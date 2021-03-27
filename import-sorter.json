@@ -5,10 +5,11 @@
     [{}],
     [
       "^@api-interfaces(.*)",
-      "^[./](shared|utils)(.*)",
       "^[./](.*).module",
       "^[./](.*).service",
       "^[./](.*).controller",
+      "^[./](.*).entity",
+      "^[./](.*).dto",
       "^[./]"
     ]
   ]
