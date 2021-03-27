@@ -37,9 +37,13 @@ export class Profile {
   @UpdateDateColumn()
   updatedAt: string;
 
+  static castToIndexedScreenName(screenName: string): string {
+    return screenName.toLowerCase().replace(/[_.]/g, '');
+  }
+
   @BeforeInsert()
   @BeforeUpdate()
   updateIndexedScreenName() {
-    this.indexedScreenName = this.screenName.toLowerCase().replace(/[_.]/g, '');
+    this.indexedScreenName = Profile.castToIndexedScreenName(this.screenName);
   }
 }

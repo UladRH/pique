@@ -1,27 +1,47 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { FindConditions, Repository } from 'typeorm';
 
-import { CreateProfileDto } from './dto/create-profile.dto';
-import { UpdateProfileDto } from './dto/update-profile.dto';
+import { Profile } from './entities/profile.entity';
+import { UpdateProfileDto } from './dto';
 
 @Injectable()
 export class ProfilesService {
-  create(createProfileDto: CreateProfileDto) {
-    return 'This action adds a new profile';
+  constructor(
+    @InjectRepository(Profile)
+    private profileRepo: Repository<Profile>,
+  ) {}
+
+  private async getBy(conditions: FindConditions<Profile>): Promise<Profile> {
+    const profile = await this.profileRepo.findOne(conditions);
+
+    if (!profile) {
+      throw new NotFoundException('Profile Not Found');
+    }
+
+    return profile;
   }
 
-  findAll() {
-    return `This action returns all profiles`;
+  getById(id: string): Promise<Profile> {
+    return this.getBy({ id });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} profile`;
+  getByScreenName(screenName: string): Promise<Profile> {
+    return this.getBy({ indexedScreenName: Profile.castToIndexedScreenName(screenName) });
   }
 
-  update(id: number, updateProfileDto: UpdateProfileDto) {
-    return `This action updates a #${id} profile`;
+  async existsByScreenName(screenName: string): Promise<boolean> {
+    try {
+      await this.getByScreenName(screenName);
+    } catch {
+      return false;
+    }
+
+    return true;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} profile`;
+  update(profile: Profile, dto: UpdateProfileDto): Promise<Profile> {
+    Object.assign(profile, dto);
+    return this.profileRepo.save(profile);
   }
 }
