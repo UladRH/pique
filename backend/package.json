@@ -21,8 +21,8 @@
     "migrate:create": "ts-node ../node_modules/typeorm/cli.js migrations:create",
     "migrate:generate": "ts-node ../node_modules/typeorm/cli.js migrations:generate",
     "migrate:run": "ts-node ../node_modules/typeorm/cli.js migration:run",
-    "seed:run": "ts-node ../node_modules/typeorm-seeding/dist/cli.js seed",
-    "seed:config": "ts-node ../node_modules/typeorm-seeding/dist/cli.js config"
+    "seed": "ts-node ../node_modules/typeorm-seeding/dist/cli.js seed",
+    "seed:dummy": "ts-node ../node_modules/typeorm-seeding/dist/cli.js seed --seed DummySeed"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.15",
