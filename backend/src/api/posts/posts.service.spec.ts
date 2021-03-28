@@ -5,6 +5,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { factory, useSeeding } from 'typeorm-seeding';
 
+import { PaginationQueryDto } from '../shared/pagination/pagination-query.dto';
 import { PostsService } from './posts.service';
 import { Profile } from '../profiles/entities/profile.entity';
 import { Post } from './entities/post.entity';
@@ -16,6 +17,7 @@ describe('PostsService', () => {
 
   let someProfile: Profile;
   let somePost: Post;
+  let somePosts: Post[];
 
   beforeAll(async () => {
     await useSeeding();
@@ -37,6 +39,7 @@ describe('PostsService', () => {
 
     someProfile = await factory(Profile)().make({ id: '1' });
     somePost = await factory(Post)().make({ id: '1', profile: someProfile });
+    somePosts = await factory(Post)().makeMany(5, { id: '1', profile: someProfile });
   });
 
   it('should be defined', () => {
@@ -69,6 +72,24 @@ describe('PostsService', () => {
       jest.spyOn(repo, 'findOne').mockResolvedValue(undefined);
 
       await expect(service.getById(somePost.id)).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('findByProfile', () => {
+    const query = new PaginationQueryDto();
+    query.page = 2;
+    query.perPage = 10;
+
+    it('should return posts', async () => {
+      jest.spyOn(repo, 'find').mockResolvedValue(somePosts);
+
+      await expect(service.findByProfile(someProfile, query)).resolves.toEqual(somePosts);
+      expect(repo.find).toBeCalledWith({
+        where: { profile: someProfile },
+        take: query.perPage,
+        skip: query.perPage * query.page,
+        order: { id: 'DESC' },
+      });
     });
   });
 

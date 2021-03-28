@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { PaginationQueryDto } from '../shared/pagination/pagination-query.dto';
 import { Profile } from '../profiles/entities/profile.entity';
 import { Post } from './entities/post.entity';
 import { CreatePostDto, UpdatePostDto } from './dto';
@@ -29,6 +30,15 @@ export class PostsService {
     }
 
     return post;
+  }
+
+  findByProfile(profile: Profile, { page, perPage }: PaginationQueryDto): Promise<Post[]> {
+    return this.postRepo.find({
+      where: { profile },
+      take: perPage,
+      skip: perPage * page,
+      order: { id: 'DESC' },
+    });
   }
 
   update(post: Post, dto: UpdatePostDto): Promise<Post> {
