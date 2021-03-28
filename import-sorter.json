@@ -1,15 +1,14 @@
 {
   "wrappingStyle": "prettier",
-  "keepUnused": [".*"],
   "groupRules": [
     [{}],
     [
-      "^@api-interfaces(.*)",
+      "^[./](.*)shared(.*)",
       "^[./](.*).module",
       "^[./](.*).service",
       "^[./](.*).controller",
       "^[./](.*).entity",
-      "^[./](.*).dto",
+      "^[./](.*)dto",
       "^[./]"
     ]
   ]
