@@ -1,4 +1,4 @@
 export class PaginationQueryDto {
-  page: number = 0;
-  perPage: number = 20;
+  page = 0;
+  perPage = 20;
 }
