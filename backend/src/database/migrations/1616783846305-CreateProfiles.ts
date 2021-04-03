@@ -24,8 +24,8 @@ export class CreateProfiles1616783846305 implements MigrationInterface {
 
   private readonly indices = [
     new TableIndex({
+      name: 'profiles_indexed_screen_name_uindex',
       columnNames: ['indexed_screen_name'],
-      name: 'indexed_screen_name_uindex',
       isUnique: true,
     }),
   ];
@@ -36,6 +36,7 @@ export class CreateProfiles1616783846305 implements MigrationInterface {
   }
 
   public async down(q: QueryRunner): Promise<void> {
+    await q.dropIndices(this.table, this.indices);
     await q.dropTable(this.table);
   }
 }

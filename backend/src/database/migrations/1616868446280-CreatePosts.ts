@@ -18,14 +18,19 @@ export class CreatePosts1616868446280 implements MigrationInterface {
     ],
   });
 
-  private readonly indices = [new TableIndex({ columnNames: ['profile_id'] })];
-
   private readonly foreignKeys = [
     new TableForeignKey({
+      name: 'posts_profiles_id_fk',
       columnNames: ['profile_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'profiles',
-      onDelete: 'CASCADE',
+    }),
+  ];
+
+  private readonly indices = [
+    new TableIndex({
+      name: 'posts_profile_id_index',
+      columnNames: ['profile_id'],
     }),
   ];
 
