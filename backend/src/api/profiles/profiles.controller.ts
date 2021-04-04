@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { PaginationQueryDto } from '../shared/pagination/pagination-query.dto';
@@ -38,7 +38,6 @@ export class ProfilesController {
   @ApiOperation({ summary: 'Get posts of given profile' })
   @ApiResponse({ status: 200, type: [Post] })
   @ApiResponse({ status: 404, description: 'Not Found' })
-  @UsePipes(new ValidationPipe({ transform: true }))
   async getProfilePosts(
     @Param('profileId') id: string,
     @Query() query: PaginationQueryDto,

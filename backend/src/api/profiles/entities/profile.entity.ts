@@ -1,4 +1,5 @@
 import { ApiHideProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -19,6 +20,7 @@ export class Profile {
   @Column()
   screenName: string;
 
+  @Exclude()
   @ApiHideProperty()
   @Column()
   indexedScreenName: string;
@@ -39,11 +41,13 @@ export class Profile {
   @Column()
   headerUri?: string;
 
-  // @example "2021-03-28T13:10:51.000Z"
+  @Exclude()
+  @ApiHideProperty()
   @CreateDateColumn()
   createdAt: string;
 
-  // @example "2021-03-28T13:10:51.000Z"
+  @Exclude()
+  @ApiHideProperty()
   @UpdateDateColumn()
   updatedAt: string;
 

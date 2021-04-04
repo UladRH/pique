@@ -1,4 +1,7 @@
+import { MaxLength } from 'class-validator';
+
 export class UpdatePostDto {
   // @example "Hello, World!"
-  content: string;
+  @MaxLength(1000)
+  content?: string;
 }

@@ -1,3 +1,6 @@
+import { Allow } from 'class-validator';
+
 export class QueryProfileDto {
-  screenName: string;
+  // @example "screen_name"
+  @Allow() screenName: string;
 }

@@ -1,3 +1,5 @@
+import { ApiHideProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -26,7 +28,8 @@ export class Post {
   @CreateDateColumn()
   createdAt: string;
 
-  // @example "2021-03-28T13:10:51.000Z"
+  @ApiHideProperty()
+  @Exclude()
   @UpdateDateColumn()
   updatedAt: string;
 }
