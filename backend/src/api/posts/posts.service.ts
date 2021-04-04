@@ -36,7 +36,7 @@ export class PostsService {
     return this.postRepo.find({
       where: { profile },
       take: perPage,
-      skip: perPage * page,
+      skip: perPage * (page - 1),
       order: { id: 'DESC' },
     });
   }

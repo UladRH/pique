@@ -87,7 +87,7 @@ describe('PostsService', () => {
       expect(repo.find).toBeCalledWith({
         where: { profile: someProfile },
         take: query.perPage,
-        skip: query.perPage * query.page,
+        skip: query.perPage * (query.page - 1),
         order: { id: 'DESC' },
       });
     });
