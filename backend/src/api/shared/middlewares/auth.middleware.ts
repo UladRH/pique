@@ -13,13 +13,13 @@ export class AuthMiddleware implements NestMiddleware {
     if (this.sessionService.hasStoredUser()) {
       const user = await this.sessionService.loadUser();
 
-      if (!user) {
+      if (user) {
+        (req as any).user = user;
+        (req as any).isAuthenticated = true;
+      } else {
         // session has nonexistent user id
         this.sessionService.destroy();
       }
-
-      (req as any).user = user;
-      (req as any).isAuthenticated = true;
     }
 
     next();
