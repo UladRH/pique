@@ -1,8 +1,8 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+import { PqRequiresAuth } from '../shared/decorators/require-auth.decorator';
 import { PqUser } from '../shared/decorators/user.decorator';
-import { AuthenticatedGuard } from '../shared/guards/authenticated.guard';
 import { AuthService } from './auth.service';
 import { User } from './entities/user.entity';
 
@@ -11,8 +11,8 @@ import { User } from './entities/user.entity';
 export class UserController {
   constructor(private readonly authService: AuthService) {}
 
-  @UseGuards(AuthenticatedGuard)
   @Get()
+  @PqRequiresAuth()
   @ApiOperation({ summary: 'Get current user' })
   @ApiResponse({ status: 200, type: User })
   getCurrentUser(@PqUser() user: User) {
