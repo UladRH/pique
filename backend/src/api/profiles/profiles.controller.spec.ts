@@ -1,5 +1,5 @@
 import { createMock } from '@golevelup/ts-jest';
-import { NotFoundException } from '@nestjs/common';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { factory, useSeeding } from 'typeorm-seeding';
 
@@ -9,6 +9,7 @@ import { ProfilesService } from './profiles.service';
 import { ProfilesController } from './profiles.controller';
 import { Post } from '../posts/entities/post.entity';
 import { Profile } from './entities/profile.entity';
+import { UpdateProfileDto } from './dto';
 
 describe('ProfilesController', () => {
   let controller: ProfilesController;
@@ -16,6 +17,7 @@ describe('ProfilesController', () => {
   let postsService: PostsService;
 
   let someProfile: Profile;
+  let otherProfile: Profile;
   let somePosts: Post[];
 
   beforeAll(async () => {
@@ -42,6 +44,7 @@ describe('ProfilesController', () => {
     postsService = module.get(PostsService);
 
     someProfile = await factory(Profile)().make({ id: '1' });
+    otherProfile = await factory(Profile)().make({ id: '2' });
     somePosts = await factory(Post)().makeMany(5, { profile: someProfile });
   });
 
@@ -80,6 +83,29 @@ describe('ProfilesController', () => {
       jest.spyOn(profileService, 'getById').mockRejectedValue(new NotFoundException());
 
       await expect(controller.getProfileById(someProfile.id)).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('updateProfile', () => {
+    const dto: UpdateProfileDto = {
+      displayName: 'update display name',
+      bio: 'update bio',
+    };
+
+    it('should successfully update a profile', async () => {
+      jest.spyOn(profileService, 'update').mockResolvedValue(someProfile);
+
+      await expect(controller.updateProfile(someProfile.id, dto, someProfile)).resolves.toEqual(
+        someProfile,
+      );
+      expect(profileService.update).toBeCalledWith(someProfile, dto);
+    });
+
+    it('should throw ForbiddenException if user is not owner of profile', async () => {
+      await expect(controller.updateProfile(someProfile.id, dto, otherProfile)).rejects.toThrow(
+        ForbiddenException,
+      );
+      expect(profileService.update).not.toBeCalled();
     });
   });
 

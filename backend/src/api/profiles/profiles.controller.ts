@@ -1,12 +1,14 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Get, Param, Patch, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+import { PqRequiresAuth } from '../shared/decorators/require-auth.decorator';
+import { PqUser } from '../shared/decorators/user.decorator';
 import { PaginationQueryDto } from '../shared/pagination/pagination-query.dto';
 import { PostsService } from '../posts/posts.service';
 import { ProfilesService } from './profiles.service';
 import { Post } from '../posts/entities/post.entity';
 import { Profile } from './entities/profile.entity';
-import { QueryProfileDto } from './dto';
+import { QueryProfileDto, UpdateProfileDto } from './dto';
 
 @ApiTags('Profiles')
 @Controller('/api/v1/profiles')
@@ -32,6 +34,25 @@ export class ProfilesController {
   @ApiResponse({ status: 404, description: 'Not Found' })
   getProfileById(@Param('profileId') id: string): Promise<Profile> {
     return this.profilesService.getById(id);
+  }
+
+  @Patch(':profileId')
+  @PqRequiresAuth()
+  @ApiOperation({ summary: 'Update a profile' })
+  @ApiResponse({ status: 200, type: Profile })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 404, description: 'Not Found' })
+  async updateProfile(
+    @Param('profileId') id: string,
+    @Body() dto: UpdateProfileDto,
+    @PqUser('profile') profile: Profile,
+  ): Promise<Profile> {
+    // User can update only own profile
+    if (profile.id != id) {
+      throw new ForbiddenException();
+    }
+
+    return this.profilesService.update(profile, dto);
   }
 
   @Get(':profileId/posts')
