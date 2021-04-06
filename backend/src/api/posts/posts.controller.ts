@@ -40,6 +40,7 @@ export class PostsController {
   }
 
   @Patch(':postId')
+  @PqRequiresAuth()
   @ApiOperation({ summary: 'Update a post' })
   @ApiResponse({ status: 200, type: Post })
   @ApiResponse({ status: 403, description: 'Forbidden' })
@@ -60,6 +61,7 @@ export class PostsController {
   }
 
   @Delete(':postId')
+  @PqRequiresAuth()
   @ApiOperation({ summary: 'Delete a post' })
   @ApiResponse({ status: 204, description: 'Empty Response' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
