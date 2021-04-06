@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   findByEmail(email: string): Promise<User | undefined> {
-    return this.userRepo.findOne({ email });
+    return this.userRepo.findOne({ email: email.toLowerCase() });
   }
 
   async findByEmailAndPassword(email: string, password: string): Promise<User | undefined> {
