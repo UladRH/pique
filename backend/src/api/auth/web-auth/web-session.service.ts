@@ -2,13 +2,13 @@ import { Inject, Injectable, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 
-import { AuthService } from './auth.service';
-import { User } from './entities/user.entity';
+import { AuthService } from '../auth.service';
+import { User } from '../entities/user.entity';
 
 export const CURRENT_USER_ID_KEY = 'currentUserId';
 
 @Injectable({ scope: Scope.REQUEST })
-export class SessionService {
+export class WebSessionService {
   constructor(
     @Inject(REQUEST)
     private readonly request: Request,

@@ -1,11 +1,11 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 
-import { SessionService } from '../../auth/session.service';
+import { WebSessionService } from '../../auth/web-auth/web-session.service';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
-  constructor(private readonly sessionService: SessionService) {}
+  constructor(private readonly sessionService: WebSessionService) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
     (req as any).isAuthenticated = false; // init

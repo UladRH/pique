@@ -2,14 +2,14 @@ import { createMock } from '@golevelup/ts-jest';
 import { NextFunction, Request, Response } from 'express';
 import { factory, useSeeding } from 'typeorm-seeding';
 
-import { SessionService } from '../../auth/session.service';
+import { WebSessionService } from '../../auth/web-auth/web-session.service';
 import { User } from '../../auth/entities/user.entity';
 import { Profile } from '../../profiles/entities/profile.entity';
 import { AuthMiddleware } from './auth.middleware';
 
 describe('AuthMiddleware', () => {
   let middleware: AuthMiddleware;
-  let sessionService: SessionService;
+  let sessionService: WebSessionService;
 
   let req: Request;
   let res: Response;
@@ -26,7 +26,7 @@ describe('AuthMiddleware', () => {
     res = {} as Response;
     next = jest.fn();
 
-    sessionService = createMock<SessionService>();
+    sessionService = createMock<WebSessionService>();
     middleware = new AuthMiddleware(sessionService);
 
     const someProfile = await factory(Profile)().make({ id: '1' });

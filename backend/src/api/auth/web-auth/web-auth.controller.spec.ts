@@ -4,7 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { factory, useSeeding } from 'typeorm-seeding';
 
 import { AuthService } from '../auth.service';
-import { SessionService } from '../session.service';
+import { WebSessionService } from './web-session.service';
 import { WebAuthController } from './web-auth.controller';
 import { Profile } from '../../profiles/entities/profile.entity';
 import { User } from '../entities/user.entity';
@@ -13,7 +13,7 @@ import { LoginUserDto, RegisterUserDto } from './dto';
 describe('WebAuthController', () => {
   let controller: WebAuthController;
   let authService: AuthService;
-  let sessionService: SessionService;
+  let sessionService: WebSessionService;
 
   let someUser: User;
 
@@ -30,15 +30,15 @@ describe('WebAuthController', () => {
           useValue: createMock<AuthService>(),
         },
         {
-          provide: SessionService,
-          useValue: createMock<SessionService>(),
+          provide: WebSessionService,
+          useValue: createMock<WebSessionService>(),
         },
       ],
     }).compile();
 
     controller = module.get(WebAuthController);
     authService = module.get(AuthService);
-    sessionService = module.get(SessionService);
+    sessionService = module.get(WebSessionService);
 
     const someProfile = await factory(Profile)().make({ id: '1' });
     someUser = await factory(User)().make({ id: '1', profile: someProfile });

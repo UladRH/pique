@@ -4,13 +4,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Request } from 'express';
 import { factory, useSeeding } from 'typeorm-seeding';
 
-import { AuthService } from './auth.service';
-import { CURRENT_USER_ID_KEY, SessionService } from './session.service';
-import { Profile } from '../profiles/entities/profile.entity';
-import { User } from './entities/user.entity';
+import { AuthService } from '../auth.service';
+import { CURRENT_USER_ID_KEY, WebSessionService } from './web-session.service';
+import { Profile } from '../../profiles/entities/profile.entity';
+import { User } from '../entities/user.entity';
 
-describe('SessionService', () => {
-  let service: SessionService;
+describe('WebSessionService', () => {
+  let service: WebSessionService;
   let request: Request;
   let authService: AuthService;
 
@@ -23,7 +23,7 @@ describe('SessionService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        SessionService,
+        WebSessionService,
         {
           provide: REQUEST,
           useValue: createMock<Request>(),
@@ -35,7 +35,7 @@ describe('SessionService', () => {
       ],
     }).compile();
 
-    service = await module.resolve(SessionService);
+    service = await module.resolve(WebSessionService);
     request = await module.resolve(REQUEST);
     authService = await module.resolve(AuthService);
 

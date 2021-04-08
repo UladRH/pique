@@ -2,7 +2,7 @@ import { Body, Controller, HttpCode, HttpException, HttpStatus, Post } from '@ne
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from '../auth.service';
-import { SessionService } from '../session.service';
+import { WebSessionService } from './web-session.service';
 import { User } from '../entities/user.entity';
 import { LoginUserDto, RegisterUserDto } from './dto';
 
@@ -11,7 +11,7 @@ import { LoginUserDto, RegisterUserDto } from './dto';
 export class WebAuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly sessionService: SessionService,
+    private readonly sessionService: WebSessionService,
   ) {}
 
   @Post('register')
