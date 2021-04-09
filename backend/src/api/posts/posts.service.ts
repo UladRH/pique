@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { PaginationQueryDto } from '../shared/pagination/pagination-query.dto';
+import { MediaService } from '../media/media.service';
 import { Profile } from '../profiles/entities/profile.entity';
 import { Post } from './entities/post.entity';
 import { CreatePostDto, UpdatePostDto } from './dto';
@@ -12,12 +13,23 @@ export class PostsService {
   constructor(
     @InjectRepository(Post)
     private readonly postRepo: Repository<Post>,
+    private readonly mediaService: MediaService,
   ) {}
 
-  create(author: Profile, dto: CreatePostDto) {
+  async create(author: Profile, dto: CreatePostDto) {
+    const media = await this.mediaService.findByIds(dto.mediaAttachmentsIds, {
+      post: null,
+      profile: author,
+    });
+
+    if (media.length < dto.mediaAttachmentsIds.length) {
+      throw new NotFoundException('Media Attachments Not Found');
+    }
+
     const post = new Post();
     post.content = dto.content;
     post.profile = author;
+    post.mediaAttachments = media;
 
     return this.postRepo.save(post);
   }

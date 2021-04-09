@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post as HttpPost,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -27,7 +28,12 @@ export class PostsController {
   @PqRequiresAuth()
   @ApiOperation({ summary: 'Create a new post' })
   @ApiResponse({ status: 201, type: Post })
+  @ApiResponse({ status: 404, description: 'Media attachments Not Found' })
   createPost(@Body() dto: CreatePostDto, @PqUser('profile') profile: Profile): Promise<Post> {
+    if (!dto.content && dto.mediaAttachmentsIds.length == 0) {
+      throw new UnprocessableEntityException(['content or mediaAttachmentsIds must be provided']);
+    }
+
     return this.postsService.create(profile, dto);
   }
 

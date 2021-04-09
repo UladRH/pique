@@ -1,5 +1,9 @@
 import { createMock } from '@golevelup/ts-jest';
-import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { factory, useSeeding } from 'typeorm-seeding';
 
@@ -47,6 +51,7 @@ describe('PostsController', () => {
   describe('createPost', () => {
     const dto: CreatePostDto = {
       content: 'Create content',
+      mediaAttachmentsIds: [],
     };
 
     it('should successfully create a post', async () => {
@@ -54,6 +59,13 @@ describe('PostsController', () => {
 
       await expect(controller.createPost(dto, someProfile)).resolves.toEqual(somePost);
       expect(postsService.create).toBeCalledWith(someProfile, dto);
+    });
+
+    it('should throw UnprocessableEntityException if content or mediaAttachmentsIds not provided', async () => {
+      await expect(() => {
+        controller.createPost(new CreatePostDto(), someProfile);
+      }).toThrow(UnprocessableEntityException);
+      expect(postsService.create).not.toBeCalled();
     });
   });
 

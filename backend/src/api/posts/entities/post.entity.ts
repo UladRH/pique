@@ -5,10 +5,12 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
+import { MediaAttachment } from '../../media/entities/media-attachment.entity';
 import { Profile } from '../../profiles/entities/profile.entity';
 
 @Entity('posts')
@@ -21,8 +23,11 @@ export class Post {
   @Column()
   content?: string;
 
-  @ManyToOne((_type) => Profile, { eager: true })
+  @ManyToOne(() => Profile, { eager: true })
   profile: Profile;
+
+  @OneToMany(() => MediaAttachment, (m) => m.post, { eager: true, cascade: true })
+  mediaAttachments: MediaAttachment[];
 
   // @example "2021-03-28T13:10:51.000Z"
   @CreateDateColumn()
