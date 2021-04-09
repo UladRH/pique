@@ -85,4 +85,15 @@ describe('MediaService', () => {
       await expect(service.getById(someProfile.id)).rejects.toThrow(NotFoundException);
     });
   });
+
+  describe('getByIds', () => {
+    it('should return media attachment array', async () => {
+      jest.spyOn(repo, 'findByIds').mockResolvedValue([someMedia]);
+
+      const ids = ['1'];
+
+      await expect(service.findByIds(ids)).resolves.toEqual([someMedia]);
+      expect(repo.findByIds).toBeCalledWith(ids, { where: {} });
+    });
+  });
 });

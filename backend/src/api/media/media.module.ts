@@ -10,5 +10,6 @@ import { MediaAttachmentStorage } from './storages/media-attachment.storage';
   imports: [TypeOrmModule.forFeature([MediaAttachment])],
   controllers: [MediaController],
   providers: [MediaService, MediaAttachmentStorage],
+  exports: [MediaService],
 })
 export class MediaModule {}

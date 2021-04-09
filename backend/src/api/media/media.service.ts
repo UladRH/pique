@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { FindConditions } from 'typeorm/find-options/FindConditions';
 
 import { Profile } from '../profiles/entities/profile.entity';
 import { MediaAttachment } from './entities/media-attachment.entity';
@@ -30,5 +31,9 @@ export class MediaService {
     }
 
     return media;
+  }
+
+  findByIds(ids: string[], conditions: FindConditions<MediaAttachment> = {}) {
+    return this.mediaRepo.findByIds(ids, { where: conditions });
   }
 }
