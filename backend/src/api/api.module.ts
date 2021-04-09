@@ -2,11 +2,12 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
 import { AuthMiddleware } from './shared/middlewares/auth.middleware';
 import { AuthModule } from './auth/auth.module';
+import { MediaModule } from './media/media.module';
 import { PostsModule } from './posts/posts.module';
 import { ProfilesModule } from './profiles/profiles.module';
 
 @Module({
-  imports: [AuthModule, PostsModule, ProfilesModule],
+  imports: [AuthModule, PostsModule, ProfilesModule, MediaModule],
 })
 export class ApiModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
