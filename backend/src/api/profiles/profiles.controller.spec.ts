@@ -128,4 +128,80 @@ describe('ProfilesController', () => {
       );
     });
   });
+
+  describe('updateProfileAvatar', () => {
+    const someImage = createMock<Express.Multer.File>();
+
+    it('should successfully update a profile avatar', async () => {
+      jest.spyOn(profileService, 'updateAvatar').mockResolvedValue(someProfile);
+
+      await expect(
+        controller.updateProfileAvatar(someProfile.id, someProfile, someImage),
+      ).resolves.toEqual(someProfile);
+      expect(profileService.updateAvatar).toBeCalledWith(someProfile, someImage);
+    });
+
+    it('should throw ForbiddenException if user is not owner of profile', async () => {
+      await expect(
+        controller.updateProfileAvatar(someProfile.id, otherProfile, someImage),
+      ).rejects.toThrow(ForbiddenException);
+      expect(profileService.updateAvatar).not.toBeCalled();
+    });
+  });
+
+  describe('removeProfileAvatar', () => {
+    it('should successfully remove a profile avatar', async () => {
+      jest.spyOn(profileService, 'removeAvatar').mockResolvedValue(someProfile);
+
+      await expect(controller.removeProfileAvatar(someProfile.id, someProfile)).resolves.toEqual(
+        someProfile,
+      );
+      expect(profileService.removeAvatar).toBeCalledWith(someProfile);
+    });
+
+    it('should throw ForbiddenException if user is not owner of profile', async () => {
+      await expect(controller.removeProfileAvatar(someProfile.id, otherProfile)).rejects.toThrow(
+        ForbiddenException,
+      );
+      expect(profileService.removeAvatar).not.toBeCalled();
+    });
+  });
+
+  describe('updateProfileHeader', () => {
+    const someImage = createMock<Express.Multer.File>();
+
+    it('should successfully update a profile header', async () => {
+      jest.spyOn(profileService, 'updateHeader').mockResolvedValue(someProfile);
+
+      await expect(
+        controller.updateProfileHeader(someProfile.id, someProfile, someImage),
+      ).resolves.toEqual(someProfile);
+      expect(profileService.updateHeader).toBeCalledWith(someProfile, someImage);
+    });
+
+    it('should throw ForbiddenException if user is not owner of profile', async () => {
+      await expect(
+        controller.updateProfileHeader(someProfile.id, otherProfile, someImage),
+      ).rejects.toThrow(ForbiddenException);
+      expect(profileService.updateHeader).not.toBeCalled();
+    });
+  });
+
+  describe('removeProfileHeader', () => {
+    it('should successfully remove a profile header', async () => {
+      jest.spyOn(profileService, 'removeHeader').mockResolvedValue(someProfile);
+
+      await expect(controller.removeProfileHeader(someProfile.id, someProfile)).resolves.toEqual(
+        someProfile,
+      );
+      expect(profileService.removeHeader).toBeCalledWith(someProfile);
+    });
+
+    it('should throw ForbiddenException if user is not owner of profile', async () => {
+      await expect(controller.removeProfileHeader(someProfile.id, otherProfile)).rejects.toThrow(
+        ForbiddenException,
+      );
+      expect(profileService.removeHeader).not.toBeCalled();
+    });
+  });
 });

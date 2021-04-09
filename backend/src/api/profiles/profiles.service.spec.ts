@@ -8,10 +8,14 @@ import { factory, useSeeding } from 'typeorm-seeding';
 import { ProfilesService } from './profiles.service';
 import { Profile } from './entities/profile.entity';
 import { UpdateProfileDto } from './dto';
+import { AvatarStorage } from './storages/avatar.storage';
+import { HeaderStorage } from './storages/header.storage';
 
 describe('ProfilesService', () => {
   let service: ProfilesService;
   let repo: Repository<Profile>;
+  let avatarStorage: AvatarStorage;
+  let headerStorage: HeaderStorage;
 
   let someProfile: Profile;
 
@@ -27,11 +31,21 @@ describe('ProfilesService', () => {
           provide: getRepositoryToken(Profile),
           useValue: createMock<Repository<Profile>>(),
         },
+        {
+          provide: AvatarStorage,
+          useValue: createMock<AvatarStorage>(),
+        },
+        {
+          provide: HeaderStorage,
+          useValue: createMock<HeaderStorage>(),
+        },
       ],
     }).compile();
 
     service = module.get(ProfilesService);
     repo = module.get(getRepositoryToken(Profile));
+    avatarStorage = module.get(AvatarStorage);
+    headerStorage = module.get(HeaderStorage);
 
     someProfile = await factory(Profile)().make({ id: '1' });
   });
@@ -92,7 +106,6 @@ describe('ProfilesService', () => {
     const dto: UpdateProfileDto = {
       bio: 'Updated bio',
       displayName: 'Updated display name',
-      screenName: 'UpdatedScreenName',
     };
 
     it('should successfully update a profile', async () => {
@@ -102,6 +115,70 @@ describe('ProfilesService', () => {
       expect(repo.save).toBeCalledWith({
         ...someProfile,
         ...dto,
+      });
+      expect(repo.save).toBeCalledTimes(1);
+    });
+  });
+
+  describe('updateAvatar', () => {
+    const someImage = createMock<Express.Multer.File>();
+    const someUri = 'so/me/_image_uri.jpg';
+
+    it('should successfully update a profile avatar', async () => {
+      jest.spyOn(repo, 'save').mockResolvedValue(someProfile);
+      jest.spyOn(avatarStorage, 'save').mockResolvedValue(someUri);
+
+      await expect(service.updateAvatar(someProfile, someImage)).resolves.toEqual(someProfile);
+      expect(repo.save).toBeCalledWith({
+        ...someProfile,
+        avatarUri: someUri,
+      });
+      expect(repo.save).toBeCalledTimes(1);
+      expect(avatarStorage.save).toBeCalledWith(someImage);
+      expect(avatarStorage.save).toBeCalledTimes(1);
+    });
+  });
+
+  describe('removeAvatar', () => {
+    it('should successfully remove a profile avatar', async () => {
+      jest.spyOn(repo, 'save').mockResolvedValue(someProfile);
+
+      await expect(service.removeAvatar(someProfile)).resolves.toEqual(someProfile);
+      expect(repo.save).toBeCalledWith({
+        ...someProfile,
+        avatarUri: null,
+      });
+      expect(repo.save).toBeCalledTimes(1);
+    });
+  });
+
+  describe('updateHeader', () => {
+    const someImage = createMock<Express.Multer.File>();
+    const someUri = 'so/me/_image_uri.jpg';
+
+    it('should successfully update a profile header', async () => {
+      jest.spyOn(repo, 'save').mockResolvedValue(someProfile);
+      jest.spyOn(headerStorage, 'save').mockResolvedValue(someUri);
+
+      await expect(service.updateHeader(someProfile, someImage)).resolves.toEqual(someProfile);
+      expect(repo.save).toBeCalledWith({
+        ...someProfile,
+        headerUri: someUri,
+      });
+      expect(repo.save).toBeCalledTimes(1);
+      expect(headerStorage.save).toBeCalledWith(someImage);
+      expect(headerStorage.save).toBeCalledTimes(1);
+    });
+  });
+
+  describe('removeHeader', () => {
+    it('should successfully remove a profile header', async () => {
+      jest.spyOn(repo, 'save').mockResolvedValue(someProfile);
+
+      await expect(service.removeHeader(someProfile)).resolves.toEqual(someProfile);
+      expect(repo.save).toBeCalledWith({
+        ...someProfile,
+        headerUri: null,
       });
       expect(repo.save).toBeCalledTimes(1);
     });
