@@ -5,7 +5,8 @@
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
-  "collectCoverageFrom": ["**/*.(t|j)s"],
+  "collectCoverageFrom": ["api/**/*.(t|j)s"],
+  "coveragePathIgnorePatterns": [".module.ts$"],
   "coverageDirectory": "../coverage",
   "testEnvironment": "node"
 }
