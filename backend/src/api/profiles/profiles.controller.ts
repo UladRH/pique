@@ -71,11 +71,12 @@ export class ProfilesController {
   @ApiResponse({ status: 404, description: 'Not Found' })
   async getProfilePosts(
     @Param('profileId') id: string,
-    @Query() query: PaginationQueryDto,
+    @Query() pagination: PaginationQueryDto,
+    @PqUser('profile') viewer: Profile,
   ): Promise<Post[]> {
-    const profile = await this.getProfileById(id);
-
-    return this.postsService.findByProfile(profile, query);
+    const author = await this.getProfileById(id);
+    const posts = await this.postsService.find({ author, pagination });
+    return this.postsService.populateViewerSpecific(posts, viewer);
   }
 
   @Put(':profileId/avatar')

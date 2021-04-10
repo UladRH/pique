@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post as HttpPost,
+  Put,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -41,8 +42,12 @@ export class PostsController {
   @ApiOperation({ summary: 'Get a post by id' })
   @ApiResponse({ status: 200, type: Post })
   @ApiResponse({ status: 404, description: 'Not Found' })
-  getPostById(@Param('postId') id: string): Promise<Post> {
-    return this.postsService.getById(id);
+  async getPostById(
+    @Param('postId') id: string,
+    @PqUser('profile') viewer: Profile,
+  ): Promise<Post> {
+    const post = await this.postsService.getById(id);
+    return this.postsService.populateViewerSpecific(post, viewer);
   }
 
   @Patch(':postId')
@@ -54,12 +59,12 @@ export class PostsController {
   async updatePost(
     @Param('postId') id: string,
     @Body() dto: UpdatePostDto,
-    @PqUser('profile') profile: Profile,
+    @PqUser('profile') viewer: Profile,
   ): Promise<Post> {
-    const post = await this.getPostById(id);
+    const post = await this.getPostById(id, viewer);
 
     // User can update only own posts
-    if (post.profile.id != profile.id) {
+    if (post.profile.id != viewer.id) {
       throw new ForbiddenException();
     }
 
@@ -73,17 +78,32 @@ export class PostsController {
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 404, description: 'Not Found' })
   @HttpCode(204)
-  async removePost(
-    @Param('postId') id: string,
-    @PqUser('profile') profile: Profile,
-  ): Promise<void> {
-    const post = await this.getPostById(id);
+  async removePost(@Param('postId') id: string, @PqUser('profile') viewer: Profile): Promise<void> {
+    const post = await this.getPostById(id, viewer);
 
     // User can remove only own posts
-    if (post.profile.id != profile.id) {
+    if (post.profile.id != viewer.id) {
       throw new ForbiddenException();
     }
 
     return this.postsService.remove(post);
+  }
+
+  @Put(':postId/liked')
+  @ApiOperation({ summary: 'Like a post' })
+  @ApiResponse({ status: 200, type: Post })
+  @ApiResponse({ status: 404, description: 'Not Found' })
+  async likePost(@Param('postId') id: string, @PqUser('profile') viewer: Profile): Promise<Post> {
+    const post = await this.getPostById(id, viewer);
+    return this.postsService.setLiked(post, viewer, true);
+  }
+
+  @Delete(':postId/liked')
+  @ApiOperation({ summary: 'Unlike a post' })
+  @ApiResponse({ status: 200, type: Post })
+  @ApiResponse({ status: 404, description: 'Not Found' })
+  async unlikePost(@Param('postId') id: string, @PqUser('profile') viewer: Profile): Promise<Post> {
+    const post = await this.getPostById(id, viewer);
+    return this.postsService.setLiked(post, viewer, false);
   }
 }

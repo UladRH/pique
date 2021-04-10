@@ -34,7 +34,11 @@ describe('ProfilesController', () => {
         },
         {
           provide: PostsService,
-          useValue: createMock<PostsService>(),
+          useValue: createMock<PostsService>({
+            populateViewerSpecific: (posts: any) => {
+              return Promise.resolve(posts);
+            },
+          }),
         },
       ],
     }).compile();
@@ -110,22 +114,24 @@ describe('ProfilesController', () => {
   });
 
   describe('getProfilePosts', () => {
-    const query = new PaginationQueryDto();
+    const pagination = new PaginationQueryDto();
 
     it('should get profile posts', async () => {
       jest.spyOn(profileService, 'getById').mockResolvedValue(someProfile);
-      jest.spyOn(postsService, 'findByProfile').mockResolvedValue(somePosts);
+      jest.spyOn(postsService, 'find').mockResolvedValue(somePosts);
 
-      await expect(controller.getProfilePosts(someProfile.id, query)).resolves.toEqual(somePosts);
-      expect(postsService.findByProfile).toBeCalledWith(someProfile, query);
+      await expect(
+        controller.getProfilePosts(someProfile.id, pagination, someProfile),
+      ).resolves.toEqual(somePosts);
+      expect(postsService.find).toBeCalledWith({ author: someProfile, pagination });
     });
 
     it('should throw NotFoundException', async () => {
       jest.spyOn(profileService, 'getById').mockRejectedValue(new NotFoundException());
 
-      await expect(controller.getProfilePosts(someProfile.id, query)).rejects.toThrow(
-        NotFoundException,
-      );
+      await expect(
+        controller.getProfilePosts(someProfile.id, pagination, someProfile),
+      ).rejects.toThrow(NotFoundException);
     });
   });
 

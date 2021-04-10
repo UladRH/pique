@@ -31,7 +31,11 @@ describe('PostsController', () => {
       providers: [
         {
           provide: PostsService,
-          useValue: createMock<PostsService>(),
+          useValue: createMock<PostsService>({
+            populateViewerSpecific: (posts: any) => {
+              return Promise.resolve(posts);
+            },
+          }),
         },
       ],
     }).compile();
@@ -73,14 +77,16 @@ describe('PostsController', () => {
     it('should get post by id', async () => {
       jest.spyOn(postsService, 'getById').mockResolvedValue(somePost);
 
-      await expect(controller.getPostById(somePost.id)).resolves.toEqual(somePost);
+      await expect(controller.getPostById(somePost.id, someProfile)).resolves.toEqual(somePost);
       expect(postsService.getById).toBeCalledWith(somePost.id);
     });
 
     it('should throw NotFoundException', async () => {
       jest.spyOn(postsService, 'getById').mockRejectedValue(new NotFoundException());
 
-      await expect(controller.getPostById(someProfile.id)).rejects.toThrow(NotFoundException);
+      await expect(controller.getPostById(someProfile.id, someProfile)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -125,6 +131,26 @@ describe('PostsController', () => {
         ForbiddenException,
       );
       expect(postsService.remove).not.toBeCalled();
+    });
+  });
+
+  describe('likePost', () => {
+    it('should successfully like a post', async () => {
+      jest.spyOn(postsService, 'getById').mockResolvedValue(somePost);
+      jest.spyOn(postsService, 'setLiked').mockResolvedValue(somePost);
+
+      await expect(controller.likePost(somePost.id, someProfile)).resolves.toEqual(somePost);
+      expect(postsService.setLiked).toBeCalledWith(somePost, someProfile, true);
+    });
+  });
+
+  describe('likePost', () => {
+    it('should successfully unlike a post', async () => {
+      jest.spyOn(postsService, 'getById').mockResolvedValue(somePost);
+      jest.spyOn(postsService, 'setLiked').mockResolvedValue(somePost);
+
+      await expect(controller.unlikePost(somePost.id, someProfile)).resolves.toEqual(somePost);
+      expect(postsService.setLiked).toBeCalledWith(somePost, someProfile, false);
     });
   });
 });
