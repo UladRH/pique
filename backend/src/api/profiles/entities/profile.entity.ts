@@ -6,9 +6,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
+import { ProfileCounters } from './profile-counters.entity';
 
 @Entity('profiles')
 export class Profile {
@@ -40,6 +43,9 @@ export class Profile {
   // @example "avatar.jpg"
   @Column()
   headerUri?: string;
+
+  @OneToOne(() => ProfileCounters, (c) => c.profile, { eager: true, cascade: true })
+  counters: ProfileCounters = new ProfileCounters();
 
   @Exclude()
   @ApiHideProperty()

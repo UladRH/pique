@@ -4,6 +4,7 @@ import { In, Repository } from 'typeorm';
 
 import { PaginationQueryDto } from '../shared/pagination/pagination-query.dto';
 import { MediaService } from '../media/media.service';
+import { ProfilesCountersService } from '../profiles/profiles-counters.service';
 import { Profile } from '../profiles/entities/profile.entity';
 import { PostCounters } from './entities/post-counters.entity';
 import { PostLike } from './entities/post-like.entity';
@@ -22,6 +23,7 @@ export class PostsService {
     @InjectRepository(PostCounters) private readonly postCountersRepo: Repository<PostCounters>,
     @InjectRepository(PostLike) private readonly postLikeRepo: Repository<PostLike>,
     private readonly mediaService: MediaService,
+    private readonly profilesCounters: ProfilesCountersService,
   ) {}
 
   async create(author: Profile, dto: CreatePostDto) {
@@ -34,12 +36,15 @@ export class PostsService {
       throw new NotFoundException('Media Attachments Not Found');
     }
 
-    const post = new Post();
+    let post = new Post();
     post.content = dto.content;
     post.profile = author;
     post.mediaAttachments = media;
+    post = await this.postRepo.save(post);
 
-    return this.postRepo.save(post);
+    await this.profilesCounters.change(author, 'posts', '+');
+
+    return post;
   }
 
   async getById(id: string): Promise<Post> {
@@ -78,6 +83,7 @@ export class PostsService {
 
   async remove(post: Post): Promise<void> {
     await this.postRepo.remove(post);
+    await this.profilesCounters.change(post.profile, 'posts', '-');
   }
 
   async setLiked(post: Post, profile: Profile, liked: boolean) {

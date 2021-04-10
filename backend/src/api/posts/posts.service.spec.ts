@@ -7,6 +7,7 @@ import { factory, useSeeding } from 'typeorm-seeding';
 
 import { PaginationQueryDto } from '../shared/pagination/pagination-query.dto';
 import { MediaService } from '../media/media.service';
+import { ProfilesCountersService } from '../profiles/profiles-counters.service';
 import { PostsService } from './posts.service';
 import { MediaAttachment } from '../media/entities/media-attachment.entity';
 import { Profile } from '../profiles/entities/profile.entity';
@@ -21,6 +22,7 @@ describe('PostsService', () => {
   let postCountersRepo: Repository<PostCounters>;
   let postLikeRepo: Repository<PostLike>;
   let mediaService: MediaService;
+  let profilesCounters: ProfilesCountersService;
 
   let someProfile: Profile;
   let somePost: Post;
@@ -51,6 +53,10 @@ describe('PostsService', () => {
           provide: MediaService,
           useValue: createMock<MediaService>(),
         },
+        {
+          provide: ProfilesCountersService,
+          useValue: createMock<ProfilesCountersService>(),
+        },
       ],
     }).compile();
 
@@ -59,6 +65,7 @@ describe('PostsService', () => {
     postCountersRepo = module.get(getRepositoryToken(PostCounters));
     postLikeRepo = module.get(getRepositoryToken(PostLike));
     mediaService = module.get(MediaService);
+    profilesCounters = module.get(ProfilesCountersService);
 
     someProfile = await factory(Profile)().make({ id: '1' });
     somePost = await factory(Post)().make({ id: '1', profile: someProfile });
@@ -90,6 +97,8 @@ describe('PostsService', () => {
         mediaAttachments: someManyMedia,
         counters: new PostCounters(),
       });
+      expect(profilesCounters.change).toBeCalledWith(someProfile, 'posts', '+');
+      expect(profilesCounters.change).toBeCalledTimes(1);
       expect(postRepo.save).toBeCalledTimes(1);
     });
 
@@ -158,6 +167,8 @@ describe('PostsService', () => {
 
       await expect(service.remove(somePost)).resolves.toBeUndefined();
       expect(postRepo.remove).toBeCalledWith(somePost);
+      expect(profilesCounters.change).toBeCalledWith(someProfile, 'posts', '-');
+      expect(profilesCounters.change).toBeCalledTimes(1);
       expect(postRepo.remove).toBeCalledTimes(1);
     });
   });
