@@ -4,14 +4,13 @@
 /backend/data
 
 # compiled output
-/backend/dist
-/backend/coverage
+**/dist
 
 # dependencies
 node_modules
 
 # IDEs and editors
-/.idea
+**/.idea
 .project
 .classpath
 .c9/
@@ -27,14 +26,14 @@ node_modules
 !.vscode/extensions.json
 
 # misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
+**/.sass-cache
+**/connect.lock
+**/coverage
+**/libpeerconnection.log
 npm-debug.log
 yarn-error.log
 testem.log
-/typings
+**/typings
 
 # System Files
 .DS_Store

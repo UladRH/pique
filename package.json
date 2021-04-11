@@ -5,6 +5,7 @@
   "author": "Uladzislau Hlebovich",
   "private": true,
   "workspaces": [
-    "backend"
+    "backend",
+    "frontend"
   ]
 }
