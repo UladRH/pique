@@ -13,6 +13,7 @@ import { CreatePostDto, UpdatePostDto } from './dto';
 
 export interface PostsFindOpts {
   author?: Profile;
+  authorsIds?: Profile['id'][];
   pagination?: PaginationQueryDto;
 }
 
@@ -63,6 +64,11 @@ export class PostsService {
       whereAuthor = { profile: opts.author };
     }
 
+    let whereAuthorsIds = {};
+    if (opts.authorsIds) {
+      whereAuthorsIds = { profile: In(opts.authorsIds) };
+    }
+
     const { page, perPage } = opts.pagination ?? new PaginationQueryDto();
     const takeSkipPagination = {
       take: perPage,
@@ -70,7 +76,7 @@ export class PostsService {
     };
 
     return this.postRepo.find({
-      where: { ...whereAuthor },
+      where: { ...whereAuthor, ...whereAuthorsIds },
       ...takeSkipPagination,
       order: { id: 'DESC' },
     });
