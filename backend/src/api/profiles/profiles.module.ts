@@ -6,12 +6,13 @@ import { ProfilesCountersService } from './profiles-counters.service';
 import { ProfilesService } from './profiles.service';
 import { ProfilesController } from './profiles.controller';
 import { ProfileCounters } from './entities/profile-counters.entity';
+import { ProfileFollower } from './entities/profile-follower.entity';
 import { Profile } from './entities/profile.entity';
 import { AvatarStorage } from './storages/avatar.storage';
 import { HeaderStorage } from './storages/header.storage';
 
 @Module({
-  imports: [PostsModule, TypeOrmModule.forFeature([Profile, ProfileCounters])],
+  imports: [PostsModule, TypeOrmModule.forFeature([Profile, ProfileCounters, ProfileFollower])],
   controllers: [ProfilesController],
   providers: [ProfilesService, ProfilesCountersService, AvatarStorage, HeaderStorage],
   exports: [ProfilesService, ProfilesCountersService],

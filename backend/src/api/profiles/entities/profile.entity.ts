@@ -6,6 +6,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -46,6 +48,24 @@ export class Profile {
 
   @OneToOne(() => ProfileCounters, (c) => c.profile, { eager: true, cascade: true })
   counters: ProfileCounters = new ProfileCounters();
+
+  @ManyToMany(() => Profile, (p) => p.following)
+  @JoinTable({
+    name: 'profiles_followers',
+    joinColumn: { name: 'target_profile_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'profile_id', referencedColumnName: 'id' },
+  })
+  followers: Profile[];
+
+  @ManyToMany(() => Profile, (p) => p.followers)
+  @JoinTable({
+    name: 'profiles_followers',
+    joinColumn: { name: 'profile_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'target_profile_id', referencedColumnName: 'id' },
+  })
+  following: Profile[];
+
+  followed: boolean;
 
   @Exclude()
   @ApiHideProperty()

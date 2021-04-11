@@ -1,11 +1,13 @@
 import { createMock } from '@golevelup/ts-jest';
-import { NotFoundException } from '@nestjs/common';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { factory, useSeeding } from 'typeorm-seeding';
 
+import { ProfilesCountersService } from './profiles-counters.service';
 import { ProfilesService } from './profiles.service';
+import { ProfileFollower } from './entities/profile-follower.entity';
 import { Profile } from './entities/profile.entity';
 import { UpdateProfileDto } from './dto';
 import { AvatarStorage } from './storages/avatar.storage';
@@ -14,10 +16,14 @@ import { HeaderStorage } from './storages/header.storage';
 describe('ProfilesService', () => {
   let service: ProfilesService;
   let repo: Repository<Profile>;
+  let followersRepo: Repository<ProfileFollower>;
   let avatarStorage: AvatarStorage;
   let headerStorage: HeaderStorage;
+  let profileCounters: ProfilesCountersService;
 
   let someProfile: Profile;
+  let otherProfile: Profile;
+  let manyProfiles: Profile[];
 
   beforeAll(async () => {
     await useSeeding();
@@ -32,6 +38,10 @@ describe('ProfilesService', () => {
           useValue: createMock<Repository<Profile>>(),
         },
         {
+          provide: getRepositoryToken(ProfileFollower),
+          useValue: createMock<Repository<ProfileFollower>>(),
+        },
+        {
           provide: AvatarStorage,
           useValue: createMock<AvatarStorage>(),
         },
@@ -39,15 +49,23 @@ describe('ProfilesService', () => {
           provide: HeaderStorage,
           useValue: createMock<HeaderStorage>(),
         },
+        {
+          provide: ProfilesCountersService,
+          useValue: createMock<ProfilesCountersService>(),
+        },
       ],
     }).compile();
 
     service = module.get(ProfilesService);
     repo = module.get(getRepositoryToken(Profile));
+    followersRepo = module.get(getRepositoryToken(ProfileFollower));
     avatarStorage = module.get(AvatarStorage);
     headerStorage = module.get(HeaderStorage);
+    profileCounters = module.get(ProfilesCountersService);
 
     someProfile = await factory(Profile)().make({ id: '1' });
+    otherProfile = await factory(Profile)().make({ id: '2' });
+    manyProfiles = [someProfile, otherProfile];
   });
 
   it('should be defined', () => {
@@ -181,6 +199,107 @@ describe('ProfilesService', () => {
         headerUri: null,
       });
       expect(repo.save).toBeCalledTimes(1);
+    });
+  });
+
+  describe('setFollower', () => {
+    it('should follow a profile if profile not followed', async () => {
+      const targetProfile = someProfile;
+      const viewer = otherProfile;
+
+      jest.spyOn(followersRepo, 'findOne').mockResolvedValue(undefined);
+
+      await service.setFollowed(targetProfile, viewer, true);
+
+      expect(followersRepo.insert).toBeCalledWith({ targetProfile, profile: viewer });
+      expect(profileCounters.change).toHaveBeenNthCalledWith(1, targetProfile, 'followers', '+');
+      expect(profileCounters.change).toHaveBeenNthCalledWith(2, viewer, 'following', '+');
+    });
+
+    it('should unfollow a profile if followed', async () => {
+      const targetProfile = someProfile;
+      const viewer = otherProfile;
+
+      jest
+        .spyOn(followersRepo, 'findOne')
+        .mockResolvedValue({ targetProfile, profile: viewer } as ProfileFollower);
+
+      await service.setFollowed(targetProfile, viewer, false);
+
+      expect(followersRepo.delete).toBeCalledWith({ targetProfile, profile: viewer });
+      expect(profileCounters.change).toHaveBeenNthCalledWith(1, targetProfile, 'followers', '-');
+      expect(profileCounters.change).toHaveBeenNthCalledWith(2, viewer, 'following', '-');
+    });
+
+    it('should ignore if profile already followed', async () => {
+      const targetProfile = someProfile;
+      const viewer = otherProfile;
+
+      jest
+        .spyOn(followersRepo, 'findOne')
+        .mockResolvedValue({ targetProfile, profile: viewer } as ProfileFollower);
+
+      await service.setFollowed(targetProfile, viewer, true);
+
+      expect(profileCounters.change).not.toBeCalled();
+      expect(followersRepo.insert).not.toBeCalled();
+      expect(followersRepo.delete).not.toBeCalled();
+    });
+
+    it('should ignore if profile already unfollowed', async () => {
+      const targetProfile = someProfile;
+      const viewer = otherProfile;
+
+      jest.spyOn(followersRepo, 'findOne').mockResolvedValue(undefined);
+
+      await service.setFollowed(targetProfile, viewer, false);
+
+      expect(profileCounters.change).not.toBeCalled();
+      expect(followersRepo.insert).not.toBeCalled();
+      expect(followersRepo.delete).not.toBeCalled();
+    });
+
+    it('should throw ForbiddenException if target and viewer equals', async () => {
+      await expect(service.setFollowed(someProfile, someProfile, true)).rejects.toThrow(
+        ForbiddenException,
+      );
+      await expect(service.setFollowed(someProfile, someProfile, false)).rejects.toThrow(
+        ForbiddenException,
+      );
+
+      expect(profileCounters.change).not.toBeCalled();
+      expect(followersRepo.insert).not.toBeCalled();
+      expect(followersRepo.delete).not.toBeCalled();
+    });
+  });
+
+  describe('populateViewerSpecific', () => {
+    it('should populate profiles for viewer', async () => {
+      jest
+        .spyOn(followersRepo, 'find')
+        .mockResolvedValue([{ targetProfileId: '1' } as ProfileFollower]);
+
+      manyProfiles[1].id = '2';
+      const profiles = await service.populateViewerSpecific(manyProfiles, someProfile);
+
+      await expect(profiles[0].followed).toEqual(true);
+      await expect(profiles[1].followed).toEqual(false);
+    });
+
+    it('should populate profiles for anonymous viewer', async () => {
+      jest.spyOn(followersRepo, 'find');
+
+      const profiles = await service.populateViewerSpecific(manyProfiles);
+
+      await expect(profiles[0].followed).toEqual(false);
+      await expect(profiles[1].followed).toEqual(false);
+      await expect(followersRepo.find).not.toBeCalled();
+    });
+
+    it('should populate for single profile', async () => {
+      const profile = await service.populateViewerSpecific(someProfile);
+
+      await expect(profile.followed).toEqual(false);
     });
   });
 });

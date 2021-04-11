@@ -30,7 +30,11 @@ describe('ProfilesController', () => {
       providers: [
         {
           provide: ProfilesService,
-          useValue: createMock<ProfilesService>(),
+          useValue: createMock<ProfilesService>({
+            populateViewerSpecific: (posts: any) => {
+              return Promise.resolve(posts);
+            },
+          }),
         },
         {
           provide: PostsService,

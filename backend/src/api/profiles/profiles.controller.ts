@@ -34,16 +34,24 @@ export class ProfilesController {
   @ApiOperation({ summary: 'Get a profile by screen name' })
   @ApiResponse({ status: 200, type: Profile })
   @ApiResponse({ status: 404, description: 'Not Found' })
-  getProfileByQuery(@Query() query: QueryProfileDto): Promise<Profile> {
-    return this.profilesService.getByScreenName(query.screenName);
+  async getProfileByQuery(
+    @Query() query: QueryProfileDto,
+    @PqUser('profile') viewer?: Profile,
+  ): Promise<Profile> {
+    const profile = await this.profilesService.getByScreenName(query.screenName);
+    return this.profilesService.populateViewerSpecific(profile, viewer);
   }
 
   @Get(':profileId')
   @ApiOperation({ summary: 'Get a profile by id' })
   @ApiResponse({ status: 200, type: Profile })
   @ApiResponse({ status: 404, description: 'Not Found' })
-  getProfileById(@Param('profileId') id: string): Promise<Profile> {
-    return this.profilesService.getById(id);
+  async getProfileById(
+    @Param('profileId') id: string,
+    @PqUser('profile') viewer?: Profile,
+  ): Promise<Profile> {
+    const profile = await this.profilesService.getById(id);
+    return this.profilesService.populateViewerSpecific(profile, viewer);
   }
 
   @Patch(':profileId')
@@ -153,5 +161,51 @@ export class ProfilesController {
     }
 
     return this.profilesService.removeHeader(profile);
+  }
+
+  @Get(':profileId/followers')
+  @ApiOperation({ summary: 'Get a profile followers' })
+  @ApiResponse({ status: 200, type: [Profile] })
+  @ApiResponse({ status: 404, description: 'Not Found' })
+  async getProfileFollowers(
+    @Param('profileId') id: string,
+    @Query() pagination: PaginationQueryDto,
+  ): Promise<Profile[]> {
+    const profile = await this.getProfileById(id);
+    return this.profilesService.findFollowersOf(profile, { pagination });
+  }
+
+  @Get(':profileId/following')
+  @ApiOperation({ summary: 'Get a profile following' })
+  @ApiResponse({ status: 200, type: [Profile] })
+  @ApiResponse({ status: 404, description: 'Not Found' })
+  async getProfileFollowing(
+    @Param('profileId') id: string,
+    @Query() pagination: PaginationQueryDto,
+  ): Promise<Profile[]> {
+    const profile = await this.getProfileById(id);
+    return this.profilesService.findFollowingOf(profile, { pagination });
+  }
+
+  @Put(':profileId/followed')
+  @PqRequiresAuth()
+  @ApiOperation({ summary: 'Follow a profile' })
+  @ApiResponse({ status: 200, type: [Profile] })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 404, description: 'Not Found' })
+  async followProfile(@Param('profileId') id: string, @PqUser('profile') viewer: Profile) {
+    const target = await this.getProfileById(id);
+    return this.profilesService.setFollowed(target, viewer, true);
+  }
+
+  @Delete(':profileId/followed')
+  @PqRequiresAuth()
+  @ApiOperation({ summary: 'Unfollow a profile' })
+  @ApiResponse({ status: 200, type: [Profile] })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 404, description: 'Not Found' })
+  async unfollowProfile(@Param('profileId') id: string, @PqUser('profile') viewer: Profile) {
+    const target = await this.getProfileById(id);
+    return this.profilesService.setFollowed(target, viewer, false);
   }
 }
