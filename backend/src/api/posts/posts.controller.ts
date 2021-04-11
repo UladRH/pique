@@ -90,6 +90,7 @@ export class PostsController {
   }
 
   @Put(':postId/liked')
+  @PqRequiresAuth()
   @ApiOperation({ summary: 'Like a post' })
   @ApiResponse({ status: 200, type: Post })
   @ApiResponse({ status: 404, description: 'Not Found' })
@@ -99,6 +100,7 @@ export class PostsController {
   }
 
   @Delete(':postId/liked')
+  @PqRequiresAuth()
   @ApiOperation({ summary: 'Unlike a post' })
   @ApiResponse({ status: 200, type: Post })
   @ApiResponse({ status: 404, description: 'Not Found' })
