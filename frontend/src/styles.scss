@@ -1,1 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+@import '~bootstrap/scss/bootstrap';
+@import '~@fontsource/inter/variable-full.css';
+
+html,
+body {
+  height: 100%;
+  font-family: 'InterVariable', $font-family-sans-serif;
+}
+
+// Consistent margin between blocks
+.block:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+
+// Bootstrap <-> Angular form validation state
+input.has-validation.ng-invalid.ng-dirty:not(.without-invalid),
+input.has-validation.ng-invalid.ng-touched:not(.without-invalid) {
+  @extend .is-invalid;
+}
+
+input.has-validation.ng-valid.ng-dirty:not(.without-valid),
+input.has-validation.ng-valid.ng-touched:not(.without-valid) {
+  @extend .is-valid;
+}
+
+// Show spinner only in disabled button
+button[type='submit']:enabled > .spinner-border {
+  display: none;
+}
+
+// Display only single error at a time
+.invalid-tooltip div {
+  display: none;
+}
+
+.invalid-tooltip div:first-child {
+  display: block;
+}
