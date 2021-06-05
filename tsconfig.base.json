@@ -1,20 +1,22 @@
 {
   "compilerOptions": {
     // Basic Options
-    "typeRoots": ["./node_modules/@types"],
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "resolveJsonModule": true,
-    "downlevelIteration": true,
+    //    "downlevelIteration": true
     // Strict Type-Checking Options
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
+    //    "strict": true,
+    //    "noImplicitAny": true,
+    //    "strictNullChecks": true,
+    //    "strictFunctionTypes": true,
+    //    "strictPropertyInitialization": true,
     "noImplicitThis": true,
-    "alwaysStrict": true,
+    //    "alwaysStrict": true,
     // Additional Checks
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    //    "noUnusedLocals": true,
+    //    "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
@@ -23,5 +25,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
