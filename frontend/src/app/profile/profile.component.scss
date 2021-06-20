@@ -1,0 +1,117 @@
+@import "../../common";
+
+.container {
+  max-width: map-get($container-max-widths, 'md');
+  margin: 0 auto;
+  padding: 0;
+}
+
+.header-image {
+  width: 100%;
+  height: 16rem;
+  background: $gray-700;
+  border-bottom-left-radius: $border-radius-lg;
+  border-bottom-right-radius: $border-radius-lg;
+
+  @include media-breakpoint-down(md) {
+    height: 12rem;
+  }
+}
+
+.header-profile {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0 1rem;
+
+  .avatar-image {
+    width: 8rem;
+    height: 8rem;
+    margin-top: -2rem;
+    background: $gray-300;
+    border-radius: $border-radius-lg;
+    flex-grow: 0;
+
+    @include media-breakpoint-down(md) {
+      width: 6rem;
+      height: 6rem;
+      margin-top: -1.5rem;
+    }
+
+    @include media-breakpoint-down(xs) {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .name {
+    margin: 1rem;
+    flex-grow: 1;
+    flex-basis: auto;
+
+    @include media-breakpoint-down(xs) {
+      text-align: center;
+      flex-basis: 100%;
+    }
+
+    font-weight: bold;
+    @include font-size($h4-font-size);
+
+    small {
+      display: block;
+      font-weight: normal;
+      color: $text-muted;
+      @include font-size($h6-font-size);
+    }
+  }
+
+  .buttons {
+    align-self: center;
+    display: inline-flex;
+
+    @include media-breakpoint-down(md) {
+      order: 5;
+      width: 100%;
+      max-width: 15rem;
+      margin: 0 auto;
+    }
+
+    @include media-breakpoint-down(xs) {
+      margin: 0;
+      max-width: none;
+    }
+
+    .follow {
+      flex-grow: 1;
+    }
+  }
+
+  .counters {
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    @include media-breakpoint-down(md) {
+      justify-content: space-around;
+    }
+
+    .counter {
+      @include margin(1rem);
+      text-align: center;
+
+      @include media-breakpoint-up(md) {
+        display: inline-flex;
+      }
+
+      .value {
+        font-weight: bold;
+      }
+
+      .label {
+        @include media-breakpoint-up(md) {
+          margin-left: 0.33rem;
+        }
+      }
+    }
+  }
+}
