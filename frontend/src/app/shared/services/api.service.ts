@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpParamsOptions } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -25,8 +25,10 @@ export class ApiService {
     return this.http.request<R>(method, path, options).pipe(catchError(ApiService.formatErrors));
   }
 
-  get<R>(path: string, params: HttpParams = new HttpParams()): Observable<R> {
-    return this.request('GET', `${API_URL}${path}`, { params });
+  get<R>(path: string, params?: HttpParamsOptions['fromObject']): Observable<R> {
+    return this.request('GET', `${API_URL}${path}`, {
+      params: new HttpParams({ fromObject: params }),
+    });
   }
 
   post<R>(path: string, body: Record<string, unknown> = {}): Observable<R> {
