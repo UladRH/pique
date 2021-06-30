@@ -1,0 +1,33 @@
+<ng-container *ngIf="profile">
+  <div class="container">
+    <div class="header-image"></div>
+
+    <div class="header-profile">
+      <div class="avatar-image"></div>
+
+      <h1 class="name">
+        {{ profile.displayName }}
+        <small>@{{ profile.screenName }}</small>
+      </h1>
+
+      <div class="buttons">
+        <div class="btn btn-primary follow">Follow</div>
+      </div>
+
+      <div class="counters" *ngIf="profile.counters as counters">
+        <div class="counter">
+          <div class="value">{{ counters.followers }}</div>
+          <div class="label">followers</div>
+        </div>
+        <div class="counter">
+          <div class="value">{{ counters.following }}</div>
+          <div class="label">following</div>
+        </div>
+        <div class="counter">
+          <div class="value">{{ counters.posts }}</div>
+          <div class="label">posts</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
