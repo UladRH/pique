@@ -7,6 +7,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
+import { ProfileModule } from './profile/profile.module';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 
@@ -23,6 +24,7 @@ import { AppComponent } from './app.component';
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     AuthModule,
+    ProfileModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
