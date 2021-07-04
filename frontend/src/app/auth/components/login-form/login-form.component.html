@@ -1,0 +1,53 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <fieldset [disabled]="pending">
+    <div class="block">
+      <div class="h1 fw-bolder">Sign in</div>
+      <div class="text-muted">
+        New Here?
+        <a [routerLink]="'/register'">Create an Account</a>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="form-floating">
+        <input
+          type="email"
+          formControlName="email"
+          [class.has-validation]="validation"
+          class="form-control without-valid"
+          placeholder="Email address"
+          autofocus
+        />
+        <label>Email address</label>
+        <div *ngIf="email.invalid" class="invalid-tooltip">
+          Please enter your valid email address
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="form-floating">
+        <input
+          type="password"
+          formControlName="password"
+          [class.has-validation]="validation"
+          class="form-control without-valid"
+          placeholder="Password"
+        />
+        <label>Password</label>
+        <div *ngIf="password.invalid" class="invalid-tooltip">Please enter your valid password</div>
+      </div>
+    </div>
+
+    <div *ngIf="error" class="block text-danger">Incorrect email or password</div>
+
+    <div class="block">
+      <button class="btn btn-lg btn-primary" type="submit">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Sign In
+      </button>
+    </div>
+
+    <div class="block text-muted">Use Private mode on a shared device</div>
+  </fieldset>
+</form>

@@ -4,11 +4,9 @@ import { Observable } from 'rxjs';
 import { LoginUserDto, RegisterUserDto, User } from '../shared/interfaces';
 import { ApiService } from '../shared/services/api.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private api: ApiService) {}
+  constructor(private readonly api: ApiService) {}
 
   getCurrentUser(): Observable<User> {
     return this.api.get('/auth/user');

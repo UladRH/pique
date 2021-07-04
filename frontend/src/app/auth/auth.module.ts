@@ -5,21 +5,29 @@ import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { AuthEffects } from './+state/auth.effects';
-import { AuthFacade } from './+state/auth.facade';
-import * as fromAuth from './+state/auth.reducer';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { ClickLoggedInDirective } from './click-logged-in.directive';
+import { AuthPageComponent } from './components/auth-page/auth-page.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { LoginPageComponent } from './containers/login-page.component';
+import { RegisterPageComponent } from './containers/register-page.component';
+import { AuthEffects } from './state/auth.effects';
+import * as fromAuth from './state/auth.reducer';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
+  declarations: [
+    LoginFormComponent,
+    RegisterFormComponent,
+    RegisterPageComponent,
+    LoginPageComponent,
+    AuthPageComponent,
+  ],
   imports: [
     CommonModule,
-    StoreModule.forFeature(fromAuth.AUTH_FEATURE_KEY, fromAuth.reducer),
-    EffectsModule.forFeature([AuthEffects]),
     RouterModule,
     ReactiveFormsModule,
+    StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducer),
+    EffectsModule.forFeature([AuthEffects]),
   ],
-  providers: [AuthFacade],
 })
 export class AuthModule {}
