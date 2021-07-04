@@ -16,6 +16,7 @@ import * as fromAuth from './state/auth.reducer';
 
 @NgModule({
   declarations: [
+    ClickLoggedInDirective,
     LoginFormComponent,
     RegisterFormComponent,
     RegisterPageComponent,
@@ -29,5 +30,6 @@ import * as fromAuth from './state/auth.reducer';
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducer),
     EffectsModule.forFeature([AuthEffects]),
   ],
+  exports: [ClickLoggedInDirective],
 })
 export class AuthModule {}
