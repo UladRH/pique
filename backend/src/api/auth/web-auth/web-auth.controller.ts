@@ -34,7 +34,7 @@ export class WebAuthController {
   async login(@Body() dto: LoginUserDto): Promise<User> {
     const user = await this.authService.findByEmailAndPassword(dto.email, dto.password);
     if (!user) {
-      throw new HttpException('Invalid Credentials', HttpStatus.FORBIDDEN);
+      throw new HttpException('Incorrect Credentials', HttpStatus.FORBIDDEN);
     }
 
     this.sessionService.storeUser(user);
