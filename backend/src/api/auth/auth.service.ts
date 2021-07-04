@@ -45,7 +45,7 @@ export class AuthService {
     }
 
     const user = new User();
-    user.email = dto.email;
+    user.email = dto.email.toLowerCase();
     await this.setPassword(user, dto.password);
     user.profile = new Profile();
     user.profile.screenName = dto.screenName;
