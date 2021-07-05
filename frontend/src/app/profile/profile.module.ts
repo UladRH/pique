@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
 import { ProfileService } from './profile.service';
-import * as fromProfile from './+state/profile.reducer';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfilePageComponent } from './containers/profile-page.component';
+import * as fromProfile from './state/profile.reducer';
 
 @NgModule({
   declarations: [ProfileComponent, ProfilePageComponent],

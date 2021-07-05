@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 import { Profile } from '../../shared/interfaces';
-import * as fromProfile from '../+state/profile.selectors';
+import * as fromProfile from '../state/profile.selectors';
 
 @Component({
   selector: 'app-profile-page',

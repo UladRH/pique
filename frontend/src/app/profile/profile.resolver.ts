@@ -6,8 +6,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Profile } from '../shared/interfaces';
 import { ProfileService } from './profile.service';
-import * as ProfileActions from './+state/profile.actions';
-import { ProfileState } from './+state/profile.reducer';
+import * as ProfileActions from './state/profile.actions';
+import { ProfileState } from './state/profile.reducer';
 
 @Injectable({
   providedIn: 'root',
