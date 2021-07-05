@@ -1,6 +1,7 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 
+import { decrement, increment } from '../../shared/counter-reducer.utils';
 import { Profile } from '../../shared/interfaces';
 import * as ProfileActions from './profile.actions';
 
@@ -17,39 +18,25 @@ export const reducer = createReducer(
 
   on(ProfileActions.loaded, (state, { profile }) => adapter.addOne(profile, state)),
 
-  on(ProfileActions.follow, ProfileActions.unfollowFailure, (state, { profile: { id } }) => {
-    const counters = state.entities[id].counters;
-    return adapter.updateOne(
+  on(ProfileActions.follow, ProfileActions.unfollowFailure, (state, { profile }) =>
+    adapter.updateOne(
       {
-        id,
-        changes: {
-          followed: true,
-          counters: {
-            ...counters,
-            followers: counters.followers + 1,
-          },
-        },
+        id: profile.id,
+        changes: { followed: false, counters: increment('followers', profile.counters) },
       },
       state,
-    );
-  }),
+    ),
+  ),
 
-  on(ProfileActions.unfollow, ProfileActions.followFailure, (state, { profile: { id } }) => {
-    const counters = state.entities[id].counters;
-    return adapter.updateOne(
+  on(ProfileActions.unfollow, ProfileActions.followFailure, (state, { profile }) =>
+    adapter.updateOne(
       {
-        id,
-        changes: {
-          followed: false,
-          counters: {
-            ...counters,
-            followers: counters.followers - 1,
-          },
-        },
+        id: profile.id,
+        changes: { followed: false, counters: decrement('followers', profile.counters) },
       },
       state,
-    );
-  }),
+    ),
+  ),
 
   on(ProfileActions.followSuccess, ProfileActions.unfollowSuccess, (state, { profile }) =>
     adapter.upsertOne(profile, state),
