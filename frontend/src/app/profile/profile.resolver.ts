@@ -31,7 +31,7 @@ export class ProfileResolver implements Resolve<Profile['id']> {
 
   getFromApi(id: string, screenName: string): Observable<Profile> {
     return this.requestByIdOrScreenName(id, screenName).pipe(
-      tap((profile) => this.store.dispatch(ProfileActions.loadProfile({ profile }))),
+      tap((profile) => this.store.dispatch(ProfileActions.loadedProfile({ profile }))),
     );
   }
 

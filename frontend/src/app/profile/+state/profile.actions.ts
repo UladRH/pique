@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 
 import { Profile } from '../../shared/interfaces';
 
-export const loadProfile = createAction(
-  '[Profile Resolver] Load Profile',
+export const loadedProfile = createAction(
+  '[Profile Resolver] Profile Loaded',
   props<{ profile: Profile }>(),
 );

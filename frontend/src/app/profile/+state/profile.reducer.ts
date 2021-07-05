@@ -15,5 +15,5 @@ export const initialState: ProfileState = adapter.getInitialState({});
 export const reducer = createReducer(
   initialState,
 
-  on(ProfileActions.loadProfile, (state, { profile }) => adapter.addOne(profile, state)),
+  on(ProfileActions.loadedProfile, (state, { profile }) => adapter.addOne(profile, state)),
 );
