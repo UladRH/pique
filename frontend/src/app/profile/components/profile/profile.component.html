@@ -11,7 +11,19 @@
       </h1>
 
       <div class="buttons">
-        <div class="btn btn-primary follow">Follow</div>
+        <ng-container
+          *ngIf="profile.followed; then unfollowButton; else followButton"
+        ></ng-container>
+
+        <ng-template #followButton>
+          <div (clickLoggedIn)="followed.emit(profile)" class="btn btn-primary follow">Follow</div>
+        </ng-template>
+
+        <ng-template #unfollowButton>
+          <div (clickLoggedIn)="unfollowed.emit(profile)" class="btn btn-outline-primary follow">
+            Unfollow
+          </div>
+        </ng-template>
       </div>
 
       <div class="counters" *ngIf="profile.counters as counters">

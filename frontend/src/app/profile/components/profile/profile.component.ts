@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Profile } from '../../../shared/interfaces';
 
@@ -6,7 +6,11 @@ import { Profile } from '../../../shared/interfaces';
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent {
-  @Input() profile!: Profile;
+  @Input() profile: Profile;
+
+  @Output() followed = new EventEmitter<Profile>();
+  @Output() unfollowed = new EventEmitter<Profile>();
 }

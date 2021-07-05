@@ -15,5 +15,43 @@ export const initialState: ProfileState = adapter.getInitialState({});
 export const reducer = createReducer(
   initialState,
 
-  on(ProfileActions.loadedProfile, (state, { profile }) => adapter.addOne(profile, state)),
+  on(ProfileActions.loaded, (state, { profile }) => adapter.addOne(profile, state)),
+
+  on(ProfileActions.follow, ProfileActions.unfollowFailure, (state, { profile: { id } }) => {
+    const counters = state.entities[id].counters;
+    return adapter.updateOne(
+      {
+        id,
+        changes: {
+          followed: true,
+          counters: {
+            ...counters,
+            followers: counters.followers + 1,
+          },
+        },
+      },
+      state,
+    );
+  }),
+
+  on(ProfileActions.unfollow, ProfileActions.followFailure, (state, { profile: { id } }) => {
+    const counters = state.entities[id].counters;
+    return adapter.updateOne(
+      {
+        id,
+        changes: {
+          followed: false,
+          counters: {
+            ...counters,
+            followers: counters.followers - 1,
+          },
+        },
+      },
+      state,
+    );
+  }),
+
+  on(ProfileActions.followSuccess, ProfileActions.unfollowSuccess, (state, { profile }) =>
+    adapter.upsertOne(profile, state),
+  ),
 );

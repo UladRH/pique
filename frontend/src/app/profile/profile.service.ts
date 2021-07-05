@@ -17,4 +17,12 @@ export class ProfileService {
   getByScreenName(screenName: Profile['screenName']): Observable<Profile> {
     return this.api.get(`/profiles`, { screenName });
   }
+
+  follow(id: Profile['id']): Observable<Profile> {
+    return this.api.put(`/profiles/${id}/followed`);
+  }
+
+  unfollow(id: Profile['id']): Observable<Profile> {
+    return this.api.delete(`/profiles/${id}/followed`);
+  }
 }
