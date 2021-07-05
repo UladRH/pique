@@ -2,10 +2,10 @@ import { Factory, Seeder } from 'typeorm-seeding';
 
 import { User } from '../../api/auth/entities/user.entity';
 import { MediaAttachment } from '../../api/media/entities/media-attachment.entity';
+import { PostLike } from '../../api/posts/entities/post-like.entity';
 import { Post } from '../../api/posts/entities/post.entity';
 import { ProfileFollower } from '../../api/profiles/entities/profile-follower.entity';
 import { Profile } from '../../api/profiles/entities/profile.entity';
-import { PostLike } from '../../api/posts/entities/post-like.entity';
 
 export default class DummySeed implements Seeder {
   public async run(factory: Factory): Promise<any> {

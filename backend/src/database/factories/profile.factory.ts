@@ -8,11 +8,12 @@ import { Profile } from '../../api/profiles/entities/profile.entity';
 define(Profile, (faker: typeof Faker) => {
   const profile = new Profile();
 
-  profile.screenName = faker.internet.userName() + '.' + faker.random.number();
+  profile.screenName = faker.internet.userName() + '_' + faker.random.number();
   profile.displayName = faker.name.findName();
   profile.bio = faker.lorem.paragraph();
-  profile.avatarUri = faker.image.avatar();
-  profile.headerUri = faker.image.imageUrl(1500, 500, 'any', false, true);
+  profile.avatarUri =
+    'https://robohash.org/set_set3/bgset_bg1/' + faker.random.alphaNumeric(5) + '?size=500x500';
+  profile.headerUri = 'https://picsum.photos/seed/' + faker.random.alphaNumeric(5) + '/1500/500';
   profile.counters = new ProfileCounters();
   Object.assign(profile.counters, { posts: 0, followers: 0, following: 0 });
 
