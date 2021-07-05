@@ -127,6 +127,8 @@ export class ProfilesService {
       await this.profilesCounters.change(viewer, 'following', '-');
     }
 
+    target.followed = followed;
+
     return target;
   }
 
