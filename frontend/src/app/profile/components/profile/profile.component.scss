@@ -1,4 +1,4 @@
-@import "src/common";
+@import 'src/common';
 
 .container {
   max-width: map-get($container-max-widths, 'md');
@@ -9,7 +9,8 @@
 .header-image {
   width: 100%;
   height: 16rem;
-  background: $gray-700;
+  background-color: $gray-700;
+  background-size: cover;
   border-bottom-left-radius: $border-radius-lg;
   border-bottom-right-radius: $border-radius-lg;
 
@@ -27,7 +28,8 @@
     width: 8rem;
     height: 8rem;
     margin-top: -2rem;
-    background: $gray-300;
+    background-color: $gray-300;
+    background-size: cover;
     border-radius: $border-radius-lg;
     flex-grow: 0;
 

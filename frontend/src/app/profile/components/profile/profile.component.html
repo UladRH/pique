@@ -1,9 +1,9 @@
 <ng-container *ngIf="profile">
   <div class="container">
-    <div class="header-image"></div>
+    <div class="header-image" [style.background-image]="'url(' + profile.headerUri + ')'"></div>
 
     <div class="header-profile">
-      <div class="avatar-image"></div>
+      <div class="avatar-image" [style.background-image]="'url(' + profile.avatarUri + ')'"></div>
 
       <h1 class="name">
         {{ profile.displayName }}
