@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { LoginUserDto, RegisterUserDto, User } from '../shared/interfaces';
 import { ApiService } from '../shared/services/api.service';
-import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

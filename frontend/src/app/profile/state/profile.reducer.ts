@@ -3,8 +3,8 @@ import { createReducer, on } from '@ngrx/store';
 
 import { decrement, increment } from '../../shared/counter-reducer.utils';
 import { Profile } from '../../shared/interfaces';
-import * as ProfileActions from './profile.actions';
 import * as AuthActions from '../../auth/state/auth.actions';
+import * as ProfileActions from './profile.actions';
 
 export const profileFeatureKey = 'profiles';
 

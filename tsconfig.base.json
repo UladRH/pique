@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
     // Basic Options
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
+    "typeRoots": ["./node_modules/@types"],
     "resolveJsonModule": true,
     //    "downlevelIteration": true
     // Strict Type-Checking Options
@@ -25,7 +23,5 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
