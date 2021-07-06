@@ -13,5 +13,5 @@ export interface RegisterUserDto {
 
 export interface User {
   id: string;
-  profile: Profile;
+  profile?: Profile;
 }

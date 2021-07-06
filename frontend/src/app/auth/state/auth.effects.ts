@@ -21,7 +21,7 @@ export class AuthEffects {
       ofType(AuthActions.getUser),
       switchMap(() =>
         this.authService.getCurrentUser().pipe(
-          map((user) => AuthActions.getUserSuccess({ user })),
+          map((data) => AuthActions.getUserSuccess(data)),
           catchError((error) => of(AuthActions.getUserFailure({ error }))),
         ),
       ),
@@ -33,7 +33,7 @@ export class AuthEffects {
       ofType(AuthActions.login),
       exhaustMap(({ dto }) =>
         this.authService.login(dto).pipe(
-          map((user) => AuthActions.loginSuccess({ user })),
+          map((data) => AuthActions.loginSuccess(data)),
           catchError((error) => of(AuthActions.loginFailure({ error }))),
         ),
       ),
@@ -45,7 +45,7 @@ export class AuthEffects {
       ofType(AuthActions.register),
       exhaustMap(({ dto }) =>
         this.authService.register(dto).pipe(
-          map((user) => AuthActions.registerSuccess({ user })),
+          map((data) => AuthActions.registerSuccess(data)),
           catchError((error) => of(AuthActions.registerFailure({ error }))),
         ),
       ),

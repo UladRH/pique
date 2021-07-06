@@ -4,6 +4,7 @@ import { createReducer, on } from '@ngrx/store';
 import { decrement, increment } from '../../shared/counter-reducer.utils';
 import { Profile } from '../../shared/interfaces';
 import * as ProfileActions from './profile.actions';
+import * as AuthActions from '../../auth/state/auth.actions';
 
 export const profileFeatureKey = 'profiles';
 
@@ -16,7 +17,13 @@ export const initialState: ProfileState = adapter.getInitialState({});
 export const reducer = createReducer(
   initialState,
 
-  on(ProfileActions.loaded, (state, { profile }) => adapter.addOne(profile, state)),
+  on(
+    ProfileActions.loaded,
+    AuthActions.getUserSuccess,
+    AuthActions.loginSuccess,
+    AuthActions.registerSuccess,
+    (state, { profile }) => adapter.addOne(profile, state),
+  ),
 
   on(ProfileActions.follow, ProfileActions.unfollowFailure, (state, { profile }) =>
     adapter.updateOne(
