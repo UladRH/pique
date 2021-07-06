@@ -20,7 +20,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.getUser),
       switchMap(() =>
-        this.authService.getCurrentUser().pipe(
+        this.authService.getLoggedInUser().pipe(
           map((data) => AuthActions.getUserSuccess(data)),
           catchError((error) => of(AuthActions.getUserFailure({ error }))),
         ),

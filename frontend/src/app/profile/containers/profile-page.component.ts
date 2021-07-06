@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 import { Profile } from '../../shared/interfaces';
@@ -13,6 +12,7 @@ import * as fromProfile from '../state/profile.selectors';
   template: `
     <app-profile
       [profile]="$profile | async"
+      [isOwnProfile]="$isOwnProfile | async"
       (followed)="follow($event)"
       (unfollowed)="unfollow($event)"
     ></app-profile>
@@ -20,13 +20,15 @@ import * as fromProfile from '../state/profile.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfilePageComponent {
-  $profile: Observable<Profile>;
+  $profile = this.route.data.pipe(
+    mergeMap(({ profileId }) => this.store.select(fromProfile.selectProfileById(profileId))),
+  );
 
-  constructor(private readonly store: Store, private readonly route: ActivatedRoute) {
-    this.$profile = this.route.data.pipe(
-      mergeMap(({ profileId }) => this.store.select(fromProfile.getProfileById(profileId))),
-    );
-  }
+  $isOwnProfile = this.route.data.pipe(
+    mergeMap(({ profileId }) => this.store.select(fromProfile.selectIsOwnProfile(profileId))),
+  );
+
+  constructor(private readonly store: Store, private readonly route: ActivatedRoute) {}
 
   follow(profile: Profile) {
     this.store.dispatch(ProfileActions.follow({ profile }));

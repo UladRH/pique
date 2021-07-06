@@ -9,7 +9,7 @@ import { ApiService } from '../shared/services/api.service';
 export class AuthService {
   constructor(private readonly api: ApiService) {}
 
-  getCurrentUser() {
+  getLoggedInUser() {
     return this.api.get<User>('/auth/user').pipe(map(AuthService.normalize));
   }
 

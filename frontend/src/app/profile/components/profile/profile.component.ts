@@ -10,6 +10,7 @@ import { Profile } from '../../../shared/interfaces';
 })
 export class ProfileComponent {
   @Input() profile: Profile;
+  @Input() isOwnProfile: boolean;
 
   @Output() followed = new EventEmitter<Profile>();
   @Output() unfollowed = new EventEmitter<Profile>();
