@@ -25,21 +25,21 @@ export const reducer = createReducer(
     (state, { profile }) => adapter.addOne(profile, state),
   ),
 
-  on(ProfileActions.follow, ProfileActions.unfollowFailure, (state, { profile }) =>
+  on(ProfileActions.follow, ProfileActions.unfollowFailure, (state, { profile: { id } }) =>
     adapter.updateOne(
       {
-        id: profile.id,
-        changes: { followed: false, counters: increment('followers', profile.counters) },
+        id,
+        changes: { followed: false, counters: increment('followers', state.entities[id].counters) },
       },
       state,
     ),
   ),
 
-  on(ProfileActions.unfollow, ProfileActions.followFailure, (state, { profile }) =>
+  on(ProfileActions.unfollow, ProfileActions.followFailure, (state, { profile: { id } }) =>
     adapter.updateOne(
       {
-        id: profile.id,
-        changes: { followed: false, counters: decrement('followers', profile.counters) },
+        id,
+        changes: { followed: false, counters: decrement('followers', state.entities[id].counters) },
       },
       state,
     ),
