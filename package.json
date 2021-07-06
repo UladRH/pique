@@ -7,5 +7,21 @@
   "workspaces": [
     "backend",
     "frontend"
-  ]
+  ],
+  "devDependencies": {
+    "format-imports": "^2.4.1",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.2",
+    "husky": "^7.0.1"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "format": "yarn run format:imports && yarn run format:prettier",
+    "format:prettier": "prettier --write .",
+    "format:imports": "format-imports backend/src/ && format-imports backend/test && format-imports frontend/src && format-imports frontend/e2e"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "format-imports",
+    "*.{js,jsx,ts,tsx,md,json,html,css,scss}": "prettier --write"
+  }
 }
