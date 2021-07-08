@@ -31,11 +31,15 @@ export class ApiService {
     });
   }
 
-  post<R>(path: string, body: Record<string, unknown> = {}): Observable<R> {
+  post<R>(path: string, body: object = {}): Observable<R> {
     return this.request('POST', `${API_URL}${path}`, { body });
   }
 
-  put<R>(path: string, body: Record<string, unknown> = {}): Observable<R> {
+  patch<R>(path: string, body: object = {}): Observable<R> {
+    return this.request('PATCH', `${API_URL}${path}`, { body });
+  }
+
+  put<R>(path: string, body: object = {}): Observable<R> {
     return this.request('PUT', `${API_URL}${path}`, { body });
   }
 
