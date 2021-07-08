@@ -12,6 +12,10 @@ const routes: Routes = [
   { path: 'login', component: LoginPageComponent, canActivate: [NoAuthGuard] },
   { path: 'register', component: RegisterPageComponent, canActivate: [NoAuthGuard] },
   { path: '', canActivate: [AuthGuard] },
+  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
+  },
   { path: ':screenName', component: ProfilePageComponent, resolve: { profileId: ProfileResolver } },
 ];
 

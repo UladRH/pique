@@ -1,3 +1,8 @@
+export interface ProfileUpdateDto {
+  displayName?: string;
+  bio?: string;
+}
+
 export interface Profile {
   id: string;
   screenName: string;

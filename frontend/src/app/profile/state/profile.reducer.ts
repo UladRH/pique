@@ -45,7 +45,10 @@ export const reducer = createReducer(
     ),
   ),
 
-  on(ProfileActions.followSuccess, ProfileActions.unfollowSuccess, (state, { profile }) =>
-    adapter.upsertOne(profile, state),
+  on(
+    ProfileActions.followSuccess,
+    ProfileActions.unfollowSuccess,
+    ProfileActions.updateProfileDetailsSuccess,
+    (state, { profile }) => adapter.upsertOne(profile, state),
   ),
 );

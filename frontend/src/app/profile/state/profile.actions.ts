@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { IError, Profile } from '../../shared/interfaces';
+import { IError, Profile, ProfileUpdateDto } from '../../shared/interfaces';
 
 export const loaded = createAction(
   '[Profile Resolver] Profile Loaded',
@@ -31,4 +31,17 @@ export const unfollowSuccess = createAction(
 export const unfollowFailure = createAction(
   '[Profile Api] Profile Unfollow Failure',
   props<{ profile: Profile; error: IError }>(),
+);
+
+export const updateProfileDetails = createAction(
+  '[Settings Profile Edit] Update Profile Details',
+  props<{ dto: ProfileUpdateDto }>(),
+);
+export const updateProfileDetailsSuccess = createAction(
+  '[Settings Profile Edit] Update Profile Details Success',
+  props<{ profile: Profile }>(),
+);
+export const updateProfileDetailsFailure = createAction(
+  '[Settings Profile Edit] Update Profile Details Failure',
+  props<{ error: IError }>(),
 );

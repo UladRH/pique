@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, exhaustMap, map } from 'rxjs/operators';
+import { catchError, exhaustMap, map, withLatestFrom } from 'rxjs/operators';
 
 import { ProfileService } from '../profile.service';
+import * as fromProfile from '../state/profile.selectors';
 import * as ProfileActions from './profile.actions';
 
 @Injectable()
@@ -32,8 +34,22 @@ export class ProfileEffects {
     ),
   );
 
+  updateProfileDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProfileActions.updateProfileDetails),
+      withLatestFrom(this.store.select(fromProfile.selectLoggedInProfile)),
+      exhaustMap(([{ dto }, profile]) =>
+        this.profileService.updateProfile(profile.id, dto).pipe(
+          map((profile) => ProfileActions.updateProfileDetailsSuccess({ profile })),
+          catchError((error) => of(ProfileActions.updateProfileDetailsFailure({ error }))),
+        ),
+      ),
+    ),
+  );
+
   constructor(
     private readonly actions$: Actions,
+    private readonly store: Store,
     private readonly profileService: ProfileService,
   ) {}
 }

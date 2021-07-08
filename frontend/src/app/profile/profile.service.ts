@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Profile } from '../shared/interfaces';
+import { Profile, ProfileUpdateDto } from '../shared/interfaces';
 import { ApiService } from '../shared/services/api.service';
 
 @Injectable({
@@ -24,5 +24,9 @@ export class ProfileService {
 
   unfollow(id: Profile['id']): Observable<Profile> {
     return this.api.delete(`/profiles/${id}/followed`);
+  }
+
+  updateProfile(id: Profile['id'], dto: ProfileUpdateDto): Observable<Profile> {
+    return this.api.patch(`/profiles/${id}`, dto);
   }
 }

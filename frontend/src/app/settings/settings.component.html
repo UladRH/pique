@@ -1,0 +1,33 @@
+<div class="container container-max-width-xl my-md-5 my-2">
+  <div class="row g-5">
+    <div class="col-md-4">
+      <div class="list-group">
+        <a
+          [routerLink]="['profile']"
+          routerLinkActive="active"
+          class="list-group-item list-group-item-action"
+        >
+          Edit Profile
+        </a>
+        <a
+          [routerLink]="['email']"
+          routerLinkActive="active"
+          class="list-group-item list-group-item-action disabled"
+        >
+          Email addresses
+        </a>
+        <a
+          [routerLink]="['password']"
+          routerLinkActive="active"
+          class="list-group-item list-group-item-action disabled"
+        >
+          Change password
+        </a>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
