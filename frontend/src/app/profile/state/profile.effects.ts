@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
+import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
-import { catchError, exhaustMap, map, withLatestFrom } from 'rxjs/operators';
+import { catchError, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators';
 
 import { ProfileService } from '../profile.service';
 import * as fromProfile from '../state/profile.selectors';
@@ -47,9 +48,19 @@ export class ProfileEffects {
     ),
   );
 
+  updateProfileDetailsSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ProfileActions.updateProfileDetailsSuccess),
+        tap(() => this.toast.success('Profile saved.')),
+      ),
+    { dispatch: false },
+  );
+
   constructor(
     private readonly actions$: Actions,
     private readonly store: Store,
     private readonly profileService: ProfileService,
+    private readonly toast: ToastrService,
   ) {}
 }
