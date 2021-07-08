@@ -37,21 +37,43 @@ export const reducer = createReducer(
   ),
 
   on(ProfileActions.follow, ProfileActions.unfollowFailure, (state, { profile: { id } }) =>
-    adapter.updateOne(
-      {
-        id,
-        changes: { followed: false, counters: increment('followers', state.entities[id].counters) },
-      },
+    adapter.updateMany(
+      [
+        {
+          id,
+          changes: {
+            followed: false,
+            counters: increment('followers', state.entities[id].counters),
+          },
+        },
+        {
+          id: state.loggedInProfileId,
+          changes: {
+            counters: increment('following', state.entities[state.loggedInProfileId].counters),
+          },
+        },
+      ],
       state,
     ),
   ),
 
   on(ProfileActions.unfollow, ProfileActions.followFailure, (state, { profile: { id } }) =>
-    adapter.updateOne(
-      {
-        id,
-        changes: { followed: false, counters: decrement('followers', state.entities[id].counters) },
-      },
+    adapter.updateMany(
+      [
+        {
+          id,
+          changes: {
+            followed: false,
+            counters: decrement('followers', state.entities[id].counters),
+          },
+        },
+        {
+          id: state.loggedInProfileId,
+          changes: {
+            counters: decrement('following', state.entities[state.loggedInProfileId].counters),
+          },
+        },
+      ],
       state,
     ),
   ),
