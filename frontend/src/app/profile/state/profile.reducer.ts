@@ -8,14 +8,25 @@ import * as ProfileActions from './profile.actions';
 
 export const profileFeatureKey = 'profiles';
 
-export interface ProfileState extends EntityState<Profile> {}
+export interface ProfileState extends EntityState<Profile> {
+  loggedInProfileId: Profile['id'];
+}
 
 export const adapter: EntityAdapter<Profile> = createEntityAdapter<Profile>({});
 
-export const initialState: ProfileState = adapter.getInitialState({});
+export const initialState: ProfileState = adapter.getInitialState({
+  loggedInProfileId: null,
+});
 
 export const reducer = createReducer(
   initialState,
+
+  on(
+    AuthActions.getUserSuccess,
+    AuthActions.loginSuccess,
+    AuthActions.registerSuccess,
+    (state, { profile }) => ({ ...state, loggedInProfileId: profile.id }),
+  ),
 
   on(
     ProfileActions.loaded,

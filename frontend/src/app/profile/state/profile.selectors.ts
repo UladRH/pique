@@ -1,6 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import * as fromAuth from '../../auth/state/auth.selectors';
 import * as fromProfile from './profile.reducer';
 
 export const selectProfileState = createFeatureSelector<fromProfile.ProfileState>(
@@ -16,9 +15,8 @@ export const selectProfileById = (id) =>
 
 export const selectLoggedInProfile = createSelector(
   selectProfileState,
-  fromAuth.selectLoggedInProfileId,
-  ({ entities }, profileId) => entities[profileId],
+  ({ entities, loggedInProfileId }) => entities[loggedInProfileId],
 );
 
 export const selectIsOwnProfile = (id) =>
-  createSelector(fromAuth.selectLoggedInProfileId, (loggedInProfileId) => id == loggedInProfileId);
+  createSelector(selectProfileState, ({ loggedInProfileId }) => id == loggedInProfileId);

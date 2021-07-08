@@ -6,8 +6,6 @@ export const selectAuthState = createFeatureSelector<AuthState>(authFeatureKey);
 
 export const selectLoggedInUser = createSelector(selectAuthState, (state) => state.user);
 
-export const selectLoggedInProfileId = createSelector(selectAuthState, (state) => state.profileId);
-
 export const selectLoggedIn = createSelector(selectAuthState, (state) => state.loggedIn);
 
 export const selectLoginFormPending = createSelector(selectAuthState, (state) => state.pending);

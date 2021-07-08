@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { IError, Profile, User } from '../../shared/interfaces';
+import { IError, User } from '../../shared/interfaces';
 import * as AuthActions from './auth.actions';
 
 export const authFeatureKey = 'auth';
@@ -8,7 +8,6 @@ export const authFeatureKey = 'auth';
 export interface AuthState {
   loggedIn: boolean;
   user: User;
-  profileId: Profile['id'];
   pending: boolean;
   error: IError;
 }
@@ -16,7 +15,6 @@ export interface AuthState {
 export const initialState: AuthState = {
   loggedIn: null,
   user: null,
-  profileId: null,
   pending: false,
   error: null,
 };
@@ -28,7 +26,7 @@ export const reducer = createReducer(
     AuthActions.getUserSuccess,
     AuthActions.loginSuccess,
     AuthActions.registerSuccess,
-    (state, { user, profile }) => ({ ...state, user, profileId: profile.id, loggedIn: true }),
+    (state, { user }) => ({ ...state, user, loggedIn: true }),
   ),
 
   on(AuthActions.getUserFailure, (state) => ({ ...state, loggedIn: false })),
