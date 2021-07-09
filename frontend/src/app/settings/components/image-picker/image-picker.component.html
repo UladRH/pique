@@ -1,0 +1,9 @@
+<input #fileInput (change)="onFileChange($event)" hidden type="file" />
+
+<button (click)="fileInput.value = null; fileInput.click()" class="btn btn-primary" type="button">
+  Upload
+</button>
+
+<button (click)="onRemove($event)" *ngIf="image$ | async" class="btn btn-danger ms-2" type="button">
+  Remove
+</button>
