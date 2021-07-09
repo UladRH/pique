@@ -7517,6 +7517,20 @@ neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
+ngx-image-cropper@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-image-cropper/-/ngx-image-cropper-4.0.0.tgz#8981f42503b724288a3ae40c1c6d5d925eb81915"
+  integrity sha512-6g9/4DepnOO8PTZcdH7qZSur/e+PriekjMeJFr2WGVP4/DkNxYqneVerpuwghcpjETp30ClO5iG6098mFzV++w==
+  dependencies:
+    tslib "^1.10.0"
+
+ngx-simple-modal@^1.4.17:
+  version "1.4.17"
+  resolved "https://registry.yarnpkg.com/ngx-simple-modal/-/ngx-simple-modal-1.4.17.tgz#fc1a5bfdbce998fc21df28f2f8efe2644d2592a7"
+  integrity sha512-KhaJQ/oXv0XB31X3eXqew9NgVI3aAqd0qa7CTuO6sI8ZHXXnMbdIIXD+MYAafXZsuCGVZ9Z6lVS2NcegYqEo0w==
+  dependencies:
+    tslib "^1.9.0"
+
 ngx-toastr@^14.0.0:
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/ngx-toastr/-/ngx-toastr-14.0.0.tgz#20e4737ef330b892a453768cd98b980558aeb286"

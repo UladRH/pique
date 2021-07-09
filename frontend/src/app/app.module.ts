@@ -1,10 +1,11 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { SimpleModalModule } from 'ngx-simple-modal';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +22,7 @@ import { AppEffects } from './app.effects';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    HammerModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument({
@@ -28,6 +30,7 @@ import { AppEffects } from './app.effects';
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     ToastrModule.forRoot({ positionClass: 'toast-bottom-center' }),
+    SimpleModalModule,
     AuthModule,
     ProfileModule,
   ],
