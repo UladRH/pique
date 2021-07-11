@@ -1,5 +1,5 @@
 import { ApiHideProperty } from '@nestjs/swagger';
-import { Exclude } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -40,10 +40,12 @@ export class Profile {
 
   // @example "avatar.jpg"
   @Column()
+  @Transform(({ value }) => (value ? `http://localhost:4200/usercontent/${value}` : null)) //FIXME
   avatarUri?: string;
 
   // @example "avatar.jpg"
   @Column()
+  @Transform(({ value }) => (value ? `http://localhost:4200/usercontent/${value}` : null)) //FIXME
   headerUri?: string;
 
   @OneToOne(() => ProfileCounters, (c) => c.profile, { eager: true, cascade: true })
