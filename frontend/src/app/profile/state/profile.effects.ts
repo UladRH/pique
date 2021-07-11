@@ -35,24 +35,33 @@ export class ProfileEffects {
     ),
   );
 
-  updateProfileDetails$ = createEffect(() =>
+  update$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProfileActions.updateProfileDetails),
+      ofType(ProfileActions.update),
       withLatestFrom(this.store.select(fromProfile.selectLoggedInProfile)),
       exhaustMap(([{ dto }, profile]) =>
-        this.profileService.updateProfile(profile.id, dto).pipe(
-          map((profile) => ProfileActions.updateProfileDetailsSuccess({ profile })),
-          catchError((error) => of(ProfileActions.updateProfileDetailsFailure({ error }))),
+        this.profileService.update(profile.id, dto).pipe(
+          map((profile) => ProfileActions.updateSuccess({ profile })),
+          catchError((error) => of(ProfileActions.updateFailure({ error }))),
         ),
       ),
     ),
   );
 
-  updateProfileDetailsSuccess$ = createEffect(
+  updateSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ProfileActions.updateProfileDetailsSuccess),
+        ofType(ProfileActions.updateSuccess),
         tap(() => this.toast.success('Profile saved.')),
+      ),
+    { dispatch: false },
+  );
+
+  updateFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ProfileActions.updateFailure),
+        tap(() => this.toast.error('An error occurred while saving profile changes.')),
       ),
     { dispatch: false },
   );

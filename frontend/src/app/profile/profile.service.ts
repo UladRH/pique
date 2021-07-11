@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { Profile, ProfileUpdateDto } from '../shared/interfaces';
+import { dataUriToBlob } from '../shared/data-uri.utils';
+import { Profile, ProfileEditFormDto, ProfileUpdateDto } from '../shared/interfaces';
 import { ApiService } from '../shared/services/api.service';
 
 @Injectable({
@@ -26,7 +28,54 @@ export class ProfileService {
     return this.api.delete(`/profiles/${id}/followed`);
   }
 
-  updateProfile(id: Profile['id'], dto: ProfileUpdateDto): Observable<Profile> {
-    return this.api.patch(`/profiles/${id}`, dto);
+  update(id: Profile['id'], changes: ProfileEditFormDto): Observable<Profile> {
+    const requests = [];
+
+    if ('displayName' in changes || 'bio' in changes) {
+      requests.push(this.updateDetails(id, changes));
+    }
+
+    if (changes.avatarUri) {
+      requests.push(this.updateAvatar(id, changes.avatarUri));
+    } else if (changes.avatarUri === null) {
+      requests.push(this.removeAvatar(id));
+    }
+
+    if (changes.headerUri) {
+      requests.push(this.updateHeader(id, changes.headerUri));
+    } else if (changes.headerUri === null) {
+      requests.push(this.removeHeader(id));
+    }
+
+    return forkJoin(requests).pipe(map((profiles: Profile[]) => profiles[profiles.length - 1]));
+  }
+
+  updateDetails(id: Profile['id'], dto: ProfileUpdateDto): Observable<Profile> {
+    return this.api.patch(`/profiles/${id}`, {
+      displayName: dto.displayName,
+      bio: dto.bio,
+    });
+  }
+
+  updateAvatar(id: Profile['id'], dataUriImage: string): Observable<Profile> {
+    const formData = new FormData();
+    formData.append('file', dataUriToBlob(dataUriImage));
+
+    return this.api.put(`/profiles/${id}/avatar`, formData);
+  }
+
+  removeAvatar(id: Profile['id']): Observable<Profile> {
+    return this.api.delete(`/profiles/${id}/avatar`);
+  }
+
+  updateHeader(id: Profile['id'], dataUriImage: string): Observable<Profile> {
+    const formData = new FormData();
+    formData.append('file', dataUriToBlob(dataUriImage));
+
+    return this.api.put(`/profiles/${id}/header`, formData);
+  }
+
+  removeHeader(id: Profile['id']): Observable<Profile> {
+    return this.api.delete(`/profiles/${id}/header`);
   }
 }

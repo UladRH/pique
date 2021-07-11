@@ -3,6 +3,11 @@ export interface ProfileUpdateDto {
   bio?: string;
 }
 
+export interface ProfileEditFormDto extends ProfileUpdateDto {
+  avatarUri?: string;
+  headerUri?: string;
+}
+
 export interface Profile {
   id: string;
   screenName: string;

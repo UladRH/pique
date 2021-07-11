@@ -2,24 +2,36 @@ import { Injectable } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { SimpleModalService } from 'ngx-simple-modal';
 import { EMPTY } from 'rxjs';
-import { exhaustMap, filter, map } from 'rxjs/operators';
+import { exhaustMap, filter, map, take } from 'rxjs/operators';
 
 import { ImageCropModalComponent } from '../image-crop-modal/image-crop-modal.component';
 
 interface ImagePickerState {
   initial: string;
   updated: string;
+
+  cropModalOpts: {
+    title: string;
+    applyButton: string;
+    width: number;
+    height: number;
+  };
 }
 
 @Injectable()
 export class ImagePickerStore extends ComponentStore<ImagePickerState> {
-  constructor(private readonly modalService: SimpleModalService) {
-    super({ initial: null, updated: null });
-  }
-
   readonly image$ = this.select((state) => state.updated || state.initial);
 
-  readonly setInitial = this.updater((state, initial: string) => ({
+  readonly cropModalOpts$ = this.select((state) => state.cropModalOpts);
+
+  readonly setCropModalOpts = this.updater(
+    (state, opts: Partial<ImagePickerState['cropModalOpts']>) => ({
+      ...state,
+      cropModalOpts: { ...state.cropModalOpts, ...opts },
+    }),
+  );
+
+  readonly setInitialImage = this.updater((state, initial: string) => ({
     ...state,
     initial,
     updated: null,
@@ -40,6 +52,26 @@ export class ImagePickerStore extends ComponentStore<ImagePickerState> {
     }
   });
 
+  constructor(private readonly modalService: SimpleModalService) {
+    super({
+      initial: null,
+      updated: null,
+
+      cropModalOpts: {
+        title: 'Crop your image',
+        applyButton: 'Apply',
+        width: 500,
+        height: 500,
+      },
+    });
+  }
+
+  private readonly openCropModal = (file) =>
+    this.cropModalOpts$.pipe(
+      take(1),
+      exhaustMap((opts) => this.modalService.addModal(ImageCropModalComponent, { ...opts, file })),
+    );
+
   readonly onFileChange = this.effect<InputEvent>(($event) =>
     $event.pipe(
       map(($event: any) => $event.target.files[0]),
@@ -55,13 +87,4 @@ export class ImagePickerStore extends ComponentStore<ImagePickerState> {
       ),
     ),
   );
-
-  private readonly openCropModal = (file) =>
-    this.modalService.addModal(ImageCropModalComponent, {
-      title: 'Crop your image',
-      button: 'Apply',
-      file,
-      width: 400,
-      height: 400,
-    });
 }

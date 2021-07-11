@@ -29,7 +29,7 @@
 
       <p class="small text-muted mt-2">
         In most cases, you'll be able to change your screen name back to
-        {{ previousScreenName }} for another 14 days.
+        {{ profile.screenName }} for another 14 days.
       </p>
     </div>
   </div>
@@ -53,8 +53,59 @@
   </div>
 
   <div class="block row">
+    <label class="col-sm-4 col-form-label fw-bold text-sm-end">Avatar</label>
+    <div class="col-sm-6">
+      <div
+        class="bg-dark rounded-3"
+        style="width: 7rem; height: 7rem; background-size: cover; background-position: center"
+        [style.background-image]="avatarPreviewBg$ | async"
+      ></div>
+
+      <div class="my-2">
+        <app-image-picker
+          formControlName="avatarUri"
+          [width]="400"
+          [height]="400"
+        ></app-image-picker>
+      </div>
+
+      <small class="text-muted mt-2">
+        PNG or JPG. At most 2 MB. Will be downscaled to 400x400px
+      </small>
+    </div>
+  </div>
+
+  <div class="block row">
+    <label class="col-sm-4 col-form-label fw-bold text-sm-end">Header</label>
+    <div class="col-sm-6">
+      <div
+        class="bg-dark rounded-3"
+        style="background-size: cover; background-position: center"
+        [style.padding-bottom]="(500 / 1500) * 100 + '%'"
+        [style.background-image]="headerPreviewBg$ | async"
+      ></div>
+
+      <div class="my-2">
+        <app-image-picker
+          formControlName="headerUri"
+          [width]="1500"
+          [height]="500"
+        ></app-image-picker>
+      </div>
+
+      <small class="text-muted mt-2">
+        PNG or JPG. At most 2 MB. Will be downscaled to 1500x500px
+      </small>
+    </div>
+  </div>
+
+  <div class="block row">
     <div class="offset-sm-4 col-sm-6">
-      <button [disabled]="form.invalid || form.pristine" class="btn btn-success btn" type="submit">
+      <button
+        [disabled]="form.invalid || !(isChanged$ | async)"
+        class="btn btn-success btn"
+        type="submit"
+      >
         Save profile
       </button>
     </div>

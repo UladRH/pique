@@ -4,7 +4,7 @@ import { SimpleModalComponent } from 'ngx-simple-modal';
 
 interface ImageCropModal {
   title: string;
-  button: string;
+  applyButton: string;
   file: File;
   width: number;
   height: number;
@@ -17,23 +17,23 @@ interface ImageCropModal {
 })
 export class ImageCropModalComponent extends SimpleModalComponent<ImageCropModal, string> {
   title: string;
-  button: string;
+  applyButton: string;
   file: File;
   width: number;
   height: number;
+
+  dataUriImage = null;
 
   constructor() {
     super();
   }
 
-  image = null;
-
   imageCropped($event: ImageCroppedEvent) {
-    this.image = $event.base64;
+    this.dataUriImage = $event.base64;
   }
 
   confirm() {
-    this.result = this.image;
+    this.result = this.dataUriImage;
     this.close();
   }
 }

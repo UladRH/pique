@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Profile } from '../../../shared/interfaces';
-import { resolveMediaBgImage } from '../../../shared/resolve-image.utils';
 
 @Component({
   selector: 'app-profile',
@@ -17,10 +16,10 @@ export class ProfileComponent {
   @Output() unfollowed = new EventEmitter<Profile>();
 
   get headerImage() {
-    return resolveMediaBgImage(this.profile.headerUri);
+    return this.profile.headerUri ? `url("${this.profile.headerUri}")` : null;
   }
 
   get avatarImage() {
-    return resolveMediaBgImage(this.profile.avatarUri);
+    return this.profile.avatarUri ? `url("${this.profile.avatarUri}")` : null;
   }
 }

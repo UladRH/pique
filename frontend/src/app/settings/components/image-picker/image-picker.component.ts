@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ImagePickerStore } from './image-picker.store';
@@ -12,10 +12,20 @@ import { ImagePickerStore } from './image-picker.store';
     ImagePickerStore,
   ],
 })
-export class ImagePickerComponent implements ControlValueAccessor {
-  constructor(private readonly componentStore: ImagePickerStore) {}
+export class ImagePickerComponent implements ControlValueAccessor, OnChanges {
+  @Input() width: number;
+  @Input() height: number;
 
   image$ = this.componentStore.image$;
+
+  constructor(private readonly componentStore: ImagePickerStore) {}
+
+  ngOnChanges(): void {
+    this.componentStore.setCropModalOpts({
+      width: this.width,
+      height: this.height,
+    });
+  }
 
   onFileChange($event) {
     this.componentStore.onFileChange($event);
@@ -25,13 +35,13 @@ export class ImagePickerComponent implements ControlValueAccessor {
     this.componentStore.removeImage();
   }
 
-  writeValue(value: string) {
-    this.componentStore.setInitial(value);
+  writeValue(value) {
+    this.componentStore.setInitialImage(value);
   }
 
-  registerOnChange(onChange: any) {
+  registerOnChange(onChange) {
     this.componentStore.image$.subscribe(onChange);
   }
 
-  registerOnTouched(onTouched: any) {}
+  registerOnTouched(onTouched) {}
 }

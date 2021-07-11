@@ -1,4 +1,10 @@
-<input #fileInput (change)="onFileChange($event)" hidden type="file" />
+<input
+  #fileInput
+  (change)="onFileChange($event)"
+  hidden
+  type="file"
+  accept="image/jpeg,image/png"
+/>
 
 <button (click)="fileInput.value = null; fileInput.click()" class="btn btn-primary" type="button">
   Upload
