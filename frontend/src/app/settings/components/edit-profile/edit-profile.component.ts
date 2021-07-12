@@ -61,7 +61,7 @@ export class EditProfileComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.form.patchValue(this.profile);
+    setTimeout(() => this.form.patchValue(this.profile));
   }
 
   onSubmit() {
