@@ -6,6 +6,7 @@ import {
   OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -20,6 +21,7 @@ import { Profile, ProfileEditFormDto } from '../../../shared/interfaces';
 })
 export class EditProfileComponent implements OnInit, OnChanges {
   @Input() profile: Profile;
+  @Input() pending: boolean;
 
   @Output() submitChanged = new EventEmitter<ProfileEditFormDto>();
 
@@ -60,8 +62,10 @@ export class EditProfileComponent implements OnInit, OnChanges {
     );
   }
 
-  ngOnChanges() {
-    setTimeout(() => this.form.patchValue(this.profile));
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['profile']) {
+      setTimeout(() => this.form.patchValue(this.profile));
+    }
   }
 
   onSubmit() {
