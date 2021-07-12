@@ -40,12 +40,16 @@ export class Profile {
 
   // @example "avatar.jpg"
   @Column()
-  @Transform(({ value }) => (value ? `http://localhost:4200/usercontent/${value}` : null)) //FIXME
+  @Transform(({ value }) =>
+    !value || value?.startsWith('https://') ? value : `http://localhost:4200/usercontent/${value}`,
+  ) //FIXME
   avatarUri?: string;
 
   // @example "avatar.jpg"
   @Column()
-  @Transform(({ value }) => (value ? `http://localhost:4200/usercontent/${value}` : null)) //FIXME
+  @Transform(({ value }) =>
+    !value || value?.startsWith('https://') ? value : `http://localhost:4200/usercontent/${value}`,
+  ) //FIXME
   headerUri?: string;
 
   @OneToOne(() => ProfileCounters, (c) => c.profile, { eager: true, cascade: true })
