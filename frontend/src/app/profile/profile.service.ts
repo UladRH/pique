@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { concatAll, last, map } from 'rxjs/operators';
 
 import { dataUriToBlob } from '../shared/data-uri.utils';
 import { Profile, ProfileEditFormDto, ProfileUpdateDto } from '../shared/interfaces';
@@ -47,7 +47,11 @@ export class ProfileService {
       requests.push(this.removeHeader(id));
     }
 
-    return forkJoin(requests).pipe(map((profiles: Profile[]) => profiles[profiles.length - 1]));
+    return from(requests).pipe(
+      concatAll(),
+      last(),
+      map((profile: Profile) => profile),
+    );
   }
 
   updateDetails(id: Profile['id'], dto: ProfileUpdateDto): Observable<Profile> {
