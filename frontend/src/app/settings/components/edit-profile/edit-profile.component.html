@@ -2,7 +2,7 @@
   <fieldset [disabled]="pending">
     <div class="block row">
       <label class="col-sm-4 col-form-label fw-bold text-sm-end">Display Name</label>
-      <div class="col-sm-6">
+      <div class="col-sm-7">
         <div class="input-group">
           <input formControlName="displayName" class="form-control has-validation without-valid" />
           <div *ngIf="displayName.invalid" class="invalid-tooltip">
@@ -20,10 +20,8 @@
     </div>
 
     <div class="block row">
-      <label class="col-sm-4 col-form-label fw-bold text-sm-end text-muted">
-        Screen Name (required)
-      </label>
-      <div class="col-sm-6">
+      <label class="col-sm-4 col-form-label fw-bold text-sm-end text-muted">Screen Name</label>
+      <div class="col-sm-7">
         <div class="input-group">
           <input formControlName="screenName" class="form-control" disabled />
         </div>
@@ -37,7 +35,7 @@
 
     <div class="block row">
       <label class="col-sm-4 col-form-label fw-bold text-sm-end">Bio</label>
-      <div class="col-sm-6">
+      <div class="col-sm-7">
         <div class="input-group">
           <textarea
             formControlName="bio"
@@ -55,10 +53,10 @@
 
     <div class="block row">
       <label class="col-sm-4 col-form-label fw-bold text-sm-end">Avatar</label>
-      <div class="col-sm-6">
+      <div class="col-sm-7">
         <div
-          class="bg-dark rounded-3"
-          style="width: 7rem; height: 7rem; background-size: cover; background-position: center"
+          class="avatar-image border rounded-3"
+          style="width: 7rem; height: 7rem"
           [style.background-image]="avatarPreviewBg$ | async"
         ></div>
 
@@ -78,10 +76,9 @@
 
     <div class="block row">
       <label class="col-sm-4 col-form-label fw-bold text-sm-end">Header</label>
-      <div class="col-sm-6">
+      <div class="col-sm-7">
         <div
-          class="bg-dark rounded-3"
-          style="background-size: cover; background-position: center"
+          class="header-image border rounded-3"
           [style.padding-bottom]="(500 / 1500) * 100 + '%'"
           [style.background-image]="headerPreviewBg$ | async"
         ></div>
@@ -101,7 +98,7 @@
     </div>
 
     <div class="block row">
-      <div class="offset-sm-4 col-sm-6">
+      <div class="offset-sm-4 col-sm-7">
         <button
           [disabled]="form.invalid || !(isChanged$ | async)"
           class="btn btn-success btn"
