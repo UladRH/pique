@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
+import { AuthModule } from '../auth/auth.module';
 import { PostRoutingModule } from './post-routing.module';
 import { PostComponent } from './components/post/post.component';
 import { PostPageComponent } from './containers/post-page.component';
@@ -16,6 +17,7 @@ import * as fromPost from './state/post.reducer';
     PostRoutingModule,
     StoreModule.forFeature(fromPost.postFeatureKey, fromPost.reducer),
     EffectsModule.forFeature([PostEffects]),
+    AuthModule,
   ],
 })
 export class PostModule {}

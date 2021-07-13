@@ -25,11 +25,15 @@
       ></ng-container>
 
       <ng-template #followButton>
-        <button class="btn btn-primary">Follow</button>
+        <button (clickLoggedIn)="followed.emit(post.profile)" class="btn btn-primary">
+          Follow
+        </button>
       </ng-template>
 
       <ng-template #unfollowButton>
-        <button class="btn btn-outline-primary">Unfollow</button>
+        <button (clickLoggedIn)="unfollowed.emit(post.profile)" class="btn btn-outline-primary">
+          Unfollow
+        </button>
       </ng-template>
     </div>
   </div>
@@ -53,14 +57,20 @@
   </div>
 
   <div class="mt-3">
-    <ng-container *ngIf="post.liked; then unlikeButton; else likeButton"></ng-container>
+    <div class="input-group input-group-lg">
+      <ng-container>
+        <ng-container *ngIf="post.liked; then unlikeButton; else likeButton"></ng-container>
 
-    <ng-template #likeButton>
-      <div class="btn btn-lg btn-danger">Like</div>
-    </ng-template>
+        <ng-template #likeButton>
+          <button (clickLoggedIn)="liked.emit(post)" class="btn btn-danger">Like</button>
+        </ng-template>
 
-    <ng-template #unlikeButton>
-      <div class="btn btn-lg btn-danger">Unlike</div>
-    </ng-template>
+        <ng-template #unlikeButton>
+          <div (clickLoggedIn)="unliked.emit(post)" class="btn btn-outline-danger">Unlike</div>
+        </ng-template>
+      </ng-container>
+
+      <div class="input-group-text bg-light text-danger border-danger">{{ post.likesCount }}</div>
+    </div>
   </div>
 </div>

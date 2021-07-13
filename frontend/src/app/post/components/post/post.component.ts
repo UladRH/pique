@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { Profile } from '../../../shared/interfaces';
 import { Post } from '../../../shared/interfaces/post.interface';
 
 @Component({
@@ -7,10 +8,12 @@ import { Post } from '../../../shared/interfaces/post.interface';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss'],
 })
-export class PostComponent implements OnInit {
+export class PostComponent {
   @Input() post: Post;
 
-  constructor() {}
+  @Output() liked = new EventEmitter<Post>();
+  @Output() unliked = new EventEmitter<Post>();
 
-  ngOnInit(): void {}
+  @Output() followed = new EventEmitter<Profile>();
+  @Output() unfollowed = new EventEmitter<Profile>();
 }

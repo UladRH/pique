@@ -16,4 +16,12 @@ export class PostService {
   get(id: Post['id']): Observable<Post> {
     return this.api.get(`/posts/${id}`).pipe(map(PostService.normalizeNested));
   }
+
+  like(id: Post['id']): Observable<Post> {
+    return this.api.put(`/posts/${id}/liked`).pipe(map(PostService.normalizeNested));
+  }
+
+  unlike(id: Post['id']): Observable<Post> {
+    return this.api.delete(`/posts/${id}/liked`).pipe(map(PostService.normalizeNested));
+  }
 }
