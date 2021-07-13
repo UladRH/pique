@@ -9,7 +9,7 @@ import { ApiService } from '../shared/services/api.service';
 export class PostService {
   constructor(private readonly api: ApiService) {}
 
-  private static normalizeNested(data: Post) {
+  static normalizeNested(data: Post) {
     return { ...data, profileId: data.profile.id };
   }
 

@@ -2,6 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import {
   relatedEntity,
   relatedEntitySelector,
+  rootEntities,
   rootEntity,
   rootEntitySelector,
   toStaticSelector,
@@ -24,5 +25,7 @@ export const selectPost = rootEntity(
   selectPostState,
   relatedEntity(selectProfileState, 'profileId', 'profile'),
 );
+
+export const selectPosts = rootEntities(selectPost);
 
 export const selectPostById = (id) => toStaticSelector(selectPost, id);

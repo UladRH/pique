@@ -11,7 +11,11 @@ import { ProfileResolver } from './profile/profile.resolver';
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent, canActivate: [NoAuthGuard] },
   { path: 'register', component: RegisterPageComponent, canActivate: [NoAuthGuard] },
-  { path: '', canActivate: [AuthGuard] },
+  {
+    path: '',
+    loadChildren: () => import('./feed/feed.module').then((m) => m.FeedModule),
+    canActivate: [AuthGuard],
+  },
   { path: 'p', loadChildren: () => import('./post/post.module').then((m) => m.PostModule) },
   {
     path: 'settings',
