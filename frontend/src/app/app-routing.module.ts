@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'login', component: LoginPageComponent, canActivate: [NoAuthGuard] },
   { path: 'register', component: RegisterPageComponent, canActivate: [NoAuthGuard] },
   { path: '', canActivate: [AuthGuard] },
+  { path: 'p', loadChildren: () => import('./post/post.module').then((m) => m.PostModule) },
   {
     path: 'settings',
     loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
