@@ -7524,6 +7524,11 @@ neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
+ngrx-entity-relationship@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/ngrx-entity-relationship/-/ngrx-entity-relationship-1.7.0.tgz#c26999cfa5f8d36b7a9cdc1cc62674fd42b179cd"
+  integrity sha512-SepAkpGxhUtcuCGCBx0SgQEgBTIZ/cln84aJB4kmu5FThJIGJdx3jvRsJrjMQUnKbpUIW6BaeQx6dMFektvkGw==
+
 ngx-image-cropper@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/ngx-image-cropper/-/ngx-image-cropper-4.0.0.tgz#8981f42503b724288a3ae40c1c6d5d925eb81915"

@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ngrxEntityRelationshipReducer } from 'ngrx-entity-relationship';
 import { SimpleModalModule } from 'ngx-simple-modal';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -23,7 +24,7 @@ import { AppEffects } from './app.effects';
     HttpClientModule,
     BrowserAnimationsModule,
     HammerModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot({}, { metaReducers: [ngrxEntityRelationshipReducer] }),
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

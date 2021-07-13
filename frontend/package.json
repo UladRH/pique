@@ -28,6 +28,7 @@
     "@ngrx/router-store": "^12.0.0",
     "@ngrx/store": "^12.0.0",
     "bootstrap": "^5.0.1",
+    "ngrx-entity-relationship": "^1.7.0",
     "ngx-image-cropper": "^4.0.0",
     "ngx-simple-modal": "^1.4.17",
     "ngx-toastr": "^14.0.0",
