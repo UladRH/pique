@@ -6,7 +6,7 @@ import { MediaAttachment } from '../../api/media/entities/media-attachment.entit
 define(MediaAttachment, (faker: typeof Faker) => {
   const media = new MediaAttachment();
 
-  media.fileUri = faker.image.imageUrl(800, 600, 'any', false, true);
+  media.fileUri = 'https://picsum.photos/seed/' + faker.random.alphaNumeric(5) + '/800/600';
 
   return media;
 });

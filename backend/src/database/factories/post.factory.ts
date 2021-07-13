@@ -8,6 +8,9 @@ define(Post, (faker: typeof Faker) => {
   const post = new Post();
 
   post.content = faker.lorem.sentence();
+  post.createdAt = post.updatedAt = faker.date
+    .between('Jun 26, 2019 8:25 PM', 'Aug 22, 2020 9:49 PM')
+    .toString();
 
   return post;
 });
