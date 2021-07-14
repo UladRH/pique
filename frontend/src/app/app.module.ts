@@ -11,7 +11,10 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
+import { FeedModule } from './feed/feed.module';
+import { PostModule } from './post/post.module';
 import { ProfileModule } from './profile/profile.module';
+import { SettingsModule } from './settings/settings.module';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppEffects } from './app.effects';
@@ -34,6 +37,9 @@ import { AppEffects } from './app.effects';
     SimpleModalModule,
     AuthModule,
     ProfileModule,
+    PostModule,
+    SettingsModule,
+    FeedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
