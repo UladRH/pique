@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, UrlSegment } from '@angular/router';
 
 import { AuthGuard } from './auth/auth.guard';
 import { LoginPageComponent } from './auth/containers/login-page.component';
@@ -45,9 +45,21 @@ const routes: Routes = [
     resolve: { post: PostResolver },
   },
   {
-    path: ':screenName',
     component: ProfilePageComponent,
     resolve: { profileId: ProfileResolver },
+    // @screenName
+    matcher: (url) => {
+      if (url.length === 1 && url[0].path.startsWith('@')) {
+        return {
+          consumed: url,
+          posParams: {
+            screenName: new UrlSegment(url[0].path.substr(1), {}),
+          },
+        };
+      }
+
+      return null;
+    },
   },
   {
     path: '',
