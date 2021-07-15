@@ -1,13 +1,11 @@
 @import 'common';
 
 @import '~bootstrap/scss/bootstrap';
-@import '~@fontsource/inter/variable-full.css';
 @import '~ngx-toastr/toastr';
 
 html,
 body {
   height: 100%;
-  font-family: 'InterVariable', $font-family-sans-serif;
 }
 
 // Consistent margin between blocks

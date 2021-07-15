@@ -18,7 +18,7 @@
     "prepare": "husky install",
     "format": "yarn run format:imports && yarn run format:prettier",
     "format:prettier": "prettier --write .",
-    "format:imports": "format-imports backend/src/ && format-imports backend/test && format-imports frontend/src && format-imports frontend/e2e"
+    "format:imports": "format-imports backend/src/ && format-imports backend/test && format-imports frontend/src"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "format-imports",
