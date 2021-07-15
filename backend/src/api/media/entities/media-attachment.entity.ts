@@ -1,4 +1,4 @@
-import { ApiHideProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import {
   Column,
@@ -14,11 +14,12 @@ import { Profile } from '../../profiles/entities/profile.entity';
 
 @Entity('media_attachments')
 export class MediaAttachment {
-  // @example 1
+  @ApiHideProperty()
+  @Exclude()
   @PrimaryGeneratedColumn()
   id: string;
 
-  // @example "file.jpg"
+  @ApiProperty({ example: 'https://example.com/image.jpg' })
   @Column()
   fileUri: string;
 

@@ -1,4 +1,4 @@
-import { ApiHideProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 
@@ -17,12 +17,15 @@ export class ProfileCounters {
   @JoinColumn()
   profile: Profile;
 
+  @ApiProperty({ example: 0 })
   @Column({ default: 0 })
   posts: number;
 
+  @ApiProperty({ example: 0 })
   @Column({ default: 0 })
   followers: number;
 
+  @ApiProperty({ example: 0 })
   @Column({ default: 0 })
   following: number;
 }

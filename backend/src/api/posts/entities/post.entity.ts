@@ -1,5 +1,5 @@
-import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
-import { Exclude, Expose } from 'class-transformer';
+import { ApiHideProperty, ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Exclude, Expose, Type } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -19,18 +19,25 @@ import { PostLike } from './post-like.entity';
 
 @Entity('posts')
 export class Post {
-  // @example 1
+  @ApiProperty({ example: '1' })
+  @Type(() => String)
   @PrimaryGeneratedColumn()
   id: string;
 
-  // @example "Hello, World!"
+  @ApiProperty({ example: 'Hello, World!' })
   @Column()
   content?: string;
 
+  @ApiProperty({ example: '1' })
+  @Column()
+  profileId: string;
+
+  @ApiProperty()
   @ManyToOne(() => Profile, { eager: true })
   @JoinColumn()
   profile: Profile;
 
+  @ApiProperty({ type: MediaAttachment, isArray: true })
   @OneToMany(() => MediaAttachment, (m) => m.post, { eager: true, cascade: true })
   mediaAttachments: MediaAttachment[];
 
@@ -44,6 +51,7 @@ export class Post {
   @OneToOne(() => PostCounters, (p) => p.post, { eager: true, cascade: true })
   counters: PostCounters = new PostCounters();
 
+  @ApiPropertyOptional({ example: false })
   liked?: boolean;
 
   @ApiProperty({ example: 42 })
@@ -52,7 +60,7 @@ export class Post {
     return this.counters.likes;
   }
 
-  // @example "2021-03-28T13:10:51.000Z"
+  @ApiProperty({ example: '2021-03-28T13:10:51.000Z', type: Date })
   @CreateDateColumn()
   createdAt: string;
 

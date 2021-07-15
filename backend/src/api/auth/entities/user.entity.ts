@@ -1,4 +1,5 @@
-import { Exclude } from 'class-transformer';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
+import { Exclude, Type } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -12,26 +13,35 @@ import { Profile } from '../../profiles/entities/profile.entity';
 
 @Entity('users')
 export class User {
-  // @example 1
+  @ApiProperty({ example: '1' })
+  @Type(() => String)
   @PrimaryGeneratedColumn()
   id: string;
 
-  // @example "user@example.com"
+  @ApiHideProperty()
+  @Exclude()
   @Column()
   email?: string;
 
+  @ApiHideProperty()
   @Exclude()
   @Column()
   hashed_password?: string;
 
-  @ManyToOne((_type) => Profile, { eager: true, cascade: true })
+  @ApiProperty({ example: '1' })
+  @Column()
+  profileId: string;
+
+  @ManyToOne(() => Profile, { eager: true, cascade: true })
   profile: Profile;
 
-  // @example "2021-03-28T13:10:51.000Z"
+  @ApiHideProperty()
+  @Exclude()
   @CreateDateColumn()
   createdAt: string;
 
-  // @example "2021-03-28T13:10:51.000Z"
+  @ApiHideProperty()
+  @Exclude()
   @UpdateDateColumn()
   updatedAt: string;
 }
