@@ -9,3 +9,5 @@ export const selectFeedState = createFeatureSelector<fromFeed.FeedState>(fromFee
 export const selectFeedPostsIds = createSelector(selectFeedState, (state) => state.postsIds);
 
 export const selectFeedPosts = toStaticSelector(fromPost.selectPosts, selectFeedPostsIds);
+
+export const selectPagination = createSelector(selectFeedState, (state) => state);

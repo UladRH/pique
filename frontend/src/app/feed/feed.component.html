@@ -1,3 +1,11 @@
-<p>feed works!</p>
+<div class="container container-max-width-md py-5">
+  <div infiniteScroll [infiniteScrollDistance]="1" (scrolled)="next($event)">
+    <app-post-list [posts]="posts$ | async"></app-post-list>
+  </div>
 
-{{ posts$ | async | json }}
+  <div *ngIf="pending$ | async" class="text-center p-5">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>

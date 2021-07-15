@@ -7,10 +7,14 @@ export const feedFeatureKey = 'feed';
 
 export interface FeedState {
   postsIds: Post['id'][];
+  page: number;
+  perPage: number;
 }
 
 export const initialState: FeedState = {
   postsIds: [],
+  page: null,
+  perPage: 5,
 };
 
 export const reducer = createReducer(
@@ -18,6 +22,13 @@ export const reducer = createReducer(
 
   on(FeedActions.getSuccess, (state, { posts }) => ({
     ...state,
+    postsIds: posts.map((post) => post.id),
+    page: 1,
+  })),
+
+  on(FeedActions.nextSuccess, (state, { posts }) => ({
+    ...state,
     postsIds: [...state.postsIds, ...posts.map((post) => post.id)],
+    page: state.page + 1,
   })),
 );
