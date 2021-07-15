@@ -19,7 +19,7 @@ export class FeedController {
 
   @PqRequiresAuth()
   @ApiOperation({ summary: 'Get current profile feed' })
-  @ApiResponse({ status: 201, type: [Post] })
+  @ApiResponse({ status: 200, type: [Post] })
   @Get()
   async getFeed(
     @Query() pagination: PaginationQueryDto,

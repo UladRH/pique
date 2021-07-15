@@ -66,7 +66,7 @@ export class PostsService {
 
     let whereAuthorsIds = {};
     if (opts.authorsIds) {
-      whereAuthorsIds = { profile: In(opts.authorsIds) };
+      whereAuthorsIds = { profileId: In(opts.authorsIds) };
     }
 
     const { page, perPage } = opts.pagination ?? new PaginationQueryDto();
