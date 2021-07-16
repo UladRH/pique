@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Post } from '../shared/interfaces/post.interface';
+import { Post } from '../shared/interfaces';
 import * as FeedActions from './state/feed.actions';
 import * as fromFeed from './state/feed.selectors';
 

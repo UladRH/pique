@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Post } from '../shared/interfaces/post.interface';
+import { Post } from '../shared/interfaces';
 import { ApiService } from '../shared/services/api.service';
 
 @Injectable({ providedIn: 'root' })

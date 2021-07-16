@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { Post } from '../../shared/interfaces/post.interface';
+import { Post } from '../../shared/interfaces';
 import * as FeedActions from './feed.actions';
 
 export const feedFeatureKey = 'feed';

@@ -3,8 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { PaginationQueryDto } from '../shared/interfaces/pagination.interface';
-import { Post } from '../shared/interfaces/post.interface';
+import { PaginationQueryDto, Post } from '../shared/interfaces';
 import { ApiService } from '../shared/services/api.service';
 import { PostService } from '../post/post.service';
 

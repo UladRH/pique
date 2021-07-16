@@ -1,7 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { IError } from '../../shared/interfaces';
-import { Post } from '../../shared/interfaces/post.interface';
+import { IError, Post } from '../../shared/interfaces';
 
 export const loaded = createAction('[Post Resolver] Post Loaded', props<{ post: Post }>());
 

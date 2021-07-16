@@ -1,13 +1,3 @@
-export interface ProfileUpdateDto {
-  displayName?: string;
-  bio?: string;
-}
-
-export interface ProfileEditFormDto extends ProfileUpdateDto {
-  avatarUri?: string;
-  headerUri?: string;
-}
-
 export interface Profile {
   id: string;
   screenName: string;
@@ -21,4 +11,14 @@ export interface Profile {
     following: number;
   };
   followed?: boolean;
+}
+
+export interface ProfileUpdateDto {
+  displayName?: string;
+  bio?: string;
+}
+
+export interface ProfileEditFormDto extends ProfileUpdateDto {
+  avatarUri?: string;
+  headerUri?: string;
 }

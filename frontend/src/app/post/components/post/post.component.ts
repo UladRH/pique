@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Profile } from '../../../shared/interfaces';
-import { Post } from '../../../shared/interfaces/post.interface';
+import { Post, Profile } from '../../../shared/interfaces';
 
 @Component({
   selector: 'app-post',

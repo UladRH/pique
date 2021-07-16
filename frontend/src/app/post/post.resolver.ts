@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { Post } from '../shared/interfaces/post.interface';
+import { Post } from '../shared/interfaces';
 import { PostService } from './post.service';
 import * as PostActions from './state/post.actions';
 

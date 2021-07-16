@@ -1,7 +1,7 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 
-import { Post } from '../../shared/interfaces/post.interface';
+import { Post } from '../../shared/interfaces';
 import * as PostActions from './post.actions';
 
 export const postFeatureKey = 'posts';

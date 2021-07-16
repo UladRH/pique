@@ -4,8 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
-import { Profile } from '../../shared/interfaces';
-import { Post } from '../../shared/interfaces/post.interface';
+import { Post, Profile } from '../../shared/interfaces';
 import * as ProfileActions from '../../profile/state/profile.actions';
 import * as PostActions from '../state/post.actions';
 import * as fromPost from '../state/post.selectors';

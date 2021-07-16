@@ -3,12 +3,12 @@ import { Profile } from './profile.interface';
 export interface Post {
   id: string;
   content: string;
+  profileId: Profile['id'];
+  profile: Profile;
   mediaAttachments: MediaAttachment[];
-  createdAt: string;
-  profileId: string;
-  profile?: Profile;
+  liked?: boolean;
   likesCount: number;
-  liked: boolean;
+  createdAt: string;
 }
 
 export interface MediaAttachment {

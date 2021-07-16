@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { Post } from '../../../shared/interfaces/post.interface';
+import { Post } from '../../../shared/interfaces';
 import * as PostActions from '../../../post/state/post.actions';
 
 @Component({

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { LoginUserDto, RegisterUserDto, User } from '../shared/interfaces';
+import { LoginUserDto, Profile, RegisterUserDto, User } from '../shared/interfaces';
 import { ApiService } from '../shared/services/api.service';
 
 @Injectable({ providedIn: 'root' })
@@ -25,7 +25,7 @@ export class AuthService {
     return this.api.post('/auth/web/logout');
   }
 
-  private static normalize(data: User) {
+  private static normalize(data: User): { user: User; profile: Profile } {
     const { profile, ...user } = data;
     return { user, profile };
   }
