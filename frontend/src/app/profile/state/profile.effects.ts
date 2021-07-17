@@ -40,7 +40,7 @@ export class ProfileEffects {
       ofType(ProfileActions.update),
       withLatestFrom(this.store.select(fromProfile.selectLoggedInProfile)),
       exhaustMap(([{ dto }, profile]) =>
-        this.profileService.update(profile.id, dto).pipe(
+        this.profileService.update(profile!.id, dto).pipe(
           map((profile) => ProfileActions.updateSuccess({ profile })),
           catchError((error) => of(ProfileActions.updateFailure({ error }))),
         ),

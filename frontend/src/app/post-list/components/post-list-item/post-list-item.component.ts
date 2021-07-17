@@ -7,7 +7,7 @@ import { Post } from '../../../shared/interfaces';
   templateUrl: './post-list-item.component.html',
 })
 export class PostListItemComponent {
-  @Input() post: Post;
+  @Input() post!: Post;
 
   @Output() liked = new EventEmitter<Post>();
   @Output() unliked = new EventEmitter<Post>();

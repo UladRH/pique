@@ -13,8 +13,8 @@ import { ImagePickerStore } from './image-picker.store';
   ],
 })
 export class ImagePickerComponent implements ControlValueAccessor, OnChanges {
-  @Input() width: number;
-  @Input() height: number;
+  @Input() width: number = 500;
+  @Input() height: number = 500;
 
   image$ = this.componentStore.image$;
 
@@ -27,21 +27,21 @@ export class ImagePickerComponent implements ControlValueAccessor, OnChanges {
     });
   }
 
-  onFileChange($event) {
-    this.componentStore.onFileChange($event);
+  onFileChange($event: Event) {
+    this.componentStore.onFileChange($event as InputEvent);
   }
 
-  onRemove($event) {
+  onRemove(_$event: Event) {
     this.componentStore.removeImage();
   }
 
-  writeValue(value) {
+  writeValue(value: string | null) {
     this.componentStore.setInitialImage(value);
   }
 
-  registerOnChange(onChange) {
+  registerOnChange(onChange: any) {
     this.componentStore.image$.subscribe(onChange);
   }
 
-  registerOnTouched(onTouched) {}
+  registerOnTouched(onTouched: any) {}
 }

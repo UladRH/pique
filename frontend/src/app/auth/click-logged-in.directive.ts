@@ -6,10 +6,10 @@ import * as AuthActions from './state/auth.actions';
 import * as fromAuth from './state/auth.selectors';
 
 @Directive({
-  selector: '[clickLoggedIn]',
+  selector: '[appClickLoggedIn]',
 })
 export class ClickLoggedInDirective {
-  @Output('clickLoggedIn') click: EventEmitter<MouseEvent> = new EventEmitter();
+  @Output() appClickLoggedIn = new EventEmitter<MouseEvent>();
 
   constructor(private readonly store: Store) {}
 
@@ -23,7 +23,7 @@ export class ClickLoggedInDirective {
       )
       .subscribe((value) => {
         if (value) {
-          this.click.emit($event);
+          this.appClickLoggedIn.emit($event);
         } else {
           this.store.dispatch(AuthActions.authRequired());
         }

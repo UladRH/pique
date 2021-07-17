@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
-import { RegisterUserDto } from '../../shared/interfaces';
+import { IError, RegisterUserDto } from '../../shared/interfaces';
 import * as AuthActions from '../state/auth.actions';
 import * as fromAuth from '../state/auth.selectors';
 
@@ -11,7 +12,7 @@ import * as fromAuth from '../state/auth.selectors';
     <app-auth-page>
       <app-register-form
         (submitted)="onSubmit($event)"
-        [pending]="pending$ | async"
+        [pending]="!!(pending$ | async)"
         [error]="error$ | async"
       >
       </app-register-form>
@@ -20,10 +21,13 @@ import * as fromAuth from '../state/auth.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterPageComponent implements OnDestroy {
-  pending$ = this.store.select(fromAuth.selectRegisterFormPending);
-  error$ = this.store.select(fromAuth.selectRegisterFormError);
+  pending$: Observable<boolean>;
+  error$: Observable<IError | null>;
 
-  constructor(private readonly store: Store) {}
+  constructor(private readonly store: Store) {
+    this.pending$ = this.store.select(fromAuth.selectRegisterFormPending);
+    this.error$ = this.store.select(fromAuth.selectRegisterFormError);
+  }
 
   onSubmit(dto: RegisterUserDto) {
     this.store.dispatch(AuthActions.register({ dto }));

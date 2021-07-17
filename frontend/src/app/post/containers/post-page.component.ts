@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -13,7 +13,8 @@ import * as fromPost from '../state/post.selectors';
   selector: 'app-post-page',
   template: `
     <app-post
-      [post]="post$ | async"
+      *ngIf="post$ | async as post"
+      [post]="post"
       (liked)="like($event)"
       (unliked)="unlike($event)"
       (followed)="follow($event)"
@@ -21,14 +22,14 @@ import * as fromPost from '../state/post.selectors';
     ></app-post>
   `,
 })
-export class PostPageComponent implements OnInit {
+export class PostPageComponent {
   post$: Observable<Post>;
 
-  constructor(private readonly store: Store, private readonly route: ActivatedRoute) {}
-
-  ngOnInit() {
+  constructor(private readonly store: Store, private readonly route: ActivatedRoute) {
     this.post$ = this.route.data.pipe(
-      mergeMap(({ post }) => this.store.select(fromPost.selectPostById(post.id))),
+      mergeMap(
+        ({ post }) => this.store.select(fromPost.selectPostById(post.id)) as Observable<Post>,
+      ),
     );
   }
 

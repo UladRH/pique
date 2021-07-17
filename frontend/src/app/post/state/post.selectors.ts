@@ -8,6 +8,7 @@ import {
   toStaticSelector,
 } from 'ngrx-entity-relationship';
 
+import { Post } from '../../shared/interfaces';
 import { selectProfileState } from '../../profile/state/profile.selectors';
 import * as fromPost from './post.reducer';
 
@@ -28,4 +29,4 @@ export const selectPost = rootEntity(
 
 export const selectPosts = rootEntities(selectPost);
 
-export const selectPostById = (id) => toStaticSelector(selectPost, id);
+export const selectPostById = (id: Post['id']) => toStaticSelector(selectPost, id);

@@ -14,7 +14,7 @@
         [resizeToHeight]="height"
         backgroundColor="white"
         (imageCropped)="imageCropped($event)"
-        imageQuality="100"
+        [imageQuality]="100"
         format="jpeg"
         style="max-height: 75vh"
       ></image-cropper>

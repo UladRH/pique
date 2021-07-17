@@ -4,11 +4,10 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -19,9 +18,9 @@ import { Profile, ProfileEditFormDto } from '../../../shared/interfaces';
   templateUrl: './edit-profile.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditProfileComponent implements OnInit, OnChanges {
-  @Input() profile: Profile;
-  @Input() pending: boolean;
+export class EditProfileComponent implements OnChanges {
+  @Input() profile!: Profile;
+  @Input() pending: boolean = false;
 
   @Output() submitChanged = new EventEmitter<ProfileEditFormDto>();
 
@@ -35,16 +34,15 @@ export class EditProfileComponent implements OnInit, OnChanges {
 
   isChanged$: Observable<boolean>;
 
-  avatarPreviewBg$: Observable<string>;
+  avatarPreviewBg$: Observable<string | null>;
 
-  headerPreviewBg$: Observable<string>;
+  headerPreviewBg$: Observable<string | null>;
 
-  constructor(private readonly formBuilder: FormBuilder) {}
-
-  ngOnInit(): void {
+  constructor(private readonly formBuilder: FormBuilder) {
     this.isChanged$ = this.form.valueChanges.pipe(
       map((form) => {
         for (const key of Object.keys(form)) {
+          // @ts-ignore
           if (form[key] != this.profile[key]) {
             return true;
           }
@@ -53,13 +51,33 @@ export class EditProfileComponent implements OnInit, OnChanges {
       }),
     );
 
-    this.avatarPreviewBg$ = this.avatarUri.valueChanges.pipe(
+    this.avatarPreviewBg$ = this.avatarUri!.valueChanges.pipe(
       map((uri) => (uri ? `url("${uri}")` : null)),
     );
 
-    this.headerPreviewBg$ = this.headerUri.valueChanges.pipe(
+    this.headerPreviewBg$ = this.headerUri!.valueChanges.pipe(
       map((uri) => (uri ? `url("${uri}")` : null)),
     );
+  }
+
+  get displayName() {
+    return this.form.get('displayName') as AbstractControl;
+  }
+
+  get screenName() {
+    return this.form.get('screenName') as AbstractControl;
+  }
+
+  get bio() {
+    return this.form.get('bio') as AbstractControl;
+  }
+
+  get avatarUri() {
+    return this.form.get('avatarUri') as AbstractControl;
+  }
+
+  get headerUri() {
+    return this.form.get('headerUri') as AbstractControl;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -73,32 +91,14 @@ export class EditProfileComponent implements OnInit, OnChanges {
       const changes = {};
 
       for (const key of Object.keys(this.form.value)) {
+        // @ts-ignore
         if (this.form.value[key] != this.profile[key]) {
+          // @ts-ignore
           changes[key] = this.form.value[key];
         }
       }
 
       this.submitChanged.emit(changes);
     }
-  }
-
-  get displayName() {
-    return this.form.get('displayName');
-  }
-
-  get screenName() {
-    return this.form.get('screenName');
-  }
-
-  get bio() {
-    return this.form.get('bio');
-  }
-
-  get avatarUri() {
-    return this.form.get('avatarUri');
-  }
-
-  get headerUri() {
-    return this.form.get('headerUri');
   }
 }

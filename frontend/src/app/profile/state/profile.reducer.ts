@@ -9,7 +9,7 @@ import * as ProfileActions from './profile.actions';
 export const profileFeatureKey = 'profiles';
 
 export interface ProfileState extends EntityState<Profile> {
-  loggedInProfileId: Profile['id'];
+  loggedInProfileId: Profile['id'] | null;
 }
 
 export const adapter: EntityAdapter<Profile> = createEntityAdapter<Profile>({});
@@ -25,14 +25,15 @@ export const reducer = createReducer(
     AuthActions.getUserSuccess,
     AuthActions.loginSuccess,
     AuthActions.registerSuccess,
-    (state, { profile }) => ({ ...state, loggedInProfileId: profile.id }),
+    (state, { user }) => ({
+      ...adapter.addOne(user.profile, state),
+      loggedInProfileId: user.profileId,
+    }),
   ),
 
   on(
     ProfileActions.loaded,
-    AuthActions.getUserSuccess,
-    AuthActions.loginSuccess,
-    AuthActions.registerSuccess,
+
     (state, { profile }) => adapter.addOne(profile, state),
   ),
 
@@ -43,13 +44,13 @@ export const reducer = createReducer(
           id,
           changes: {
             followed: false,
-            counters: increment('followers', state.entities[id].counters),
+            counters: increment('followers', state.entities[id]!.counters),
           },
         },
         {
-          id: state.loggedInProfileId,
+          id: state.loggedInProfileId!,
           changes: {
-            counters: increment('following', state.entities[state.loggedInProfileId].counters),
+            counters: increment('following', state.entities[state.loggedInProfileId!]!.counters),
           },
         },
       ],
@@ -64,13 +65,13 @@ export const reducer = createReducer(
           id,
           changes: {
             followed: false,
-            counters: decrement('followers', state.entities[id].counters),
+            counters: decrement('followers', state.entities[id]!.counters),
           },
         },
         {
-          id: state.loggedInProfileId,
+          id: state.loggedInProfileId!,
           changes: {
-            counters: decrement('following', state.entities[state.loggedInProfileId].counters),
+            counters: decrement('following', state.entities[state.loggedInProfileId!]!.counters),
           },
         },
       ],

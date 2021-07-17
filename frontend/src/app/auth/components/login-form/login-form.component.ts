@@ -9,11 +9,9 @@ import { IError, RegisterUserDto } from '../../../shared/interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent {
-  @Input()
-  pending: boolean;
+  @Input() pending: boolean = false;
 
-  @Input()
-  error: IError | null;
+  @Input() error: IError | null = null;
 
   @Output() submitted = new EventEmitter<RegisterUserDto>();
 
@@ -26,6 +24,14 @@ export class LoginFormComponent {
 
   constructor(private readonly formBuilder: FormBuilder) {}
 
+  get email() {
+    return this.form.get('email') as AbstractControl;
+  }
+
+  get password() {
+    return this.form.get('password') as AbstractControl;
+  }
+
   onSubmit(): void {
     this.form.markAllAsTouched();
 
@@ -35,13 +41,5 @@ export class LoginFormComponent {
       // enable validation after first unsuccessful submit
       this.validation = true;
     }
-  }
-
-  get email(): AbstractControl {
-    return this.form.get('email');
-  }
-
-  get password(): AbstractControl {
-    return this.form.get('password');
   }
 }

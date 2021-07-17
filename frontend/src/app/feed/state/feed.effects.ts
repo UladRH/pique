@@ -40,7 +40,7 @@ export class FeedEffects {
       map(([action, pagination]) => pagination),
       filter(({ page }) => page !== null),
       concatMap(({ page, perPage }) =>
-        this.feedService.feed({ page: page + 1, perPage }).pipe(
+        this.feedService.feed({ page: page! + 1, perPage }).pipe(
           map((posts) => FeedActions.nextSuccess({ posts })),
           catchError((error) => of(FeedActions.nextFailure({ error }))),
         ),
