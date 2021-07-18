@@ -1,15 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { Profile, ProfileEditFormDto } from '../../../shared/interfaces';
 
@@ -18,46 +8,30 @@ import { Profile, ProfileEditFormDto } from '../../../shared/interfaces';
   templateUrl: './edit-profile.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditProfileComponent implements OnChanges {
-  @Input() profile!: Profile;
-  @Input() pending: boolean = false;
-
-  @Output() submitChanged = new EventEmitter<ProfileEditFormDto>();
+export class EditProfileComponent {
+  @Output() submitted = new EventEmitter<ProfileEditFormDto>();
 
   form: FormGroup = this.formBuilder.group({
     displayName: ['', [Validators.maxLength(40)]],
-    screenName: [''],
+    screenName: [],
     bio: ['', [Validators.maxLength(1000)]],
     avatarUri: [],
     headerUri: [],
   });
 
-  isChanged$: Observable<boolean>;
+  constructor(private readonly formBuilder: FormBuilder) {}
 
-  avatarPreviewBg$: Observable<string | null>;
+  @Input() set profile(profile: Profile) {
+    this.form.patchValue(profile);
+    this.form.markAsPristine();
+  }
 
-  headerPreviewBg$: Observable<string | null>;
-
-  constructor(private readonly formBuilder: FormBuilder) {
-    this.isChanged$ = this.form.valueChanges.pipe(
-      map((form) => {
-        for (const key of Object.keys(form)) {
-          // @ts-ignore
-          if (form[key] != this.profile[key]) {
-            return true;
-          }
-        }
-        return false;
-      }),
-    );
-
-    this.avatarPreviewBg$ = this.avatarUri!.valueChanges.pipe(
-      map((uri) => (uri ? `url("${uri}")` : null)),
-    );
-
-    this.headerPreviewBg$ = this.headerUri!.valueChanges.pipe(
-      map((uri) => (uri ? `url("${uri}")` : null)),
-    );
+  @Input() set pending(pending: boolean) {
+    if (pending) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
   }
 
   get displayName() {
@@ -80,25 +54,9 @@ export class EditProfileComponent implements OnChanges {
     return this.form.get('headerUri') as AbstractControl;
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['profile']) {
-      setTimeout(() => this.form.patchValue(this.profile));
-    }
-  }
-
-  onSubmit() {
+  submit() {
     if (this.form.valid) {
-      const changes = {};
-
-      for (const key of Object.keys(this.form.value)) {
-        // @ts-ignore
-        if (this.form.value[key] != this.profile[key]) {
-          // @ts-ignore
-          changes[key] = this.form.value[key];
-        }
-      }
-
-      this.submitChanged.emit(changes);
+      this.submitted.emit(this.form.value);
     }
   }
 }

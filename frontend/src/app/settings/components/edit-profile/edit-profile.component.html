@@ -1,118 +1,115 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <fieldset [disabled]="pending">
-    <div class="block row">
-      <label class="col-sm-4 col-form-label fw-bold text-sm-end">Display Name</label>
-      <div class="col-sm-7">
-        <div class="input-group">
-          <input formControlName="displayName" class="form-control has-validation without-valid" />
-          <div *ngIf="displayName.invalid" class="invalid-tooltip">
-            <div *ngIf="displayName.errors?.maxlength">
-              Display name cannot be more than 40 characters long
-            </div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="block row">
+    <label class="col-sm-4 col-form-label fw-bold text-sm-end">Display Name</label>
+    <div class="col-sm-7">
+      <div class="input-group">
+        <input formControlName="displayName" class="form-control has-validation without-valid" />
+        <div *ngIf="displayName.invalid" class="invalid-tooltip">
+          <div *ngIf="displayName.errors?.maxlength">
+            Display name cannot be more than 40 characters long
           </div>
         </div>
-
-        <p class="small text-muted mt-2">
-          Help people discover your account by using the name you're known by: either your full
-          name, nickname, or business name.
-        </p>
       </div>
-    </div>
 
-    <div class="block row">
-      <label class="col-sm-4 col-form-label fw-bold text-sm-end text-muted">Screen Name</label>
-      <div class="col-sm-7">
-        <div class="input-group">
-          <input formControlName="screenName" class="form-control" [disabled]="true" />
+      <p class="small text-muted mt-2">
+        Help people discover your account by using the name you're known by: either your full name,
+        nickname, or business name.
+      </p>
+    </div>
+  </div>
+
+  <div class="block row">
+    <label class="col-sm-4 col-form-label fw-bold text-sm-end text-muted">Screen Name</label>
+    <div class="col-sm-7">
+      <div class="input-group">
+        <input formControlName="screenName" class="form-control" readonly />
+      </div>
+
+      <p class="small text-muted mt-2">
+        In most cases, you'll be able to change your screen name back for another 14 days.
+      </p>
+    </div>
+  </div>
+
+  <div class="block row">
+    <label class="col-sm-4 col-form-label fw-bold text-sm-end">Bio</label>
+    <div class="col-sm-7">
+      <div class="input-group">
+        <textarea
+          formControlName="bio"
+          class="form-control has-validation without-valid"
+          rows="3"
+        ></textarea>
+        <div *ngIf="bio.invalid" class="invalid-tooltip">
+          <div *ngIf="bio.errors?.maxlength">Bio cannot be more than 1000 characters long</div>
         </div>
-
-        <p class="small text-muted mt-2">
-          In most cases, you'll be able to change your screen name back to
-          {{ profile.screenName }} for another 14 days.
-        </p>
       </div>
+
+      <small class="text-muted mt-2">Any details such as age, occupation, or city.</small>
     </div>
+  </div>
 
-    <div class="block row">
-      <label class="col-sm-4 col-form-label fw-bold text-sm-end">Bio</label>
-      <div class="col-sm-7">
-        <div class="input-group">
-          <textarea
-            formControlName="bio"
-            class="form-control has-validation without-valid"
-            rows="3"
-          ></textarea>
-          <div *ngIf="bio.invalid" class="invalid-tooltip">
-            <div *ngIf="bio.errors?.maxlength">Bio cannot be more than 1000 characters long</div>
-          </div>
-        </div>
+  <div class="block row">
+    <label class="col-sm-4 col-form-label fw-bold text-sm-end">Avatar</label>
+    <div class="col-sm-7">
+      <div
+        class="avatar-image border rounded-3"
+        style="width: 7rem; height: 7rem"
+        [style.background-image]="avatarUri.value ? 'url(' + avatarUri.value + ')' : null"
+      ></div>
 
-        <small class="text-muted mt-2">Any details such as age, occupation, or city.</small>
+      <div class="my-2">
+        <app-image-picker
+          formControlName="avatarUri"
+          [width]="400"
+          [height]="400"
+        ></app-image-picker>
       </div>
+
+      <small class="text-muted mt-2">
+        PNG or JPG. At most 2 MB. Will be downscaled to 400x400px
+      </small>
     </div>
+  </div>
 
-    <div class="block row">
-      <label class="col-sm-4 col-form-label fw-bold text-sm-end">Avatar</label>
-      <div class="col-sm-7">
-        <div
-          class="avatar-image border rounded-3"
-          style="width: 7rem; height: 7rem"
-          [style.background-image]="avatarPreviewBg$ | async"
-        ></div>
+  <div class="block row">
+    <label class="col-sm-4 col-form-label fw-bold text-sm-end">Header</label>
+    <div class="col-sm-7">
+      <div
+        class="header-image border rounded-3"
+        [style.padding-bottom]="(500 / 1500) * 100 + '%'"
+        [style.background-image]="headerUri.value ? 'url(' + headerUri.value + ')' : null"
+      ></div>
 
-        <div class="my-2">
-          <app-image-picker
-            formControlName="avatarUri"
-            [width]="400"
-            [height]="400"
-          ></app-image-picker>
-        </div>
-
-        <small class="text-muted mt-2">
-          PNG or JPG. At most 2 MB. Will be downscaled to 400x400px
-        </small>
+      <div class="my-2">
+        <app-image-picker
+          formControlName="headerUri"
+          [width]="1500"
+          [height]="500"
+        ></app-image-picker>
       </div>
+
+      <small class="text-muted mt-2">
+        PNG or JPG. At most 2 MB. Will be downscaled to 1500x500px
+      </small>
     </div>
+  </div>
 
-    <div class="block row">
-      <label class="col-sm-4 col-form-label fw-bold text-sm-end">Header</label>
-      <div class="col-sm-7">
-        <div
-          class="header-image border rounded-3"
-          [style.padding-bottom]="(500 / 1500) * 100 + '%'"
-          [style.background-image]="headerPreviewBg$ | async"
-        ></div>
-
-        <div class="my-2">
-          <app-image-picker
-            formControlName="headerUri"
-            [width]="1500"
-            [height]="500"
-          ></app-image-picker>
-        </div>
-
-        <small class="text-muted mt-2">
-          PNG or JPG. At most 2 MB. Will be downscaled to 1500x500px
-        </small>
-      </div>
+  <div class="block row">
+    <div class="offset-sm-4 col-sm-7">
+      <button
+        [disabled]="form.disabled || form.invalid || form.pristine"
+        class="btn btn-success btn"
+        type="submit"
+      >
+        <span
+          *ngIf="form.disabled"
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        Save profile
+      </button>
     </div>
-
-    <div class="block row">
-      <div class="offset-sm-4 col-sm-7">
-        <button
-          [disabled]="form.invalid || !(isChanged$ | async)"
-          class="btn btn-success btn"
-          type="submit"
-        >
-          <span
-            *ngIf="pending"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          Save profile
-        </button>
-      </div>
-    </div>
-  </fieldset>
+  </div>
 </form>

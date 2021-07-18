@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 import { Profile, ProfileEditFormDto } from '../../shared/interfaces';
 import * as ProfileActions from '../../profile/state/profile.actions';
@@ -15,7 +15,7 @@ import * as fromProfile from '../../profile/state/profile.selectors';
       *ngIf="profile$ | async as profile"
       [profile]="profile"
       [pending]="!!(pending$ | async)"
-      (submitChanged)="onSubmit($event)"
+      (submitted)="onSubmit($event)"
     ></app-edit-profile>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,7 +35,21 @@ export class EditProfileContainerComponent {
     );
   }
 
-  onSubmit(dto: ProfileEditFormDto) {
-    this.store.dispatch(ProfileActions.update({ dto }));
+  onSubmit(form: ProfileEditFormDto) {
+    this.profile$.pipe(take(1)).subscribe((profile) => {
+      const { avatarUri, headerUri, ...details } = form;
+
+      let dto: ProfileEditFormDto = { ...details };
+
+      if (avatarUri !== profile.avatarUri) {
+        dto.avatarUri = avatarUri;
+      }
+
+      if (headerUri !== profile.headerUri) {
+        dto.headerUri = headerUri;
+      }
+
+      this.store.dispatch(ProfileActions.update({ dto }));
+    });
   }
 }
