@@ -1,94 +1,92 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <fieldset [disabled]="pending">
-    <div class="block">
-      <h1 class="h1 fw-bolder">Create an Account</h1>
-      <div class="text-muted">
-        Already have an account?
-        <a [routerLink]="'/login'">Sign in here</a>
-      </div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="block">
+    <h1 class="h1 fw-bolder">Create an Account</h1>
+    <div class="text-muted">
+      Already have an account?
+      <a [routerLink]="'/login'">Sign in here</a>
     </div>
+  </div>
 
-    <div class="block">
-      <div class="form-floating">
-        <input
-          type="text"
-          formControlName="screenName"
-          class="form-control has-validation"
-          placeholder="Screen name"
-          autofocus
-        />
-        <label>Screen name</label>
-        <div *ngIf="screenName.invalid" class="invalid-tooltip">
-          <div *ngIf="screenName.errors?.required">Screen name is required</div>
-          <div *ngIf="screenName.errors?.minlength">
-            Screen name must be at least 4 characters long
-          </div>
-          <div *ngIf="screenName.errors?.maxlength">
-            Screen name cannot be more than 25 characters long
-          </div>
-          <div *ngIf="screenName.errors?.startsWithDot">Screen name cannot begin with dot (.)</div>
-          <div *ngIf="screenName.errors?.endsWithDot">Screen name cannot have dot (.) at end</div>
-          <div *ngIf="screenName.errors?.dotAppearConsecutively">
-            Screen name cannot have dot (.) appear consecutively
-          </div>
-          <div *ngIf="screenName.errors?.disallowedCharacters">
-            Screen name can have uppercase and lowercase latin letters A to Z, digits 0 to 9,
-            underscores (_) and dots (.)
-          </div>
-          <div *ngIf="screenName.errors?.occupied">
-            This screen name is already occupied. Choose another one!
-          </div>
+  <div class="block">
+    <div class="form-floating">
+      <input
+        type="text"
+        formControlName="screenName"
+        class="form-control has-validation"
+        placeholder="Screen name"
+        autofocus
+      />
+      <label>Screen name</label>
+      <div *ngIf="screenName.invalid" class="invalid-tooltip">
+        <div *ngIf="screenName.errors?.required">Screen name is required</div>
+        <div *ngIf="screenName.errors?.minlength">
+          Screen name must be at least 4 characters long
+        </div>
+        <div *ngIf="screenName.errors?.maxlength">
+          Screen name cannot be more than 25 characters long
+        </div>
+        <div *ngIf="screenName.errors?.startsWithDot">Screen name cannot begin with dot (.)</div>
+        <div *ngIf="screenName.errors?.endsWithDot">Screen name cannot have dot (.) at end</div>
+        <div *ngIf="screenName.errors?.dotAppearConsecutively">
+          Screen name cannot have dot (.) appear consecutively
+        </div>
+        <div *ngIf="screenName.errors?.disallowedCharacters">
+          Screen name can have uppercase and lowercase latin letters A to Z, digits 0 to 9,
+          underscores (_) and dots (.)
+        </div>
+        <div *ngIf="screenName.errors?.occupied">
+          This screen name is already occupied. Choose another one!
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="block">
-      <div class="form-floating">
-        <input
-          type="email"
-          id="email"
-          formControlName="email"
-          class="form-control has-validation"
-          placeholder="Email address"
-        />
-        <label for="email">Email address</label>
-        <div *ngIf="email.invalid" class="invalid-tooltip">
-          <div *ngIf="email.errors?.required">Email is required</div>
-          <div *ngIf="email.errors?.email">Please enter your valid email address</div>
-          <div *ngIf="email.errors?.maxlength">Email cannot be more than 128 characters long</div>
-          <div *ngIf="email.errors?.occupied">
-            This email address is occupied. Are you already signed up?
-          </div>
+  <div class="block">
+    <div class="form-floating">
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        class="form-control has-validation"
+        placeholder="Email address"
+      />
+      <label for="email">Email address</label>
+      <div *ngIf="email.invalid" class="invalid-tooltip">
+        <div *ngIf="email.errors?.required">Email is required</div>
+        <div *ngIf="email.errors?.email">Please enter your valid email address</div>
+        <div *ngIf="email.errors?.maxlength">Email cannot be more than 128 characters long</div>
+        <div *ngIf="email.errors?.occupied">
+          This email address is occupied. Are you already signed up?
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="block">
-      <div class="form-floating">
-        <input
-          type="password"
-          formControlName="password"
-          class="form-control has-validation"
-          placeholder="Password"
-        />
-        <label>Password</label>
-        <div *ngIf="password.invalid" class="invalid-tooltip">
-          <div *ngIf="password.errors?.required">Password is required</div>
-          <div *ngIf="password.errors?.minlength">Password must be at least 6 characters long</div>
-          <div *ngIf="password.errors?.maxlength">
-            Password cannot be more than 64 characters long
-          </div>
+  <div class="block">
+    <div class="form-floating">
+      <input
+        type="password"
+        formControlName="password"
+        class="form-control has-validation"
+        placeholder="Password"
+      />
+      <label>Password</label>
+      <div *ngIf="password.invalid" class="invalid-tooltip">
+        <div *ngIf="password.errors?.required">Password is required</div>
+        <div *ngIf="password.errors?.minlength">Password must be at least 6 characters long</div>
+        <div *ngIf="password.errors?.maxlength">
+          Password cannot be more than 64 characters long
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="block">
-      <button class="btn btn-lg btn-primary" type="submit">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Create account
-      </button>
-    </div>
+  <div class="block">
+    <button [disabled]="form.disabled" class="btn btn-lg btn-primary" type="submit">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Create account
+    </button>
+  </div>
 
-    <p class="block text-muted">Use Private mode on a shared device</p>
-  </fieldset>
+  <p class="block text-muted">Use Private mode on a shared device</p>
 </form>

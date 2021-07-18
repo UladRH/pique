@@ -10,9 +10,7 @@ import { ScreenNameValidators } from '../../../shared/validators/screen-name.val
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterFormComponent {
-  @Input() pending: boolean = false;
-
-  @Output() submitted: EventEmitter<RegisterUserDto> = new EventEmitter();
+  @Output() submitted = new EventEmitter<RegisterUserDto>();
 
   form: FormGroup = this.formBuilder.group({
     screenName: [
@@ -34,8 +32,15 @@ export class RegisterFormComponent {
 
   constructor(private readonly formBuilder: FormBuilder) {}
 
-  @Input()
-  set error(err: IError | null) {
+  @Input() set pending(pending: boolean) {
+    if (pending) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
+  }
+
+  @Input() set error(err: IError | null) {
     if (err?.statusCode === 422) {
       if (err?.message.includes('email already occupied')) {
         this.email?.setErrors({ occupied: true });
@@ -59,7 +64,7 @@ export class RegisterFormComponent {
     return this.form.get('password') as AbstractControl;
   }
 
-  onSubmit(): void {
+  submit(): void {
     this.form.markAllAsTouched();
 
     if (this.form.valid) {
