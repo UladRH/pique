@@ -7,14 +7,14 @@ import { exhaustMap, filter, map, take } from 'rxjs/operators';
 import { ImageCropModalComponent } from '../image-crop-modal/image-crop-modal.component';
 
 interface ImagePickerState {
-  initial: string;
-  updated: string;
+  initial: string | null;
+  updated: string | null;
 
   cropModalOpts: {
-    title: string;
-    applyButton: string;
-    width: number;
-    height: number;
+    title?: string;
+    applyButton?: string;
+    width?: number;
+    height?: number;
   };
 }
 
@@ -31,7 +31,7 @@ export class ImagePickerStore extends ComponentStore<ImagePickerState> {
     }),
   );
 
-  readonly setInitialImage = this.updater((state, initial: string) => ({
+  readonly setInitialImage = this.updater((state, initial: string | null) => ({
     ...state,
     initial,
     updated: null,
@@ -57,16 +57,11 @@ export class ImagePickerStore extends ComponentStore<ImagePickerState> {
       initial: null,
       updated: null,
 
-      cropModalOpts: {
-        title: 'Crop your image',
-        applyButton: 'Apply',
-        width: 500,
-        height: 500,
-      },
+      cropModalOpts: {},
     });
   }
 
-  private readonly openCropModal = (file) =>
+  private readonly openCropModal = (file: File) =>
     this.cropModalOpts$.pipe(
       take(1),
       exhaustMap((opts) => this.modalService.addModal(ImageCropModalComponent, { ...opts, file })),
@@ -78,7 +73,7 @@ export class ImagePickerStore extends ComponentStore<ImagePickerState> {
       filter((file) => !!file),
       exhaustMap((file) =>
         this.openCropModal(file).pipe(
-          filter((result) => !!result),
+          filter((result): result is string => !!result),
           tapResponse(
             (image) => this.updateImage(image),
             () => EMPTY,

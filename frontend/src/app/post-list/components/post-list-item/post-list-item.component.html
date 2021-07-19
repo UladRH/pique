@@ -1,74 +1,76 @@
-<div class="border-bottom p-3">
-  <div class="d-flex">
-    <div class="flex-grow-0">
-      <a [routerLink]="['/', '@' + post.profile.screenName]">
-        <div
-          class="avatar-image border rounded-3"
-          style="width: 3rem; height: 3rem"
-          [style.background-image]="
-            post.profile.avatarUri ? 'url(' + post.profile.avatarUri + ')' : null
-          "
-        ></div>
-      </a>
-    </div>
+<ng-container *ngIf="post as post">
+  <div class="border-bottom p-3">
+    <div class="d-flex">
+      <div class="flex-grow-0">
+        <a [routerLink]="['/', '@' + post.profile.screenName]">
+          <div
+            class="avatar-image border rounded-3"
+            style="width: 3rem; height: 3rem"
+            [style.background-image]="
+              post.profile.avatarUri ? 'url(' + post.profile.avatarUri + ')' : null
+            "
+          ></div>
+        </a>
+      </div>
 
-    <div class="flex-grow-1 ms-2">
-      <a
-        [routerLink]="['/', '@' + post.profile.screenName]"
-        class="fs-6 fw-bold text-decoration-none text-body"
-      >
-        {{ post.profile.displayName }}
-        <span class="text-muted fw-normal">@{{ post.profile.screenName }}</span>
-      </a>
-
-      <div>
-        <div class="fs-6">
-          {{ post.content }}
-        </div>
-
-        <div class="mt-2">
-          <ng-container *ngFor="let media of post.mediaAttachments">
-            <div class="block">
-              <img [src]="media.fileUri" class="img-fluid border rounded-3" />
-            </div>
-          </ng-container>
-        </div>
-
-        <div
-          class="
-            mt-2
-            d-flex
-            align-items-end align-items-sm-center
-            flex-column-reverse flex-sm-row
-            justify-content-between
-          "
+      <div class="flex-grow-1 ms-2">
+        <a
+          [routerLink]="['/', '@' + post.profile.screenName]"
+          class="fs-6 fw-bold text-decoration-none text-body"
         >
-          <div class="input-group w-auto">
-            <ng-container>
-              <ng-container *ngIf="post.liked; then unlikeButton; else likeButton"></ng-container>
+          {{ post.profile.displayName }}
+          <span class="text-muted fw-normal">@{{ post.profile.screenName }}</span>
+        </a>
 
-              <ng-template #likeButton>
-                <button (clickLoggedIn)="liked.emit(post)" class="btn btn-danger">Like</button>
-              </ng-template>
-
-              <ng-template #unlikeButton>
-                <div (clickLoggedIn)="unliked.emit(post)" class="btn btn-outline-danger">
-                  Unlike
-                </div>
-              </ng-template>
-            </ng-container>
-
-            <div class="input-group-text bg-light text-danger border-danger">
-              {{ post.likesCount }}
-            </div>
+        <div>
+          <div class="fs-6">
+            {{ post.content }}
           </div>
-          <div>
-            <a [routerLink]="['p', post.id]" class="text-muted fs-6">
-              {{ post.createdAt | date: 'medium' }}
-            </a>
+
+          <div class="mt-2">
+            <ng-container *ngFor="let media of post.mediaAttachments">
+              <div class="block">
+                <img [src]="media.fileUri" class="img-fluid border rounded-3" />
+              </div>
+            </ng-container>
+          </div>
+
+          <div
+            class="
+              mt-2
+              d-flex
+              align-items-end align-items-sm-center
+              flex-column-reverse flex-sm-row
+              justify-content-between
+            "
+          >
+            <div class="input-group w-auto">
+              <ng-container>
+                <ng-container *ngIf="post.liked; then unlikeButton; else likeButton"></ng-container>
+
+                <ng-template #likeButton>
+                  <button (appClickLoggedIn)="liked.emit(post)" class="btn btn-danger">Like</button>
+                </ng-template>
+
+                <ng-template #unlikeButton>
+                  <div (appClickLoggedIn)="unliked.emit(post)" class="btn btn-outline-danger">
+                    Unlike
+                  </div>
+                </ng-template>
+              </ng-container>
+
+              <div class="input-group-text bg-light text-danger border-danger">
+                {{ post.likesCount }}
+              </div>
+            </div>
+            <div>
+              <a [routerLink]="['p', post.id]" class="text-muted fs-6">
+                {{ post.createdAt | date: 'medium' }}
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>

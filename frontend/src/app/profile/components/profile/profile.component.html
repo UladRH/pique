@@ -21,14 +21,14 @@
           ></ng-container>
 
           <ng-template #followButton>
-            <button (clickLoggedIn)="followed.emit(profile)" class="btn btn-primary follow">
+            <button (appClickLoggedIn)="followed.emit(profile)" class="btn btn-primary follow">
               Follow
             </button>
           </ng-template>
 
           <ng-template #unfollowButton>
             <button
-              (clickLoggedIn)="unfollowed.emit(profile)"
+              (appClickLoggedIn)="unfollowed.emit(profile)"
               class="btn btn-outline-primary follow"
             >
               Unfollow

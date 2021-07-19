@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 import { Profile, ProfileEditFormDto } from '../../shared/interfaces';
 import * as ProfileActions from '../../profile/state/profile.actions';
@@ -12,21 +12,20 @@ import * as fromProfile from '../../profile/state/profile.selectors';
   selector: 'app-edit-profile-container',
   template: `
     <app-edit-profile
-      [profile]="profile$ | async"
-      [pending]="pending$ | async"
-      (submitChanged)="onSubmit($event)"
+      *ngIf="profile$ | async as profile"
+      [profile]="profile"
+      [pending]="!!(pending$ | async)"
+      (submitted)="onSubmit($event)"
     ></app-edit-profile>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditProfileContainerComponent implements OnInit {
+export class EditProfileContainerComponent {
   profile$: Observable<Profile>;
   pending$: Observable<boolean>;
 
-  constructor(private readonly store: Store, private readonly actions$: Actions) {}
-
-  ngOnInit() {
-    this.profile$ = this.store.select(fromProfile.selectLoggedInProfile);
+  constructor(private readonly store: Store, private readonly actions$: Actions) {
+    this.profile$ = this.store.select(fromProfile.selectLoggedInProfile) as Observable<Profile>;
 
     this.pending$ = this.actions$.pipe(
       ofType(ProfileActions.update, ProfileActions.updateSuccess, ProfileActions.updateFailure),
@@ -36,7 +35,21 @@ export class EditProfileContainerComponent implements OnInit {
     );
   }
 
-  onSubmit(dto: ProfileEditFormDto) {
-    this.store.dispatch(ProfileActions.update({ dto }));
+  onSubmit(form: ProfileEditFormDto) {
+    this.profile$.pipe(take(1)).subscribe((profile) => {
+      const { avatarUri, headerUri, ...details } = form;
+
+      let dto: ProfileEditFormDto = { ...details };
+
+      if (avatarUri !== profile.avatarUri) {
+        dto.avatarUri = avatarUri;
+      }
+
+      if (headerUri !== profile.headerUri) {
+        dto.headerUri = headerUri;
+      }
+
+      this.store.dispatch(ProfileActions.update({ dto }));
+    });
   }
 }

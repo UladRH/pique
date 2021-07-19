@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
+import { Profile } from '../../shared/interfaces';
 import * as fromProfile from './profile.reducer';
 
 export const selectProfileState = createFeatureSelector<fromProfile.ProfileState>(
@@ -10,13 +11,13 @@ const { selectEntities: getProfileEntities } = fromProfile.adapter.getSelectors(
 
 export const selectProfileEntities = createSelector(selectProfileState, getProfileEntities);
 
-export const selectProfileById = (id) =>
+export const selectProfileById = (id: Profile['id']) =>
   createSelector(selectProfileEntities, (entities) => entities[id]);
 
 export const selectLoggedInProfile = createSelector(
   selectProfileState,
-  ({ entities, loggedInProfileId }) => entities[loggedInProfileId],
+  ({ entities, loggedInProfileId }) => (loggedInProfileId ? entities[loggedInProfileId] : null),
 );
 
-export const selectIsOwnProfile = (id) =>
+export const selectIsOwnProfile = (id: Profile['id']) =>
   createSelector(selectProfileState, ({ loggedInProfileId }) => id == loggedInProfileId);

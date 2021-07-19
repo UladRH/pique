@@ -3,7 +3,7 @@ import { Profile } from './profile.interface';
 export interface User {
   id: string;
   profileId: Profile['id'];
-  profile?: Profile;
+  profile: Profile;
 }
 
 export interface LoginUserDto {

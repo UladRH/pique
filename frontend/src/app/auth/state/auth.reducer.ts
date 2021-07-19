@@ -6,10 +6,10 @@ import * as AuthActions from './auth.actions';
 export const authFeatureKey = 'auth';
 
 export interface AuthState {
-  loggedIn: boolean;
-  user: User;
+  loggedIn: boolean | null;
+  user: User | null;
   pending: boolean;
-  error: IError;
+  error: IError | null;
 }
 
 export const initialState: AuthState = {

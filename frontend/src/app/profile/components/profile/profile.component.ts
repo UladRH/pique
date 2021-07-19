@@ -9,8 +9,8 @@ import { Profile } from '../../../shared/interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent {
-  @Input() profile: Profile;
-  @Input() isOwnProfile: boolean;
+  @Input() profile!: Profile;
+  @Input() isOwnProfile: boolean = false;
 
   @Output() followed = new EventEmitter<Profile>();
   @Output() unfollowed = new EventEmitter<Profile>();

@@ -8,7 +8,7 @@ import { Post, Profile } from '../../../shared/interfaces';
   styleUrls: ['./post.component.scss'],
 })
 export class PostComponent {
-  @Input() post: Post;
+  @Input() post!: Post;
 
   @Output() liked = new EventEmitter<Post>();
   @Output() unliked = new EventEmitter<Post>();

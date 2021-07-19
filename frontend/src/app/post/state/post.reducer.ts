@@ -16,10 +16,10 @@ export const reducer = createReducer(
   initialState,
 
   on(PostActions.like, PostActions.unlikeFailure, (state, { post: { id } }) =>
-    adapter.updateOne({ id, changes: { likesCount: state.entities[id].likesCount + 1 } }, state),
+    adapter.updateOne({ id, changes: { likesCount: state.entities[id]!.likesCount + 1 } }, state),
   ),
 
   on(PostActions.unlike, PostActions.likeFailure, (state, { post: { id } }) =>
-    adapter.updateOne({ id, changes: { likesCount: state.entities[id].likesCount - 1 } }, state),
+    adapter.updateOne({ id, changes: { likesCount: state.entities[id]!.likesCount - 1 } }, state),
   ),
 );

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
+import { IInfiniteScrollEvent } from 'ngx-infinite-scroll';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -14,14 +15,9 @@ import * as fromFeed from './state/feed.selectors';
 })
 export class FeedComponent implements OnInit {
   posts$: Observable<Post[]>;
-
   pending$: Observable<boolean>;
 
-  constructor(private readonly store: Store, private readonly actions$: Actions) {}
-
-  ngOnInit(): void {
-    this.store.dispatch(FeedActions.get());
-
+  constructor(private readonly store: Store, private readonly actions$: Actions) {
     this.posts$ = this.store.select(fromFeed.selectFeedPosts);
 
     this.pending$ = this.actions$.pipe(
@@ -32,7 +28,11 @@ export class FeedComponent implements OnInit {
     );
   }
 
-  next($event) {
+  ngOnInit() {
+    this.store.dispatch(FeedActions.get());
+  }
+
+  next(_$event: IInfiniteScrollEvent) {
     this.store.dispatch(FeedActions.next());
   }
 }

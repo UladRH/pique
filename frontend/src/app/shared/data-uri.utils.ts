@@ -1,4 +1,4 @@
-export function dataUriToBlob(dataUri) {
+export function dataUriToBlob(dataUri: string): Blob {
   // convert base64/URLEncoded data component to raw binary data held in a string
   let byteString;
   if (dataUri.split(',')[0].indexOf('base64') >= 0) {

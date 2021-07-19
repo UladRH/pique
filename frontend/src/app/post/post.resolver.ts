@@ -11,7 +11,7 @@ import * as PostActions from './state/post.actions';
 @Injectable({
   providedIn: 'root',
 })
-export class PostResolver implements Resolve<Post> {
+export class PostResolver implements Resolve<Post | null> {
   constructor(private readonly store: Store, private readonly postService: PostService) {}
 
   getFromApi(id: string) {
@@ -20,7 +20,7 @@ export class PostResolver implements Resolve<Post> {
       .pipe(tap((post) => this.store.dispatch(PostActions.loaded({ post }))));
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Post> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Post | null> {
     return this.getFromApi(route.params['id']).pipe(
       catchError(() => {
         // this.router.navigate(['/404'], { skipLocationChange: true });

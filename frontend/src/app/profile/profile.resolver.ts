@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { EMPTY, Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Profile } from '../shared/interfaces';
@@ -12,7 +12,7 @@ import { ProfileState } from './state/profile.reducer';
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileResolver implements Resolve<Profile['id']> {
+export class ProfileResolver implements Resolve<Profile['id'] | null> {
   constructor(
     private readonly store: Store<ProfileState>,
     private readonly profileService: ProfileService,
@@ -21,15 +21,17 @@ export class ProfileResolver implements Resolve<Profile['id']> {
 
   // navigation = this.router.getCurrentNavigation();
 
-  requestByIdOrScreenName(id: string, screenName: string) {
+  requestByIdOrScreenName(id?: string, screenName?: string) {
     if (id) {
       return this.profileService.getById(id);
     } else if (screenName) {
       return this.profileService.getByScreenName(screenName);
     }
+
+    return throwError(EMPTY);
   }
 
-  getFromApi(id: string, screenName: string): Observable<Profile> {
+  getFromApi(id?: string, screenName?: string): Observable<Profile> {
     return this.requestByIdOrScreenName(id, screenName).pipe(
       tap((profile) => this.store.dispatch(ProfileActions.loaded({ profile }))),
     );
@@ -42,7 +44,10 @@ export class ProfileResolver implements Resolve<Profile['id']> {
   //   );
   // }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Profile['id']> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<Profile['id'] | null> {
     // const id = this.navigation.extras.state?.['profileId'];
     const id = undefined;
     const screenName = route.params['screenName'];

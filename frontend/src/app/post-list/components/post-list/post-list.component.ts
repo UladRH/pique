@@ -17,7 +17,7 @@ import * as PostActions from '../../../post/state/post.actions';
   `,
 })
 export class PostListComponent {
-  @Input() posts: Post[];
+  @Input() posts: Post[] = [];
 
   constructor(private readonly store: Store) {}
 

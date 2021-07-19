@@ -7,7 +7,7 @@ export const feedFeatureKey = 'feed';
 
 export interface FeedState {
   postsIds: Post['id'][];
-  page: number;
+  page: number | null;
   perPage: number;
 }
 
@@ -29,6 +29,6 @@ export const reducer = createReducer(
   on(FeedActions.nextSuccess, (state, { posts }) => ({
     ...state,
     postsIds: [...state.postsIds, ...posts.map((post) => post.id)],
-    page: state.page + 1,
+    page: state.page! + 1,
   })),
 );
