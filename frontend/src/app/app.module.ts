@@ -10,14 +10,10 @@ import { SimpleModalModule } from 'ngx-simple-modal';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from './auth/auth.module';
-import { FeedModule } from './feed/feed.module';
-import { PostModule } from './post/post.module';
-import { ProfileModule } from './profile/profile.module';
-import { SettingsModule } from './settings/settings.module';
+import { AuthModule } from './core/auth/auth.module';
 import { environment } from '../environments/environment';
-import { AppComponent } from './app.component';
-import { AppEffects } from './app.effects';
+import { AppComponent } from './core/app.component';
+import { AppEffects } from './core/effects/app.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,10 +32,6 @@ import { AppEffects } from './app.effects';
     ToastrModule.forRoot({ positionClass: 'toast-bottom-center' }),
     SimpleModalModule,
     AuthModule,
-    ProfileModule,
-    PostModule,
-    SettingsModule,
-    FeedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
