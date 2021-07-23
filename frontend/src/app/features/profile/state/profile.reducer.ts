@@ -1,9 +1,9 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 
-import * as AuthActions from '../../../core/auth/state/auth.actions';
+import { decrement, increment } from '../../../shared/utils/counter-reducer.utils';
 import { Profile } from '../../../core/interfaces';
-import { decrement, increment } from '../../../core/utils/counter-reducer.utils';
+import * as AuthActions from '../../auth/state/auth.actions';
 import * as ProfileActions from './profile.actions';
 
 export const profileFeatureKey = 'profiles';
