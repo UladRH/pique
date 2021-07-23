@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { IError, LoginUserDto, RegisterUserDto, User } from '../../interfaces';
+import { IError, LoginUserDto, RegisterUserDto, User } from '../../../core/interfaces';
 
 export const init = createAction('[Auth] Init');
 

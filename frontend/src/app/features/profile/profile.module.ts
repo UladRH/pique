@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { AuthModule } from '../../core/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 import { ProfileService } from './profile.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileEffects } from './state/profile.effects';

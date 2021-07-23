@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { IError, RegisterUserDto } from '../../../interfaces';
-import { ScreenNameValidators } from '../../../validators/screen-name.validators';
+import { ScreenNameValidators } from '../../../shared/validators/screen-name.validators';
+import { IError, RegisterUserDto } from '../../../core/interfaces';
 
 @Component({
   selector: 'app-register-form',

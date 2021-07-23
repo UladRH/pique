@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as AuthActions from '../../core/auth/state/auth.actions';
-import * as fromAuth from '../../core/auth/state/auth.selectors';
 import { IError, LoginUserDto } from '../../core/interfaces';
+import * as AuthActions from '../../features/auth/state/auth.actions';
+import * as fromAuth from '../../features/auth/state/auth.selectors';
 
 @Component({
   selector: 'app-login-page',
