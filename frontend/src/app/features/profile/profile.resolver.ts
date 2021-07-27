@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { EMPTY, Observable, of, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 import { ProfileService } from './profile.service';
 import { Profile } from '../../core/interfaces';
@@ -12,7 +12,7 @@ import { ProfileState } from './state/profile.reducer';
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileResolver implements Resolve<Profile['id'] | null> {
+export class ProfileResolver implements Resolve<Profile | null> {
   constructor(
     private readonly store: Store<ProfileState>,
     private readonly profileService: ProfileService,
@@ -44,16 +44,12 @@ export class ProfileResolver implements Resolve<Profile['id'] | null> {
   //   );
   // }
 
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot,
-  ): Observable<Profile['id'] | null> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Profile | null> {
     // const id = this.navigation.extras.state?.['profileId'];
     const id = undefined;
     const screenName = route.params['screenName'];
 
     return this.getFromApi(id, screenName).pipe(
-      map((profile) => profile.id),
       catchError(() => {
         // this.router.navigate(['/404'], { skipLocationChange: true });
         return of(null);
