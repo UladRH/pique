@@ -6,12 +6,13 @@ import { StoreModule } from '@ngrx/store';
 
 import { AuthModule } from '../auth/auth.module';
 import { ProfileService } from './profile.service';
-import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
+import { ProfileSectionComponent } from './containers/profile-section.component';
 import { ProfileEffects } from './state/profile.effects';
 import * as fromProfile from './state/profile.reducer';
 
 @NgModule({
-  declarations: [ProfileComponent],
+  declarations: [ProfileDetailsComponent, ProfileSectionComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -20,6 +21,6 @@ import * as fromProfile from './state/profile.reducer';
     AuthModule,
   ],
   providers: [ProfileService],
-  exports: [ProfileComponent],
+  exports: [ProfileSectionComponent],
 })
 export class ProfileModule {}
