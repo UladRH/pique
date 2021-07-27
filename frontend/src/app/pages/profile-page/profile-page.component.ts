@@ -18,6 +18,6 @@ export class ProfilePageComponent {
   profile$: Observable<Profile>;
 
   constructor(private readonly route: ActivatedRoute) {
-    this.profile$ = this.route.data.pipe(map((data) => ({ id: data.profileId } as Profile)));
+    this.profile$ = this.route.data.pipe(map((data) => data.profile));
   }
 }

@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     component: ProfilePageComponent,
     resolve: {
-      profileId: ProfileResolver,
+      profile: ProfileResolver,
     },
   },
 ];
