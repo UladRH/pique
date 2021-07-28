@@ -6,15 +6,22 @@ import { StoreModule } from '@ngrx/store';
 
 import { AuthModule } from '../auth/auth.module';
 import { ProfileModule } from '../profile/profile.module';
+import { PostDetailsComponent } from './components/post-details/post-details.component';
 import { PostListItemComponent } from './components/post-list-item/post-list-item.component';
 import { PostListComponent } from './components/post-list/post-list.component';
-import { PostComponent } from './components/post/post.component';
 import { PostLikeButtonComponent } from './containers/post-like-button.component';
+import { PostSectionComponent } from './containers/post-section.component';
 import { PostEffects } from './state/post.effects';
 import * as fromPost from './state/post.reducer';
 
 @NgModule({
-  declarations: [PostComponent, PostListComponent, PostListItemComponent, PostLikeButtonComponent],
+  declarations: [
+    PostDetailsComponent,
+    PostListComponent,
+    PostListItemComponent,
+    PostLikeButtonComponent,
+    PostSectionComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -23,6 +30,6 @@ import * as fromPost from './state/post.reducer';
     AuthModule,
     ProfileModule,
   ],
-  exports: [PostComponent, PostListComponent],
+  exports: [PostDetailsComponent, PostListComponent, PostSectionComponent],
 })
 export class PostModule {}
