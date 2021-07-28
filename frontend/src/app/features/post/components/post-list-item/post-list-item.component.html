@@ -45,23 +45,7 @@
             "
           >
             <div class="input-group w-auto">
-              <ng-container>
-                <ng-container *ngIf="post.liked; then unlikeButton; else likeButton"></ng-container>
-
-                <ng-template #likeButton>
-                  <button (appClickLoggedIn)="liked.emit(post)" class="btn btn-danger">Like</button>
-                </ng-template>
-
-                <ng-template #unlikeButton>
-                  <div (appClickLoggedIn)="unliked.emit(post)" class="btn btn-outline-danger">
-                    Unlike
-                  </div>
-                </ng-template>
-              </ng-container>
-
-              <div class="input-group-text bg-light text-danger border-danger">
-                {{ post.likesCount }}
-              </div>
+              <app-post-like-button [post]="post"></app-post-like-button>
             </div>
             <div>
               <a [routerLink]="['p', post.id]" class="text-muted fs-6">
