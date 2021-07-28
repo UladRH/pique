@@ -20,21 +20,7 @@
     </div>
 
     <div class="justify-self-end">
-      <ng-container
-        *ngIf="post.profile.followed; then unfollowButton; else followButton"
-      ></ng-container>
-
-      <ng-template #followButton>
-        <button (appClickLoggedIn)="followed.emit(post.profile)" class="btn btn-primary">
-          Follow
-        </button>
-      </ng-template>
-
-      <ng-template #unfollowButton>
-        <button (appClickLoggedIn)="unfollowed.emit(post.profile)" class="btn btn-outline-primary">
-          Unfollow
-        </button>
-      </ng-template>
+      <app-profile-follow-button [profile]="post.profile"></app-profile-follow-button>
     </div>
   </div>
 
