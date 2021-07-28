@@ -20,10 +20,6 @@ export class IfOwnProfileDirective<T = unknown> extends NgIf implements OnDestro
     super(viewContainerRef, templateRef);
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
   @Input()
   set appIfOwnProfile(profile: Profile) {
     this.subscription.unsubscribe();
@@ -43,5 +39,9 @@ export class IfOwnProfileDirective<T = unknown> extends NgIf implements OnDestro
   @Input()
   set appIfOwnProfileElse(templateRef: TemplateRef<NgIfContext<T>> | null) {
     this.ngIfElse = templateRef;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

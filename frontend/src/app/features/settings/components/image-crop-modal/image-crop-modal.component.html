@@ -2,26 +2,26 @@
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title fs-6">{{ title }}</h5>
-      <button (click)="close()" class="btn-close" aria-label="Close"></button>
+      <button (click)="close()" aria-label="Close" class="btn-close"></button>
     </div>
 
     <div class="modal-body">
       <image-cropper
-        [imageFile]="file"
-        [aspectRatio]="width / height"
-        [maintainAspectRatio]="true"
-        [resizeToWidth]="width"
-        [resizeToHeight]="height"
-        backgroundColor="white"
         (imageCropped)="imageCropped($event)"
+        [aspectRatio]="width / height"
+        [imageFile]="file"
         [imageQuality]="100"
+        [maintainAspectRatio]="true"
+        [resizeToHeight]="height"
+        [resizeToWidth]="width"
+        backgroundColor="white"
         format="jpeg"
         style="max-height: 75vh"
       ></image-cropper>
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-success w-100" (click)="confirm()">
+      <button (click)="confirm()" class="btn btn-success w-100" type="button">
         {{ applyButton }}
       </button>
     </div>

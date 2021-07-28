@@ -1,9 +1,9 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
+<form (ngSubmit)="submit()" [formGroup]="form">
   <div class="block row">
     <label class="col-sm-4 col-form-label fw-bold text-sm-end">Display Name</label>
     <div class="col-sm-7">
       <div class="input-group">
-        <input formControlName="displayName" class="form-control has-validation without-valid" />
+        <input class="form-control has-validation without-valid" formControlName="displayName" />
         <div *ngIf="displayName.invalid" class="invalid-tooltip">
           <div *ngIf="displayName.errors?.maxlength">
             Display name cannot be more than 40 characters long
@@ -22,7 +22,7 @@
     <label class="col-sm-4 col-form-label fw-bold text-sm-end text-muted">Screen Name</label>
     <div class="col-sm-7">
       <div class="input-group">
-        <input formControlName="screenName" class="form-control" readonly />
+        <input class="form-control" formControlName="screenName" readonly />
       </div>
 
       <p class="small text-muted mt-2">
@@ -36,8 +36,8 @@
     <div class="col-sm-7">
       <div class="input-group">
         <textarea
-          formControlName="bio"
           class="form-control has-validation without-valid"
+          formControlName="bio"
           rows="3"
         ></textarea>
         <div *ngIf="bio.invalid" class="invalid-tooltip">
@@ -53,16 +53,16 @@
     <label class="col-sm-4 col-form-label fw-bold text-sm-end">Avatar</label>
     <div class="col-sm-7">
       <div
+        [style.background-image]="avatarUri.value ? 'url(' + avatarUri.value + ')' : null"
         class="avatar-image border rounded-3"
         style="width: 7rem; height: 7rem"
-        [style.background-image]="avatarUri.value ? 'url(' + avatarUri.value + ')' : null"
       ></div>
 
       <div class="my-2">
         <app-image-picker
-          formControlName="avatarUri"
-          [width]="400"
           [height]="400"
+          [width]="400"
+          formControlName="avatarUri"
         ></app-image-picker>
       </div>
 
@@ -76,16 +76,16 @@
     <label class="col-sm-4 col-form-label fw-bold text-sm-end">Header</label>
     <div class="col-sm-7">
       <div
-        class="header-image border rounded-3"
-        [style.padding-bottom]="(500 / 1500) * 100 + '%'"
         [style.background-image]="headerUri.value ? 'url(' + headerUri.value + ')' : null"
+        [style.padding-bottom]="(500 / 1500) * 100 + '%'"
+        class="header-image border rounded-3"
       ></div>
 
       <div class="my-2">
         <app-image-picker
-          formControlName="headerUri"
-          [width]="1500"
           [height]="500"
+          [width]="1500"
+          formControlName="headerUri"
         ></app-image-picker>
       </div>
 
@@ -104,9 +104,9 @@
       >
         <span
           *ngIf="form.disabled"
+          aria-hidden="true"
           class="spinner-border spinner-border-sm"
           role="status"
-          aria-hidden="true"
         ></span>
         Save profile
       </button>

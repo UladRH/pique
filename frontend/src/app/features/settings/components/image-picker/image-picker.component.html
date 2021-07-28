@@ -1,9 +1,9 @@
 <input
   #fileInput
   (change)="onFileChange($event)"
+  accept="image/jpeg,image/png"
   hidden
   type="file"
-  accept="image/jpeg,image/png"
 />
 
 <button (click)="fileInput.value = ''; fileInput.click()" class="btn btn-primary" type="button">

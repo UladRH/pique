@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
+<form (ngSubmit)="submit()" [formGroup]="form">
   <div class="block">
     <div class="h1 fw-bolder">Sign in</div>
     <div class="text-muted">
@@ -10,12 +10,12 @@
   <div class="block">
     <div class="form-floating">
       <input
-        type="email"
-        formControlName="email"
         [class.has-validation]="validation"
-        class="form-control without-valid"
-        placeholder="Email address"
         autofocus
+        class="form-control without-valid"
+        formControlName="email"
+        placeholder="Email address"
+        type="email"
       />
       <label>Email address</label>
       <div *ngIf="email.invalid" class="invalid-tooltip">Please enter your valid email address</div>
@@ -25,11 +25,11 @@
   <div class="block">
     <div class="form-floating">
       <input
-        type="password"
-        formControlName="password"
         [class.has-validation]="validation"
         class="form-control without-valid"
+        formControlName="password"
         placeholder="Password"
+        type="password"
       />
       <label>Password</label>
       <div *ngIf="password.invalid" class="invalid-tooltip">Please enter your valid password</div>
@@ -40,7 +40,7 @@
 
   <div class="block">
     <button [disabled]="form.disabled" class="btn btn-lg btn-primary" type="submit">
-      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      <span aria-hidden="true" class="spinner-border spinner-border-sm" role="status"></span>
       Sign In
     </button>
   </div>
