@@ -6,7 +6,6 @@ import { map } from 'rxjs/operators';
 import { Profile } from '../../core/interfaces';
 
 @Component({
-  selector: 'app-profile-page',
   template: `
     <ng-container *ngIf="profile$ | async as profile">
       <app-profile-section [profile]="profile"></app-profile-section>

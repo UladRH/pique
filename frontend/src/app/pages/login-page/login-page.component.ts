@@ -7,7 +7,6 @@ import * as AuthActions from '../../features/auth/state/auth.actions';
 import * as fromAuth from '../../features/auth/state/auth.selectors';
 
 @Component({
-  selector: 'app-login-page',
   template: `
     <app-auth-page-layout>
       <app-login-form

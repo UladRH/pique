@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 import { Post } from '../../core/interfaces';
 
 @Component({
-  selector: 'app-post-page',
   template: `
     <ng-container *ngIf="post$ | async as post">
       <app-post-section [post]="post"></app-post-section>
