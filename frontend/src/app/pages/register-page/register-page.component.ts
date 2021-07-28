@@ -1,38 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-
-import { IError, RegisterUserDto } from '../../core/interfaces';
-import * as AuthActions from '../../features/auth/state/auth.actions';
-import * as fromAuth from '../../features/auth/state/auth.selectors';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   template: `
     <app-auth-page-layout>
-      <app-register-form
-        (submitted)="onSubmit($event)"
-        [pending]="!!(pending$ | async)"
-        [error]="error$ | async"
-      >
-      </app-register-form>
+      <app-register-section></app-register-section>
     </app-auth-page-layout>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterPageComponent implements OnDestroy {
-  pending$: Observable<boolean>;
-  error$: Observable<IError | null>;
-
-  constructor(private readonly store: Store) {
-    this.pending$ = this.store.select(fromAuth.selectRegisterFormPending);
-    this.error$ = this.store.select(fromAuth.selectRegisterFormError);
-  }
-
-  onSubmit(dto: RegisterUserDto) {
-    this.store.dispatch(AuthActions.register({ dto }));
-  }
-
-  ngOnDestroy(): void {
-    this.store.dispatch(AuthActions.registerPageUnload());
-  }
-}
+export class RegisterPageComponent {}
