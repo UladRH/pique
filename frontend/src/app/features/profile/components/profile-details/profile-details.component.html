@@ -1,9 +1,9 @@
 <ng-container *ngIf="profile">
   <div class="container">
-    <div class="header-image" [style.background-image]="headerImage"></div>
+    <div [style.background-image]="headerImage" class="header-image"></div>
 
     <div class="header-profile">
-      <div class="avatar-image" [style.background-image]="avatarImage"></div>
+      <div [style.background-image]="avatarImage" class="avatar-image"></div>
 
       <h1 class="name">
         {{ profile.displayName }}
@@ -20,7 +20,7 @@
         </ng-template>
       </div>
 
-      <div class="counters" *ngIf="profile.counters as counters">
+      <div *ngIf="profile.counters as counters" class="counters">
         <div class="counter">
           <div class="value">{{ counters.followers }}</div>
           <div class="label">followers</div>

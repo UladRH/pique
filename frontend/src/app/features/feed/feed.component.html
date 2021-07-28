@@ -1,5 +1,5 @@
 <div class="container container-max-width-md py-5">
-  <div infiniteScroll [infiniteScrollDistance]="1" (scrolled)="next($event)">
+  <div (scrolled)="next($event)" [infiniteScrollDistance]="1" infiniteScroll>
     <app-post-list [posts]="(posts$ | async) ?? []"></app-post-list>
   </div>
 

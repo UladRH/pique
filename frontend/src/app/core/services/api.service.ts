@@ -17,14 +17,6 @@ export class ApiService {
     return throwError(error.error);
   }
 
-  private request<R>(
-    method: string,
-    path: string,
-    options: Record<string, unknown> = {},
-  ): Observable<R> {
-    return this.http.request<R>(method, path, options).pipe(catchError(ApiService.formatErrors));
-  }
-
   get<R>(path: string, params?: HttpParamsOptions['fromObject']): Observable<R> {
     return this.request('GET', `${API_URL}${path}`, {
       params: new HttpParams({ fromObject: params }),
@@ -45,5 +37,13 @@ export class ApiService {
 
   delete<R>(path: string): Observable<R> {
     return this.request('DELETE', `${API_URL}${path}`);
+  }
+
+  private request<R>(
+    method: string,
+    path: string,
+    options: Record<string, unknown> = {},
+  ): Observable<R> {
+    return this.http.request<R>(method, path, options).pipe(catchError(ApiService.formatErrors));
   }
 }

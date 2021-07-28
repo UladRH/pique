@@ -4,11 +4,11 @@
       <div class="flex-grow-0">
         <a [routerLink]="['/', '@' + post.profile.screenName]">
           <div
-            class="avatar-image border rounded-3"
-            style="width: 3rem; height: 3rem"
             [style.background-image]="
               post.profile.avatarUri ? 'url(' + post.profile.avatarUri + ')' : null
             "
+            class="avatar-image border rounded-3"
+            style="width: 3rem; height: 3rem"
           ></div>
         </a>
       </div>

@@ -25,6 +25,8 @@ import * as PostActions from '../state/post.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostLikeButtonComponent {
+  @Input() post: Post | null = null;
+
   constructor(private readonly store: Store) {}
 
   toggleLiked() {
@@ -38,6 +40,4 @@ export class PostLikeButtonComponent {
       }
     }
   }
-
-  @Input() post: Post | null = null;
 }
