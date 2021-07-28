@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { IError, RegisterUserDto } from '../../../core/interfaces';
+import { IError, RegisterUserDto } from '../../../../core/interfaces';
 
 @Component({
   selector: 'app-login-form',
@@ -22,7 +22,7 @@ export class LoginFormComponent {
 
   constructor(private readonly formBuilder: FormBuilder) {}
 
-  @Input() set pending(pending: boolean) {
+  @Input() set pending(pending: boolean | null) {
     if (pending) {
       this.form.disable();
     } else {

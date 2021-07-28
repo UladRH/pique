@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ScreenNameValidators } from '../../../shared/validators/screen-name.validators';
-import { IError, RegisterUserDto } from '../../../core/interfaces';
+import { ScreenNameValidators } from '../../../../shared/validators/screen-name.validators';
+import { IError, RegisterUserDto } from '../../../../core/interfaces';
 
 @Component({
   selector: 'app-register-form',
@@ -32,7 +32,7 @@ export class RegisterFormComponent {
 
   constructor(private readonly formBuilder: FormBuilder) {}
 
-  @Input() set pending(pending: boolean) {
+  @Input() set pending(pending: boolean | null) {
     if (pending) {
       this.form.disable();
     } else {
