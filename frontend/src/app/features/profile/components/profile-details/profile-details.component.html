@@ -11,29 +11,12 @@
       </h1>
 
       <div class="buttons">
-        <ng-container *ngIf="isOwnProfile; else someoneElseProfile">
+        <ng-container *appIfOwnProfile="profile; else someoneElseProfile">
           <button [routerLink]="['/settings']" class="btn btn-secondary edit">Edit Profile</button>
         </ng-container>
 
         <ng-template #someoneElseProfile>
-          <ng-container
-            *ngIf="profile.followed; then unfollowButton; else followButton"
-          ></ng-container>
-
-          <ng-template #followButton>
-            <button (appClickLoggedIn)="followed.emit(profile)" class="btn btn-primary follow">
-              Follow
-            </button>
-          </ng-template>
-
-          <ng-template #unfollowButton>
-            <button
-              (appClickLoggedIn)="unfollowed.emit(profile)"
-              class="btn btn-outline-primary follow"
-            >
-              Unfollow
-            </button>
-          </ng-template>
+          <app-profile-follow-button [profile]="profile" class="follow"></app-profile-follow-button>
         </ng-template>
       </div>
 

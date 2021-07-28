@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { Profile } from '../../../../core/interfaces';
 
@@ -10,10 +10,6 @@ import { Profile } from '../../../../core/interfaces';
 })
 export class ProfileDetailsComponent {
   @Input() profile: Profile | null = null;
-  @Input() isOwnProfile: boolean | null = false;
-
-  @Output() followed = new EventEmitter<Profile>();
-  @Output() unfollowed = new EventEmitter<Profile>();
 
   get headerImage() {
     return this.profile?.headerUri ? `url("${this.profile.headerUri}")` : null;
