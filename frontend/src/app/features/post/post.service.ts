@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ApiService } from '../../core/services/api.service';
-import { Post } from '../../core/interfaces';
+import { PaginationQueryDto, Post, Profile } from '../../core/interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
@@ -18,5 +18,12 @@ export class PostService {
 
   unlike(id: Post['id']): Observable<Post> {
     return this.api.delete(`/posts/${id}/liked`);
+  }
+
+  getForProfile(
+    profileId: Profile['id'],
+    { page, perPage }: PaginationQueryDto,
+  ): Observable<Post[]> {
+    return this.api.get(`/profiles/${profileId}/posts`, { page, perPage });
   }
 }

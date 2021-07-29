@@ -9,6 +9,7 @@ import { Profile } from '../../core/interfaces';
   template: `
     <ng-container *ngIf="profile$ | async as profile">
       <app-profile-section [profile]="profile"></app-profile-section>
+      <app-profile-posts-section [profile]="profile"></app-profile-posts-section>
     </ng-container>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
