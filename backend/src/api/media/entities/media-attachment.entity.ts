@@ -1,5 +1,5 @@
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
-import { Exclude } from 'class-transformer';
+import { Exclude, Transform, Type } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -14,13 +14,15 @@ import { Profile } from '../../profiles/entities/profile.entity';
 
 @Entity('media_attachments')
 export class MediaAttachment {
-  @ApiHideProperty()
-  @Exclude()
+  @ApiProperty({ example: '1' })
   @Type(() => String)
   @PrimaryGeneratedColumn()
   id: string;
 
   @ApiProperty({ example: 'https://example.com/image.jpg' })
+  @Transform(({ value }) =>
+    !value || value?.startsWith('https://') ? value : `http://localhost:4200/usercontent/${value}`,
+  ) //FIXME
   @Column()
   fileUri: string;
 
