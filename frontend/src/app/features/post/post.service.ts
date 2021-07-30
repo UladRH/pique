@@ -2,11 +2,18 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ApiService } from '../../core/services/api.service';
-import { PaginationQueryDto, Post, Profile } from '../../core/interfaces';
+import { PaginationQueryDto, Post, PostCreateDto, Profile } from '../../core/interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
   constructor(private readonly api: ApiService) {}
+
+  create(dto: PostCreateDto): Observable<Post> {
+    return this.api.post('/posts', {
+      content: dto.content,
+      mediaAttachmentsIds: dto.mediaAttachmentsIds,
+    });
+  }
 
   get(id: Post['id']): Observable<Post> {
     return this.api.get(`/posts/${id}`);

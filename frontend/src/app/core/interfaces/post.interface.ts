@@ -11,6 +11,16 @@ export interface Post {
   createdAt: string;
 }
 
+export interface PostCreateDto {
+  content: string;
+  mediaAttachmentsIds: MediaAttachmentDraft['id'][];
+}
+
 export interface MediaAttachment {
+  fileUri: string;
+}
+
+export interface MediaAttachmentDraft {
+  id: string;
   fileUri: string;
 }

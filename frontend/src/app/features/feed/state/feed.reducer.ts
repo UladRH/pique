@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { Post } from '../../../core/interfaces';
+import * as PostDraftActions from '../../post/state/post-draft.actions';
 import * as FeedActions from './feed.actions';
 
 export const feedFeatureKey = 'feed';
@@ -30,5 +31,10 @@ export const reducer = createReducer(
     ...state,
     postsIds: [...state.postsIds, ...posts.map((post) => post.id)],
     page: state.page! + 1,
+  })),
+
+  on(PostDraftActions.publishSuccess, (state, { post }) => ({
+    ...state,
+    postsIds: [post.id, ...state.postsIds],
   })),
 );

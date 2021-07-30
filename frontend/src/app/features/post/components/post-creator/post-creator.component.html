@@ -1,0 +1,56 @@
+<div class="container container-max-width-sm p-2">
+  <div class="mb-2">
+    <textarea
+      class="form-control"
+      id="exampleFormControlTextarea1"
+      rows="2"
+      placeholder="What's happening?"
+      (change)="change($event)"
+      [value]="content"
+    ></textarea>
+  </div>
+
+  <div class="mb-2 d-flex align-items-center flex-wrap">
+    <ng-container *ngFor="let mediaAttachment of mediaAttachments">
+      <div class="me-2 mb-2 rounded bg-dark d-inline-flex justify-content-end">
+        <button
+          class="btn btn-danger btn-sm position-absolute font-monospace"
+          (click)="removeMedia.emit(mediaAttachment)"
+        >
+          x
+        </button>
+        <div
+          class="p-5"
+          [style.background-image]="'url(' + mediaAttachment.fileUri + ')'"
+          style="background-size: cover; background-position: center"
+        ></div>
+      </div>
+    </ng-container>
+
+    <input #fileInput (change)="upload($event)" accept="image/jpeg,image/png" hidden type="file" />
+
+    <button
+      (click)="fileInput.value = ''; fileInput.click()"
+      class="
+        btn btn-secondary
+        p-0
+        me-2
+        mb-2
+        d-inline-flex
+        justify-content-center
+        align-items-center
+      "
+    >
+      <span class="position-absolute">
+        Upload <br />
+        image
+      </span>
+      <div class="p-5"></div>
+    </button>
+  </div>
+
+  <div class="mb-3">
+    <button (click)="publish.emit()" class="btn btn-primary">Post</button>
+    <button (click)="clear.emit()" class="btn btn-outline-warning">Reset</button>
+  </div>
+</div>

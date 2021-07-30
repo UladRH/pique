@@ -9,6 +9,9 @@ import { Profile } from '../../core/interfaces';
   template: `
     <ng-container *ngIf="profile$ | async as profile">
       <app-profile-section [profile]="profile"></app-profile-section>
+
+      <app-post-creator-section *appIfOwnProfile="profile"></app-post-creator-section>
+
       <app-profile-posts-section [profile]="profile"></app-profile-posts-section>
     </ng-container>
   `,
