@@ -16,6 +16,7 @@ import { Profile } from '../../profiles/entities/profile.entity';
 export class MediaAttachment {
   @ApiHideProperty()
   @Exclude()
+  @Type(() => String)
   @PrimaryGeneratedColumn()
   id: string;
 

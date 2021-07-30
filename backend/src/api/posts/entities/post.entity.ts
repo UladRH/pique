@@ -29,6 +29,7 @@ export class Post {
   content?: string;
 
   @ApiProperty({ example: '1' })
+  @Type(() => String)
   @Column()
   profileId: string;
 

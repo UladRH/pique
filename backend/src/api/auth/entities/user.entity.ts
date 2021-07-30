@@ -29,6 +29,7 @@ export class User {
   hashed_password?: string;
 
   @ApiProperty({ example: '1' })
+  @Type(() => String)
   @Column()
   profileId: string;
 
