@@ -51,7 +51,7 @@ export class ProfileResolver implements Resolve<Profile | null> {
 
     return this.getFromApi(id, screenName).pipe(
       catchError(() => {
-        // this.router.navigate(['/404'], { skipLocationChange: true });
+        this.router.navigate(['/404']);
         return of(null);
       }),
     );
