@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { PostService } from './post.service';
+import { PostService } from './services';
 import { Post } from '../../core/interfaces';
-import * as PostActions from './state/post.actions';
+import { PostActions } from './actions';
 
 @Injectable({
   providedIn: 'root',

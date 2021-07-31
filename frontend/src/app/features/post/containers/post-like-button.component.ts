@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { Post } from '../../../core/interfaces';
-import * as PostActions from '../state/post.actions';
+import * as PostActions from '../actions/post.actions';
 
 @Component({
   selector: 'app-post-like-button',

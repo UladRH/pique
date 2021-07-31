@@ -1,16 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { MediaAttachmentDraft } from '../../../core/interfaces';
-import * as PostDraftActions from './post-draft.actions';
+import { MediaAttachmentsApiActions, PostApiActions } from '../actions';
+import * as PostDraftActions from '../actions/post-draft.actions';
 
-export const postDraftFeatureKey = 'postDraft';
+export const draftFeatureKey = 'draft';
 
-export interface PostDraftState {
+export interface State {
   mediaAttachments: MediaAttachmentDraft[];
   content: string;
 }
 
-export const initialState: PostDraftState = {
+export const initialState: State = {
   mediaAttachments: [],
   content: '',
 };
@@ -18,12 +19,12 @@ export const initialState: PostDraftState = {
 export const reducer = createReducer(
   initialState,
 
-  on(PostDraftActions.uploadMediaSuccess, (state, { mediaAttachment }) => ({
+  on(MediaAttachmentsApiActions.uploadSuccess, (state, { mediaAttachment }) => ({
     ...state,
     mediaAttachments: [...state.mediaAttachments, mediaAttachment],
   })),
 
-  on(PostDraftActions.removeMedia, (state, { mediaAttachment }) => ({
+  on(PostDraftActions.removeMediaAttachment, (state, { mediaAttachment }) => ({
     ...state,
     mediaAttachments: state.mediaAttachments.filter(({ id }) => id !== mediaAttachment.id),
   })),
@@ -33,7 +34,7 @@ export const reducer = createReducer(
     content,
   })),
 
-  on(PostDraftActions.clear, PostDraftActions.publishSuccess, () => ({
+  on(PostDraftActions.clear, PostApiActions.publishSuccess, () => ({
     ...initialState,
   })),
 );

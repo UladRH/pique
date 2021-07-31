@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { Post } from '../../../core/interfaces';
-import * as fromPost from '../state/post.selectors';
+import * as fromPost from '../reducers';
 
 @Component({
   selector: 'app-post-section',

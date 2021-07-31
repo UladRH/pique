@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { catchError, concatMap, filter, map, withLatestFrom } from 'rxjs/operators';
 
 import { FeedService } from '../feed.service';
-import * as fromPost from '../../post/state/post.selectors';
+import * as fromPost from '../../post/reducers';
 import * as FeedActions from './feed.actions';
 import * as fromFeed from './feed.selectors';
 

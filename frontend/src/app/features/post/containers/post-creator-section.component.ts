@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { MediaAttachmentDraft } from '../../../core/interfaces';
-import * as PostDraftActions from '../state/post-draft.actions';
-import * as fromPostDraft from '../state/post-draft.selectors';
+import { PostDraftActions } from '../actions';
+import * as fromPost from '../reducers';
 
 @Component({
   selector: 'app-post-creator-section',
@@ -24,16 +24,20 @@ export class PostCreatorSectionComponent {
   mediaAttachments$: Observable<MediaAttachmentDraft[]>;
 
   constructor(private readonly store: Store) {
-    this.content$ = this.store.select(fromPostDraft.selectContent);
-    this.mediaAttachments$ = this.store.select(fromPostDraft.selectMediaAttachments);
+    this.content$ = this.store.select(fromPost.selectDraftContent);
+    this.mediaAttachments$ = this.store.select(fromPost.selectDraftMediaAttachments);
   }
 
   uploadMedia(file: File) {
-    this.store.dispatch(PostDraftActions.uploadMedia({ file }));
+    this.store.dispatch(PostDraftActions.uploadMediaAttachment({ file }));
   }
 
   removeMedia(mediaAttachment: MediaAttachmentDraft) {
-    this.store.dispatch(PostDraftActions.removeMedia({ mediaAttachment }));
+    this.store.dispatch(PostDraftActions.removeMediaAttachment({ mediaAttachment }));
+  }
+
+  contentChanged(content: string) {
+    this.store.dispatch(PostDraftActions.changeContent({ content }));
   }
 
   clear() {
@@ -42,9 +46,5 @@ export class PostCreatorSectionComponent {
 
   publish() {
     this.store.dispatch(PostDraftActions.publish());
-  }
-
-  contentChanged(content: string) {
-    this.store.dispatch(PostDraftActions.changeContent({ content }));
   }
 }

@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Post, Profile } from '../../../core/interfaces';
-import * as ProfilePostsActions from '../state/profile-posts.actions';
-import * as fromProfilePosts from '../state/profile-posts.selectors';
+import { PostApiActions, ProfilePostsActions } from '../actions';
+import * as fromPost from '../reducers';
 
 @Component({
   selector: 'app-profile-posts-section',
@@ -34,19 +34,15 @@ export class ProfilePostsSectionComponent implements OnInit {
 
   constructor(private readonly store: Store, private readonly actions$: Actions) {
     this.pending$ = this.actions$.pipe(
-      ofType(
-        ProfilePostsActions.next,
-        ProfilePostsActions.nextSuccess,
-        ProfilePostsActions.nextFailure,
-      ),
+      ofType(ProfilePostsActions.next, PostApiActions.nextSuccess, PostApiActions.nextFailure),
       map((action) => {
         return action.type == ProfilePostsActions.next.type;
       }),
     );
   }
   ngOnInit() {
-    this.posts$ = this.store.select(fromProfilePosts.selectProfilePosts(this.profile));
-    this.gat$ = this.store.select(fromProfilePosts.selectProfilePostsIds(this.profile));
+    this.posts$ = this.store.select(fromPost.selectProfilePosts(this.profile));
+    this.gat$ = this.store.select(fromPost.selectProfilePostsIds(this.profile));
 
     this.store.dispatch(ProfilePostsActions.get({ profile: this.profile }));
   }

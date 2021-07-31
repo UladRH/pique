@@ -13,10 +13,9 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 
-import { PostService } from '../post.service';
-import * as fromPost from './post.selectors';
-import * as ProfilePostsActions from './profile-posts.actions';
-import * as fromProfilePosts from './profile-posts.selectors';
+import { PostService } from '../services';
+import { PostApiActions, ProfilePostsActions } from '../actions';
+import * as fromPost from '../reducers';
 
 @Injectable()
 export class ProfilePostsEffects {
@@ -25,8 +24,8 @@ export class ProfilePostsEffects {
       ofType(ProfilePostsActions.get),
       exhaustMap(({ profile }) =>
         this.postService.getForProfile(profile.id, { page: 1, perPage: 10 }).pipe(
-          map((posts) => ProfilePostsActions.getSuccess({ profile, posts })),
-          catchError((error) => of(ProfilePostsActions.getFailure({ error }))),
+          map((posts) => PostApiActions.getSuccess({ profile, posts })),
+          catchError((error) => of(PostApiActions.getFailure({ error }))),
         ),
       ),
     );
@@ -34,7 +33,7 @@ export class ProfilePostsEffects {
 
   getSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProfilePostsActions.getSuccess),
+      ofType(PostApiActions.getSuccess),
       map(({ posts }) => reduceGraph({ data: posts, selector: fromPost.selectPosts })),
     ),
   );
@@ -44,14 +43,14 @@ export class ProfilePostsEffects {
       ofType(ProfilePostsActions.next),
       mergeMap(({ profile }) =>
         of(profile).pipe(
-          withLatestFrom(this.store.select(fromProfilePosts.selectProfilePostsCount(profile))),
+          withLatestFrom(this.store.select(fromPost.selectProfilePostsCount(profile))),
         ),
       ),
       filter(([_profile, count]) => count > 0),
       concatMap(([profile, count]) =>
         this.postService.getForProfile(profile.id, { page: count / 10 + 1, perPage: 10 }).pipe(
-          map((posts) => ProfilePostsActions.nextSuccess({ profile, posts })),
-          catchError((error) => of(ProfilePostsActions.nextFailure({ error }))),
+          map((posts) => PostApiActions.nextSuccess({ profile, posts })),
+          catchError((error) => of(PostApiActions.nextFailure({ error }))),
         ),
       ),
     );
@@ -59,7 +58,7 @@ export class ProfilePostsEffects {
 
   nextSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProfilePostsActions.nextSuccess),
+      ofType(PostApiActions.nextSuccess),
       map(({ posts }) => reduceGraph({ data: posts, selector: fromPost.selectPosts })),
     ),
   );

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ApiService } from '../../core/services/api.service';
-import { MediaAttachmentDraft } from '../../core/interfaces';
+import { ApiService } from '../../../core/services/api.service';
+import { MediaAttachmentDraft } from '../../../core/interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class MediaAttachmentsService {
