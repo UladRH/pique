@@ -6,7 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AuthModule } from '../auth/auth.module';
-import { ProfileModule } from '../profile/profile.module';
+import { ProfileModule } from '../profiles/profile.module';
 import {
   PostCreatorComponent,
   PostDetailsComponent,

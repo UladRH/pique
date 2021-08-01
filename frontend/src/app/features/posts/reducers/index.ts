@@ -7,7 +7,7 @@ import {
 } from 'ngrx-entity-relationship';
 
 import { Post, PostCreateDto, Profile } from '../../../core/interfaces';
-import * as fromProfile from '../../profile/reducers';
+import * as fromProfile from '../../profiles/reducers';
 import * as fromPostDraft from './post-draft.reducer';
 import * as fromPosts from './posts.reducer';
 import * as fromProfilePosts from './profile-posts.reducer';

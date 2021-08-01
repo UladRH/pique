@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { EMPTY, Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { ProfileService } from './services';
+import { ProfilesService } from './services';
 import { Profile } from '../../core/interfaces';
 import * as ProfileActions from './actions/profile.actions';
 
@@ -14,7 +14,7 @@ import * as ProfileActions from './actions/profile.actions';
 export class ProfileResolver implements Resolve<Profile | null> {
   constructor(
     private readonly store: Store,
-    private readonly profileService: ProfileService,
+    private readonly profilesService: ProfilesService,
     private readonly router: Router,
   ) {}
 
@@ -22,9 +22,9 @@ export class ProfileResolver implements Resolve<Profile | null> {
 
   requestByIdOrScreenName(id?: string, screenName?: string) {
     if (id) {
-      return this.profileService.getById(id);
+      return this.profilesService.getById(id);
     } else if (screenName) {
-      return this.profileService.getByScreenName(screenName);
+      return this.profilesService.getByScreenName(screenName);
     }
 
     return throwError(EMPTY);

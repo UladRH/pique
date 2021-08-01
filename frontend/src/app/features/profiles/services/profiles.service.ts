@@ -9,7 +9,7 @@ import { Profile, ProfileEditFormDto, ProfileUpdateDto } from '../../../core/int
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileService {
+export class ProfilesService {
   constructor(private api: ApiService) {}
 
   getById(id: Profile['id']): Observable<Profile> {

@@ -14,12 +14,12 @@ import { PostActions } from './actions';
 export class PostResolver implements Resolve<Post | null> {
   constructor(
     private readonly store: Store,
-    private readonly postService: PostsService,
+    private readonly postsService: PostsService,
     private readonly router: Router,
   ) {}
 
   getFromApi(id: string) {
-    return this.postService
+    return this.postsService
       .get(id)
       .pipe(tap((post) => this.store.dispatch(PostActions.loaded({ post }))));
   }

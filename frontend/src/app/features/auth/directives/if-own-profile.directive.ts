@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { Profile } from '../../../core/interfaces';
-import * as fromProfile from '../../profile/reducers';
+import * as fromProfiles from '../../profiles/reducers';
 
 @Directive({
   selector: '[appIfOwnProfile]',
@@ -25,7 +25,7 @@ export class IfOwnProfileDirective<T = unknown> extends NgIf implements OnDestro
     this.subscription.unsubscribe();
 
     this.subscription = this.store
-      .select(fromProfile.selectIsOwnProfile(profile.id))
+      .select(fromProfiles.selectIsOwnProfile(profile.id))
       .subscribe((value) => {
         this.ngIf = value;
       });

@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 import { Profile, ProfileEditFormDto } from '../../../core/interfaces';
-import { ProfileActions, ProfilesApiActions } from '../../profile/actions';
-import * as fromProfile from '../../profile/reducers';
+import { ProfileActions, ProfilesApiActions } from '../../profiles/actions';
+import * as fromProfile from '../../profiles/reducers';
 
 @Component({
   selector: 'app-edit-profile-container',

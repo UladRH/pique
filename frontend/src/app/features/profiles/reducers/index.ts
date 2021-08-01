@@ -2,25 +2,25 @@ import { Action, combineReducers, createFeatureSelector, createSelector } from '
 import { rootEntities, rootEntity, toStaticSelector } from 'ngrx-entity-relationship';
 
 import { Post, Profile } from '../../../core/interfaces';
-import * as fromProfile from './profile.reducer';
+import * as fromProfile from './profiles.reducer';
 
-export const profileFeatureKey = 'profiles';
+export const profilesFeatureKey = 'profiles';
 
-export interface ProfileState {
-  [fromProfile.profileFeatureKey]: fromProfile.State;
+export interface ProfilesState {
+  [fromProfile.profilesFeatureKey]: fromProfile.State;
 }
 
-export function reducers(state: ProfileState | undefined, action: Action) {
+export function reducers(state: ProfilesState | undefined, action: Action) {
   return combineReducers({
-    [fromProfile.profileFeatureKey]: fromProfile.reducer,
+    [fromProfile.profilesFeatureKey]: fromProfile.reducer,
   })(state, action);
 }
 
-export const selectProfileState = createFeatureSelector<ProfileState>(profileFeatureKey);
+export const selectProfileState = createFeatureSelector<ProfilesState>(profilesFeatureKey);
 
 export const selectProfileEntitiesState = createSelector(
   selectProfileState,
-  (state) => state[fromProfile.profileFeatureKey],
+  (state) => state[fromProfile.profilesFeatureKey],
 );
 
 export const selectProfile = rootEntity(selectProfileEntitiesState);

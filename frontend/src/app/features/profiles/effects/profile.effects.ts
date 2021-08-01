@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators';
 
-import { ProfileService } from '../services';
+import { ProfilesService } from '../services';
 import { ProfileActions, ProfilesApiActions } from '../actions';
 import * as fromProfile from '../reducers';
 
@@ -15,7 +15,7 @@ export class ProfileEffects {
     this.actions$.pipe(
       ofType(ProfileActions.follow),
       exhaustMap(({ profile }) =>
-        this.profileService.follow(profile.id).pipe(
+        this.profilesService.follow(profile.id).pipe(
           map((profile) => ProfilesApiActions.followSuccess({ profile })),
           catchError((error) => of(ProfilesApiActions.followFailure({ profile, error }))),
         ),
@@ -27,7 +27,7 @@ export class ProfileEffects {
     this.actions$.pipe(
       ofType(ProfileActions.unfollow),
       exhaustMap(({ profile }) =>
-        this.profileService.unfollow(profile.id).pipe(
+        this.profilesService.unfollow(profile.id).pipe(
           map((profile) => ProfilesApiActions.unfollowSuccess({ profile })),
           catchError((error) => of(ProfilesApiActions.unfollowFailure({ profile, error }))),
         ),
@@ -40,7 +40,7 @@ export class ProfileEffects {
       ofType(ProfileActions.update),
       withLatestFrom(this.store.select(fromProfile.selectLoggedInProfile)),
       exhaustMap(([{ dto }, profile]) =>
-        this.profileService.update(profile!.id, dto).pipe(
+        this.profilesService.update(profile!.id, dto).pipe(
           map((profile) => ProfilesApiActions.updateSuccess({ profile })),
           catchError((error) => of(ProfilesApiActions.updateFailure({ error }))),
         ),
@@ -69,7 +69,7 @@ export class ProfileEffects {
   constructor(
     private readonly actions$: Actions,
     private readonly store: Store,
-    private readonly profileService: ProfileService,
+    private readonly profilesService: ProfilesService,
     private readonly toast: ToastrService,
   ) {}
 }

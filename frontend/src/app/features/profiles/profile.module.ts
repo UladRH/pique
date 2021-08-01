@@ -5,7 +5,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { AuthModule } from '../auth/auth.module';
-import { ProfileService } from './services';
+import { ProfilesService } from './services';
 import { ProfileDetailsComponent } from './components';
 import { ProfileFollowButtonComponent, ProfileSectionComponent } from './containers';
 import { ProfileEffects } from './effects';
@@ -16,11 +16,11 @@ import * as fromProfile from './reducers';
   imports: [
     CommonModule,
     RouterModule,
-    StoreModule.forFeature(fromProfile.profileFeatureKey, fromProfile.reducers),
+    StoreModule.forFeature(fromProfile.profilesFeatureKey, fromProfile.reducers),
     EffectsModule.forFeature([ProfileEffects]),
     AuthModule,
   ],
-  providers: [ProfileService],
+  providers: [ProfilesService],
   exports: [ProfileSectionComponent, ProfileFollowButtonComponent],
 })
 export class ProfileModule {}

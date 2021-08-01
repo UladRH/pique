@@ -6,7 +6,7 @@ import { Profile } from '../../../core/interfaces';
 import * as AuthActions from '../../auth/state/auth.actions';
 import { ProfileActions, ProfilesApiActions } from '../actions';
 
-export const profileFeatureKey = 'profiles';
+export const profilesFeatureKey = 'profiles';
 
 export interface State extends EntityState<Profile> {
   loggedInProfileId: Profile['id'] | null;
