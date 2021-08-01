@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { EditProfileContainerComponent } from '../../features/settings/containers/edit-page-container.component';
+import { EditProfileContainerComponent } from '@pique/frontend/settings/containers';
+
 import { SettingsPageComponent } from './settings-page.component';
 
 const routes: Routes = [

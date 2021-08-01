@@ -4,8 +4,13 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 
-import { AuthService } from '../services';
-import { AuthActions, AuthApiActions, AuthFormsActions, AuthGuardsActions } from '../actions';
+import { AuthService } from '@pique/frontend/auth/services';
+import {
+  AuthActions,
+  AuthApiActions,
+  AuthFormsActions,
+  AuthGuardsActions,
+} from '@pique/frontend/auth/actions';
 
 @Injectable()
 export class AuthEffects {

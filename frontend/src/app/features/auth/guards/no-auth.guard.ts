@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
-import { AuthGuardsActions } from '../actions';
-import * as fromAuth from '../reducers';
+import { AuthGuardsActions } from '@pique/frontend/auth/actions';
+import * as fromAuth from '@pique/frontend/auth/reducers';
 
 @Injectable({ providedIn: 'root' })
 export class NoAuthGuard implements CanActivate {

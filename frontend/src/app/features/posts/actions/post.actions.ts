@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { Post } from '../../../core/interfaces';
+import { Post } from '@pique/frontend/core/interfaces';
 
 export const loaded = createAction('[Post Resolver] Post Loaded', props<{ post: Post }>());
 

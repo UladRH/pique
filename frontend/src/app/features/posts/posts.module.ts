@@ -5,22 +5,22 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-import { AuthModule } from '../auth/auth.module';
-import { ProfileModule } from '../profiles/profile.module';
+import { AuthModule } from '@pique/frontend/auth';
 import {
   PostCreatorComponent,
   PostDetailsComponent,
   PostListComponent,
   PostListItemComponent,
-} from './components';
+} from '@pique/frontend/posts/components';
 import {
   PostCreatorSectionComponent,
   PostLikeButtonComponent,
   PostSectionComponent,
   ProfilePostsSectionComponent,
-} from './containers';
-import { PostDraftEffects, PostEffects, ProfilePostsEffects } from './effects';
-import * as fromPost from './reducers';
+} from '@pique/frontend/posts/containers';
+import { PostDraftEffects, PostEffects, ProfilePostsEffects } from '@pique/frontend/posts/effects';
+import * as fromPost from '@pique/frontend/posts/reducers';
+import { ProfileModule } from '@pique/frontend/profiles';
 
 @NgModule({
   declarations: [

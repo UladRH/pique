@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { IError, MediaAttachmentDraft } from '../../../core/interfaces';
+import { IError, MediaAttachmentDraft } from '@pique/frontend/core/interfaces';
 
 export const uploadSuccess = createAction(
   '[Media Attachments/API] Upload Media Attachment Success',

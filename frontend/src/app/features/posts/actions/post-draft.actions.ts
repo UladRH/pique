@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { MediaAttachmentDraft } from '../../../core/interfaces';
+import { MediaAttachmentDraft } from '@pique/frontend/core/interfaces';
 
 export const uploadMediaAttachment = createAction(
   '[Post Draft] Upload Media Attachment',

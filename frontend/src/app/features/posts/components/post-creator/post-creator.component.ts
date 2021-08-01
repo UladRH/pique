@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { MediaAttachmentDraft } from '../../../../core/interfaces';
+import { MediaAttachmentDraft } from '@pique/frontend/core/interfaces';
 
 @Component({
   selector: 'app-post-creator',

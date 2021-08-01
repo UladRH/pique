@@ -1,9 +1,8 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 
-import { Post } from '../../../core/interfaces';
-import { PostsApiActions } from '../actions';
-import * as PostActions from '../actions/post.actions';
+import { Post } from '@pique/frontend/core/interfaces';
+import { PostActions, PostsApiActions } from '@pique/frontend/posts/actions';
 
 export const postsFeatureKey = 'posts';
 

@@ -2,9 +2,9 @@ import { Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { IError, RegisterUserDto } from '../../../core/interfaces';
-import { AuthFormsActions } from '../../auth/actions';
-import * as fromAuth from '../../auth/reducers';
+import { AuthFormsActions } from '@pique/frontend/auth/actions';
+import * as fromAuth from '@pique/frontend/auth/reducers';
+import { IError, RegisterUserDto } from '@pique/frontend/core/interfaces';
 
 @Component({
   selector: 'app-register-section',

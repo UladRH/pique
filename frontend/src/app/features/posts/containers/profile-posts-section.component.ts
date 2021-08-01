@@ -5,9 +5,9 @@ import { IInfiniteScrollEvent } from 'ngx-infinite-scroll';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Post, Profile } from '../../../core/interfaces';
-import { PostsApiActions, ProfilePostsActions } from '../actions';
-import * as fromPost from '../reducers';
+import { Post, Profile } from '@pique/frontend/core/interfaces';
+import { PostsApiActions, ProfilePostsActions } from '@pique/frontend/posts/actions';
+import * as fromPost from '@pique/frontend/posts/reducers';
 
 @Component({
   selector: 'app-profile-posts-section',

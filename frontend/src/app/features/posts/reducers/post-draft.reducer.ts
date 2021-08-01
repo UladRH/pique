@@ -1,8 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { MediaAttachmentDraft } from '../../../core/interfaces';
-import { MediaAttachmentsApiActions, PostsApiActions } from '../actions';
-import * as PostDraftActions from '../actions/post-draft.actions';
+import { MediaAttachmentDraft } from '@pique/frontend/core/interfaces';
+import {
+  MediaAttachmentsApiActions,
+  PostDraftActions,
+  PostsApiActions,
+} from '@pique/frontend/posts/actions';
 
 export const postDraftFeatureKey = 'draft';
 

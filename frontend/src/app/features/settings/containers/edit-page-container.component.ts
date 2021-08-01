@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
-import { Profile, ProfileEditFormDto } from '../../../core/interfaces';
-import { ProfileActions, ProfilesApiActions } from '../../profiles/actions';
-import * as fromProfile from '../../profiles/reducers';
+import { Profile, ProfileEditFormDto } from '@pique/frontend/core/interfaces';
+import { ProfileActions, ProfilesApiActions } from '@pique/frontend/profiles/actions';
+import * as fromProfile from '@pique/frontend/profiles/reducers';
 
 @Component({
   selector: 'app-edit-profile-container',

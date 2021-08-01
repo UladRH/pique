@@ -13,9 +13,9 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 
-import { PostsService } from '../services';
-import { PostsApiActions, ProfilePostsActions } from '../actions';
-import * as fromPost from '../reducers';
+import { PostsService } from '@pique/frontend/posts/services';
+import { PostsApiActions, ProfilePostsActions } from '@pique/frontend/posts/actions';
+import * as fromPost from '@pique/frontend/posts/reducers';
 
 @Injectable()
 export class ProfilePostsEffects {

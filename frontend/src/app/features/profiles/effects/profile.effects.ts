@@ -5,9 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators';
 
-import { ProfilesService } from '../services';
-import { ProfileActions, ProfilesApiActions } from '../actions';
-import * as fromProfile from '../reducers';
+import { ProfilesService } from '@pique/frontend/profiles/services';
+import { ProfileActions, ProfilesApiActions } from '@pique/frontend/profiles/actions';
+import * as fromProfile from '@pique/frontend/profiles/reducers';
 
 @Injectable()
 export class ProfileEffects {

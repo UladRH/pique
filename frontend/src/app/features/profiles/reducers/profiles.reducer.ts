@@ -1,10 +1,10 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 
-import { decrement, increment } from '../../../shared/utils/counter-reducer.utils';
-import { Profile } from '../../../core/interfaces';
-import { AuthApiActions } from '../../auth/actions';
-import { ProfileActions, ProfilesApiActions } from '../actions';
+import { decrement, increment } from '@pique/frontend/shared/utils/counter-reducer.utils';
+import { AuthApiActions } from '@pique/frontend/auth/actions';
+import { Profile } from '@pique/frontend/core/interfaces';
+import { ProfileActions, ProfilesApiActions } from '@pique/frontend/profiles/actions';
 
 export const profilesFeatureKey = 'profiles';
 

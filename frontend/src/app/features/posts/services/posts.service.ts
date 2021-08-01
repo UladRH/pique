@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ApiService } from '../../../core/services/api.service';
-import { PaginationQueryDto, Post, PostCreateDto, Profile } from '../../../core/interfaces';
+import { ApiService } from '@pique/frontend/core/services';
+import { PaginationQueryDto, Post, PostCreateDto, Profile } from '@pique/frontend/core/interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class PostsService {

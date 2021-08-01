@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { IError, Post, Profile } from '../../../core/interfaces';
+import { IError, Post, Profile } from '@pique/frontend/core/interfaces';
 
 export const likeSuccess = createAction(
   '[Posts/API] Like Post Success', //

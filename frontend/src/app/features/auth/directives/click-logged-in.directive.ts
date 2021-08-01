@@ -2,8 +2,8 @@ import { Directive, EventEmitter, HostListener, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs/operators';
 
-import { AuthGuardsActions } from '../actions';
-import * as fromAuth from '../reducers';
+import { AuthGuardsActions } from '@pique/frontend/auth/actions';
+import * as fromAuth from '@pique/frontend/auth/reducers';
 
 @Directive({
   selector: '[appClickLoggedIn]',

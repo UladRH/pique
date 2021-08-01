@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { User } from '../../../core/interfaces';
-import { AuthApiActions } from '../actions';
+import { AuthApiActions } from '@pique/frontend/auth/actions';
+import { User } from '@pique/frontend/core/interfaces';
 
 export const authFeatureKey = 'auth';
 

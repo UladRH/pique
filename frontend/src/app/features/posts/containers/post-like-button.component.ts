@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { Post } from '../../../core/interfaces';
-import * as PostActions from '../actions/post.actions';
+import { Post } from '@pique/frontend/core/interfaces';
+import * as PostActions from '@pique/frontend/posts/actions/post.actions';
 
 @Component({
   selector: 'app-post-like-button',

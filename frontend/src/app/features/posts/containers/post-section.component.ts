@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { Post } from '../../../core/interfaces';
-import * as fromPost from '../reducers';
+import { Post } from '@pique/frontend/core/interfaces';
+import * as fromPost from '@pique/frontend/posts/reducers';
 
 @Component({
   selector: 'app-post-section',

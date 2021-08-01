@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { MediaAttachmentDraft } from '../../../core/interfaces';
-import { PostDraftActions } from '../actions';
-import * as fromPost from '../reducers';
+import { MediaAttachmentDraft } from '@pique/frontend/core/interfaces';
+import { PostDraftActions } from '@pique/frontend/posts/actions';
+import * as fromPost from '@pique/frontend/posts/reducers';
 
 @Component({
   selector: 'app-post-creator-section',

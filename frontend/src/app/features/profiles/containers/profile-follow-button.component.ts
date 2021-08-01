@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { Profile } from '../../../core/interfaces';
-import { ProfileActions } from '../actions';
+import { Profile } from '@pique/frontend/core/interfaces';
+import { ProfileActions } from '@pique/frontend/profiles/actions';
 
 @Component({
   selector: 'app-profile-follow-button',

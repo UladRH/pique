@@ -1,8 +1,8 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { toStaticSelector } from 'ngrx-entity-relationship';
 
-import * as fromPost from '../../posts/reducers';
-import * as fromFeed from './feed.reducer';
+import * as fromFeed from '@pique/frontend/feed/state/feed.reducer';
+import * as fromPost from '@pique/frontend/posts/reducers';
 
 export const selectFeedState = createFeatureSelector<fromFeed.FeedState>(fromFeed.feedFeatureKey);
 

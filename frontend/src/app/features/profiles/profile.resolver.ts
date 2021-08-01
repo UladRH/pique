@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 import { EMPTY, Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { ProfilesService } from './services';
-import { Profile } from '../../core/interfaces';
-import * as ProfileActions from './actions/profile.actions';
+import { ProfilesService } from '@pique/frontend/profiles/services';
+import { Profile } from '@pique/frontend/core/interfaces';
+import * as ProfileActions from '@pique/frontend/profiles/actions/profile.actions';
 
 @Injectable({
   providedIn: 'root',

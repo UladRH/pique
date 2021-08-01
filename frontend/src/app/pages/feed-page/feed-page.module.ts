@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { FeedModule } from '../../features/feed/feed.module';
-import { PostsModule } from '../../features/posts/posts.module';
+import { FeedModule } from '@pique/frontend/feed';
+import { PostsModule } from '@pique/frontend/posts';
+
 import { FeedPageRoutingModule } from './feed-page-routing.module';
 import { FeedPageComponent } from './feed-page.component';
 

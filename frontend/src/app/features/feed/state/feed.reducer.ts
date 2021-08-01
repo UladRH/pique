@@ -1,8 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { Post } from '../../../core/interfaces';
-import { PostsApiActions } from '../../posts/actions';
-import * as FeedActions from './feed.actions';
+import { Post } from '@pique/frontend/core/interfaces';
+import * as FeedActions from '@pique/frontend/feed/state/feed.actions';
+import { PostsApiActions } from '@pique/frontend/posts/actions';
 
 export const feedFeatureKey = 'feed';
 

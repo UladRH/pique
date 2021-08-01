@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { Profile, ProfileEditFormDto } from '../../../core/interfaces';
+import { Profile, ProfileEditFormDto } from '@pique/frontend/core/interfaces';
 
 export const loaded = createAction(
   '[Profile Resolver] Profile Loaded',

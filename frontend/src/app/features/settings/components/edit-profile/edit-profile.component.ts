@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Profile, ProfileEditFormDto } from '../../../../core/interfaces';
+import { Profile, ProfileEditFormDto } from '@pique/frontend/core/interfaces';
 
 @Component({
   selector: 'app-edit-profile',

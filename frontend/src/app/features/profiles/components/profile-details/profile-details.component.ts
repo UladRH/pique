@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { Profile } from '../../../../core/interfaces';
+import { Profile } from '@pique/frontend/core/interfaces';
 
 @Component({
   selector: 'app-profile-details',

@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { Profile } from '../../../core/interfaces';
-import * as fromProfile from '../reducers';
+import { Profile } from '@pique/frontend/core/interfaces';
+import * as fromProfile from '@pique/frontend/profiles/reducers';
 
 @Component({
   selector: 'app-profile-section',

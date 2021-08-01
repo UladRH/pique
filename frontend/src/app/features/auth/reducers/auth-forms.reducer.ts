@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { IError } from '../../../core/interfaces';
-import { AuthApiActions, AuthFormsActions } from '../actions';
+import { AuthApiActions, AuthFormsActions } from '@pique/frontend/auth/actions';
+import { IError } from '@pique/frontend/core/interfaces';
 
 export const authFormsFeatureKey = 'forms';
 

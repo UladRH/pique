@@ -5,9 +5,13 @@ import { reduceGraph } from 'ngrx-entity-relationship';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, withLatestFrom } from 'rxjs/operators';
 
-import { MediaAttachmentsService, PostsService } from '../services';
-import { MediaAttachmentsApiActions, PostDraftActions, PostsApiActions } from '../actions';
-import * as fromPost from '../reducers';
+import { MediaAttachmentsService, PostsService } from '@pique/frontend/posts/services';
+import {
+  MediaAttachmentsApiActions,
+  PostDraftActions,
+  PostsApiActions,
+} from '@pique/frontend/posts/actions';
+import * as fromPost from '@pique/frontend/posts/reducers';
 
 @Injectable()
 export class PostDraftEffects {

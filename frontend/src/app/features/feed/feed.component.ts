@@ -5,9 +5,9 @@ import { IInfiniteScrollEvent } from 'ngx-infinite-scroll';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Post } from '../../core/interfaces';
-import * as FeedActions from './state/feed.actions';
-import * as fromFeed from './state/feed.selectors';
+import { Post } from '@pique/frontend/core/interfaces';
+import * as FeedActions from '@pique/frontend/feed/state/feed.actions';
+import * as fromFeed from '@pique/frontend/feed/state/feed.selectors';
 
 @Component({
   selector: 'app-feed',

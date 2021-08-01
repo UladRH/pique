@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { concatAll, last, map } from 'rxjs/operators';
 
-import { dataUriToBlob } from '../../../shared/utils/data-uri.utils';
-import { ApiService } from '../../../core/services/api.service';
-import { Profile, ProfileEditFormDto, ProfileUpdateDto } from '../../../core/interfaces';
+import { dataUriToBlob } from '@pique/frontend/shared/utils';
+import { ApiService } from '@pique/frontend/core/services';
+import { Profile, ProfileEditFormDto, ProfileUpdateDto } from '@pique/frontend/core/interfaces';
 
 @Injectable({
   providedIn: 'root',

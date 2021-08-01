@@ -1,7 +1,7 @@
 import { Action, combineReducers, createFeatureSelector, createSelector } from '@ngrx/store';
 
-import * as fromAuthForms from './auth-forms.reducer';
-import * as fromAuth from './auth.reducer';
+import * as fromAuthForms from '@pique/frontend/auth/reducers/auth-forms.reducer';
+import * as fromAuth from '@pique/frontend/auth/reducers/auth.reducer';
 
 export const authFeatureKey = 'auth';
 

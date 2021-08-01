@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Post } from '../../../../core/interfaces';
+import { Post } from '@pique/frontend/core/interfaces';
 
 @Component({
   selector: 'app-post-details',

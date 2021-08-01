@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { Post } from '../../../core/interfaces';
-import { PostsApiActions } from '../actions';
+import { Post } from '@pique/frontend/core/interfaces';
+import { PostsApiActions } from '@pique/frontend/posts/actions';
 
 export const profilePostsFeatureKey = 'profilePosts';
 

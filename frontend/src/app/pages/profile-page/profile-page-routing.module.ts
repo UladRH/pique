@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ProfileResolver } from '../../features/profiles/profile.resolver';
+import { ProfileResolver } from '@pique/frontend/profiles';
+
 import { ProfilePageComponent } from './profile-page.component';
 
 const routes: Routes = [

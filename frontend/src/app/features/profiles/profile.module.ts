@@ -4,12 +4,15 @@ import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { AuthModule } from '../auth/auth.module';
-import { ProfilesService } from './services';
-import { ProfileDetailsComponent } from './components';
-import { ProfileFollowButtonComponent, ProfileSectionComponent } from './containers';
-import { ProfileEffects } from './effects';
-import * as fromProfile from './reducers';
+import { ProfilesService } from '@pique/frontend/profiles/services';
+import { AuthModule } from '@pique/frontend/auth';
+import { ProfileDetailsComponent } from '@pique/frontend/profiles/components';
+import {
+  ProfileFollowButtonComponent,
+  ProfileSectionComponent,
+} from '@pique/frontend/profiles/containers';
+import { ProfileEffects } from '@pique/frontend/profiles/effects';
+import * as fromProfile from '@pique/frontend/profiles/reducers';
 
 @NgModule({
   declarations: [ProfileDetailsComponent, ProfileSectionComponent, ProfileFollowButtonComponent],

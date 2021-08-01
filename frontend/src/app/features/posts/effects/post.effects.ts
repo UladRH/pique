@@ -4,9 +4,9 @@ import { reduceGraph } from 'ngrx-entity-relationship';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map } from 'rxjs/operators';
 
-import { PostsService } from '../services';
-import { PostActions, PostsApiActions } from '../actions';
-import * as fromPost from '../reducers';
+import { PostsService } from '@pique/frontend/posts/services';
+import { PostActions, PostsApiActions } from '@pique/frontend/posts/actions';
+import * as fromPost from '@pique/frontend/posts/reducers';
 
 @Injectable()
 export class PostEffects {

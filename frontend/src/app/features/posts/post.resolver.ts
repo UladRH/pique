@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { PostsService } from './services';
-import { Post } from '../../core/interfaces';
-import { PostActions } from './actions';
+import { PostsService } from '@pique/frontend/posts/services';
+import { Post } from '@pique/frontend/core/interfaces';
+import { PostActions } from '@pique/frontend/posts/actions';
 
 @Injectable({
   providedIn: 'root',

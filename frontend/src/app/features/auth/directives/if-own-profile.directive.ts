@@ -3,8 +3,8 @@ import { Directive, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@ang
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
-import { Profile } from '../../../core/interfaces';
-import * as fromProfiles from '../../profiles/reducers';
+import { Profile } from '@pique/frontend/core/interfaces';
+import * as fromProfiles from '@pique/frontend/profiles/reducers';
 
 @Directive({
   selector: '[appIfOwnProfile]',

@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { PostsModule } from '../../features/posts/posts.module';
+import { PostsModule } from '@pique/frontend/posts';
+
 import { PostPageRoutingModule } from './post-page-routing.module';
 import { PostPageComponent } from './post-page.component';
 

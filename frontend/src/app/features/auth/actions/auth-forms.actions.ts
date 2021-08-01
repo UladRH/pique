@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { LoginUserDto, RegisterUserDto } from '../../../core/interfaces';
+import { LoginUserDto, RegisterUserDto } from '@pique/frontend/core/interfaces';
 
 export const login = createAction('[Login Form] Login', props<{ dto: LoginUserDto }>());
 

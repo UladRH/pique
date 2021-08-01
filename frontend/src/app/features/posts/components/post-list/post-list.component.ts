@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { Post } from '../../../../core/interfaces';
+import { Post } from '@pique/frontend/core/interfaces';
 
 @Component({
   selector: 'app-post-list',

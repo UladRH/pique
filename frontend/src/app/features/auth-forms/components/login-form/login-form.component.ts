@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { IError, RegisterUserDto } from '../../../../core/interfaces';
+import { IError, RegisterUserDto } from '@pique/frontend/core/interfaces';
 
 @Component({
   selector: 'app-login-form',

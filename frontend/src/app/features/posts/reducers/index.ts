@@ -6,11 +6,11 @@ import {
   toStaticSelector,
 } from 'ngrx-entity-relationship';
 
-import { Post, PostCreateDto, Profile } from '../../../core/interfaces';
-import * as fromProfile from '../../profiles/reducers';
-import * as fromPostDraft from './post-draft.reducer';
-import * as fromPosts from './posts.reducer';
-import * as fromProfilePosts from './profile-posts.reducer';
+import { Post, PostCreateDto, Profile } from '@pique/frontend/core/interfaces';
+import * as fromPostDraft from '@pique/frontend/posts/reducers/post-draft.reducer';
+import * as fromPosts from '@pique/frontend/posts/reducers/posts.reducer';
+import * as fromProfilePosts from '@pique/frontend/posts/reducers/profile-posts.reducer';
+import * as fromProfile from '@pique/frontend/profiles/reducers';
 
 export const postsFeatureKey = 'posts';
 

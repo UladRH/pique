@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { IError, Profile } from '../../../core/interfaces';
+import { IError, Profile } from '@pique/frontend/core/interfaces';
 
 export const followSuccess = createAction(
   '[Profiles/API] Follow Profile Success',

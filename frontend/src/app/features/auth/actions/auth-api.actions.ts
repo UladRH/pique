@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { IError, User } from '../../../core/interfaces';
+import { IError, User } from '@pique/frontend/core/interfaces';
 
 export const getUserSuccess = createAction(
   '[Auth/API] Get User Success', //
