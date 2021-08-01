@@ -4,17 +4,17 @@ import { createReducer, on } from '@ngrx/store';
 import { decrement, increment } from '../../../shared/utils/counter-reducer.utils';
 import { Profile } from '../../../core/interfaces';
 import * as AuthActions from '../../auth/state/auth.actions';
-import * as ProfileActions from './profile.actions';
+import { ProfileActions, ProfilesApiActions } from '../actions';
 
 export const profileFeatureKey = 'profiles';
 
-export interface ProfileState extends EntityState<Profile> {
+export interface State extends EntityState<Profile> {
   loggedInProfileId: Profile['id'] | null;
 }
 
 export const adapter: EntityAdapter<Profile> = createEntityAdapter<Profile>({});
 
-export const initialState: ProfileState = adapter.getInitialState({
+export const initialState: State = adapter.getInitialState({
   loggedInProfileId: null,
 });
 
@@ -37,7 +37,7 @@ export const reducer = createReducer(
     (state, { profile }) => adapter.addOne(profile, state),
   ),
 
-  on(ProfileActions.follow, ProfileActions.unfollowFailure, (state, { profile: { id } }) =>
+  on(ProfileActions.follow, ProfilesApiActions.unfollowFailure, (state, { profile: { id } }) =>
     adapter.updateMany(
       [
         {
@@ -58,7 +58,7 @@ export const reducer = createReducer(
     ),
   ),
 
-  on(ProfileActions.unfollow, ProfileActions.followFailure, (state, { profile: { id } }) =>
+  on(ProfileActions.unfollow, ProfilesApiActions.followFailure, (state, { profile: { id } }) =>
     adapter.updateMany(
       [
         {
@@ -80,9 +80,9 @@ export const reducer = createReducer(
   ),
 
   on(
-    ProfileActions.followSuccess,
-    ProfileActions.unfollowSuccess,
-    ProfileActions.updateSuccess,
+    ProfilesApiActions.followSuccess,
+    ProfilesApiActions.unfollowSuccess,
+    ProfilesApiActions.updateSuccess,
     (state, { profile }) => adapter.upsertOne(profile, state),
   ),
 );

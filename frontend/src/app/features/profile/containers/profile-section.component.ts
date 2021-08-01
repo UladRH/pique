@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { Profile } from '../../../core/interfaces';
-import * as fromProfile from '../state/profile.selectors';
+import * as fromProfile from '../reducers';
 
 @Component({
   selector: 'app-profile-section',

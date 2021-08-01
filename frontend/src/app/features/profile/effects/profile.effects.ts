@@ -5,9 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators';
 
-import { ProfileService } from '../profile.service';
-import * as ProfileActions from './profile.actions';
-import * as fromProfile from './profile.selectors';
+import { ProfileService } from '../services';
+import { ProfileActions, ProfilesApiActions } from '../actions';
+import * as fromProfile from '../reducers';
 
 @Injectable()
 export class ProfileEffects {
@@ -16,8 +16,8 @@ export class ProfileEffects {
       ofType(ProfileActions.follow),
       exhaustMap(({ profile }) =>
         this.profileService.follow(profile.id).pipe(
-          map((profile) => ProfileActions.followSuccess({ profile })),
-          catchError((error) => of(ProfileActions.followFailure({ profile, error }))),
+          map((profile) => ProfilesApiActions.followSuccess({ profile })),
+          catchError((error) => of(ProfilesApiActions.followFailure({ profile, error }))),
         ),
       ),
     ),
@@ -28,8 +28,8 @@ export class ProfileEffects {
       ofType(ProfileActions.unfollow),
       exhaustMap(({ profile }) =>
         this.profileService.unfollow(profile.id).pipe(
-          map((profile) => ProfileActions.unfollowSuccess({ profile })),
-          catchError((error) => of(ProfileActions.unfollowFailure({ profile, error }))),
+          map((profile) => ProfilesApiActions.unfollowSuccess({ profile })),
+          catchError((error) => of(ProfilesApiActions.unfollowFailure({ profile, error }))),
         ),
       ),
     ),
@@ -41,8 +41,8 @@ export class ProfileEffects {
       withLatestFrom(this.store.select(fromProfile.selectLoggedInProfile)),
       exhaustMap(([{ dto }, profile]) =>
         this.profileService.update(profile!.id, dto).pipe(
-          map((profile) => ProfileActions.updateSuccess({ profile })),
-          catchError((error) => of(ProfileActions.updateFailure({ error }))),
+          map((profile) => ProfilesApiActions.updateSuccess({ profile })),
+          catchError((error) => of(ProfilesApiActions.updateFailure({ error }))),
         ),
       ),
     ),
@@ -51,7 +51,7 @@ export class ProfileEffects {
   updateSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ProfileActions.updateSuccess),
+        ofType(ProfilesApiActions.updateSuccess),
         tap(() => this.toast.success('Profile saved.')),
       ),
     { dispatch: false },
@@ -60,7 +60,7 @@ export class ProfileEffects {
   updateFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ProfileActions.updateFailure),
+        ofType(ProfilesApiActions.updateFailure),
         tap(() => this.toast.error('An error occurred while saving profile changes.')),
       ),
     { dispatch: false },

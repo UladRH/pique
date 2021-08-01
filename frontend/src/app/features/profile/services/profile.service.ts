@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { concatAll, last, map } from 'rxjs/operators';
 
-import { dataUriToBlob } from '../../shared/utils/data-uri.utils';
-import { ApiService } from '../../core/services/api.service';
-import { Profile, ProfileEditFormDto, ProfileUpdateDto } from '../../core/interfaces';
+import { dataUriToBlob } from '../../../shared/utils/data-uri.utils';
+import { ApiService } from '../../../core/services/api.service';
+import { Profile, ProfileEditFormDto, ProfileUpdateDto } from '../../../core/interfaces';
 
 @Injectable({
   providedIn: 'root',

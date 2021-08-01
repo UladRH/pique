@@ -5,19 +5,18 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { AuthModule } from '../auth/auth.module';
-import { ProfileService } from './profile.service';
-import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
-import { ProfileFollowButtonComponent } from './containers/profile-follow-button.component';
-import { ProfileSectionComponent } from './containers/profile-section.component';
-import { ProfileEffects } from './state/profile.effects';
-import * as fromProfile from './state/profile.reducer';
+import { ProfileService } from './services';
+import { ProfileDetailsComponent } from './components';
+import { ProfileFollowButtonComponent, ProfileSectionComponent } from './containers';
+import { ProfileEffects } from './effects';
+import * as fromProfile from './reducers';
 
 @NgModule({
   declarations: [ProfileDetailsComponent, ProfileSectionComponent, ProfileFollowButtonComponent],
   imports: [
     CommonModule,
     RouterModule,
-    StoreModule.forFeature(fromProfile.profileFeatureKey, fromProfile.reducer),
+    StoreModule.forFeature(fromProfile.profileFeatureKey, fromProfile.reducers),
     EffectsModule.forFeature([ProfileEffects]),
     AuthModule,
   ],

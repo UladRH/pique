@@ -7,7 +7,7 @@ import {
 } from 'ngrx-entity-relationship';
 
 import { Post, PostCreateDto, Profile } from '../../../core/interfaces';
-import * as fromProfile from '../../profile/state/profile.selectors';
+import * as fromProfile from '../../profile/reducers';
 import * as fromPostDraft from './post-draft.reducer';
 import * as fromPost from './post.reducer';
 import * as fromProfilePosts from './profile-posts.reducer';
@@ -37,7 +37,7 @@ export const selectPostEntitiesState = createSelector(
 
 export const selectPost = rootEntity(
   selectPostEntitiesState,
-  relatedEntity(fromProfile.selectProfileState, 'profileId', 'profile'),
+  relatedEntity(fromProfile.selectProfileEntitiesState, 'profileId', 'profile'),
 );
 
 export const selectPosts = rootEntities(selectPost);

@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 import { Profile, ProfileEditFormDto } from '../../../core/interfaces';
-import * as ProfileActions from '../../profile/state/profile.actions';
-import * as fromProfile from '../../profile/state/profile.selectors';
+import { ProfileActions, ProfilesApiActions } from '../../profile/actions';
+import * as fromProfile from '../../profile/reducers';
 
 @Component({
   selector: 'app-edit-profile-container',
@@ -28,7 +28,11 @@ export class EditProfileContainerComponent {
     this.profile$ = this.store.select(fromProfile.selectLoggedInProfile) as Observable<Profile>;
 
     this.pending$ = this.actions$.pipe(
-      ofType(ProfileActions.update, ProfileActions.updateSuccess, ProfileActions.updateFailure),
+      ofType(
+        ProfileActions.update,
+        ProfilesApiActions.updateSuccess,
+        ProfilesApiActions.updateFailure,
+      ),
       map((action) => {
         return action.type == ProfileActions.update.type;
       }),

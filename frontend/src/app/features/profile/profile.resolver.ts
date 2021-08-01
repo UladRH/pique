@@ -4,17 +4,16 @@ import { Store } from '@ngrx/store';
 import { EMPTY, Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { ProfileService } from './profile.service';
+import { ProfileService } from './services';
 import { Profile } from '../../core/interfaces';
-import * as ProfileActions from './state/profile.actions';
-import { ProfileState } from './state/profile.reducer';
+import * as ProfileActions from './actions/profile.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileResolver implements Resolve<Profile | null> {
   constructor(
-    private readonly store: Store<ProfileState>,
+    private readonly store: Store,
     private readonly profileService: ProfileService,
     private readonly router: Router,
   ) {}

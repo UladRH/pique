@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { Profile } from '../../../core/interfaces';
-import * as fromProfile from '../../profile/state/profile.selectors';
+import * as fromProfile from '../../profile/reducers';
 
 @Directive({
   selector: '[appIfOwnProfile]',

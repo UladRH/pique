@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { Profile } from '../../../core/interfaces';
-import * as ProfileActions from '../state/profile.actions';
+import { ProfileActions } from '../actions';
 
 @Component({
   selector: 'app-profile-follow-button',
