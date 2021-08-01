@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { IError, RegisterUserDto } from '../../../core/interfaces';
-import * as AuthActions from '../../auth/state/auth.actions';
-import * as fromAuth from '../../auth/state/auth.selectors';
+import { AuthFormsActions } from '../../auth/actions';
+import * as fromAuth from '../../auth/reducers';
 
 @Component({
   selector: 'app-register-section',
@@ -26,10 +26,10 @@ export class RegisterSectionComponent implements OnDestroy {
   }
 
   onSubmit(dto: RegisterUserDto) {
-    this.store.dispatch(AuthActions.register({ dto }));
+    this.store.dispatch(AuthFormsActions.register({ dto }));
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(AuthActions.registerPageUnload());
+    this.store.dispatch(AuthFormsActions.registerPageUnload());
   }
 }

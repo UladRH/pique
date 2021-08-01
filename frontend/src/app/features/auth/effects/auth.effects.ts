@@ -4,8 +4,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 
-import { AuthService } from '../auth.service';
-import * as AuthActions from './auth.actions';
+import { AuthService } from '../services';
+import { AuthActions, AuthApiActions, AuthFormsActions, AuthGuardsActions } from '../actions';
 
 @Injectable()
 export class AuthEffects {
@@ -21,8 +21,8 @@ export class AuthEffects {
       ofType(AuthActions.getUser),
       switchMap(() =>
         this.authService.getLoggedInUser().pipe(
-          map((user) => AuthActions.getUserSuccess({ user })),
-          catchError((error) => of(AuthActions.getUserFailure({ error }))),
+          map((user) => AuthApiActions.getUserSuccess({ user })),
+          catchError((error) => of(AuthApiActions.getUserFailure({ error }))),
         ),
       ),
     ),
@@ -30,11 +30,11 @@ export class AuthEffects {
 
   login$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.login),
+      ofType(AuthFormsActions.login),
       exhaustMap(({ dto }) =>
         this.authService.login(dto).pipe(
-          map((user) => AuthActions.loginSuccess({ user })),
-          catchError((error) => of(AuthActions.loginFailure({ error }))),
+          map((user) => AuthApiActions.loginSuccess({ user })),
+          catchError((error) => of(AuthApiActions.loginFailure({ error }))),
         ),
       ),
     ),
@@ -42,11 +42,11 @@ export class AuthEffects {
 
   register$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.register),
+      ofType(AuthFormsActions.register),
       exhaustMap(({ dto }) =>
         this.authService.register(dto).pipe(
-          map((user) => AuthActions.registerSuccess({ user })),
-          catchError((error) => of(AuthActions.registerFailure({ error }))),
+          map((user) => AuthApiActions.registerSuccess({ user })),
+          catchError((error) => of(AuthApiActions.registerFailure({ error }))),
         ),
       ),
     ),
@@ -55,7 +55,7 @@ export class AuthEffects {
   authRequired$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(AuthActions.authRedirect, AuthActions.authRequired),
+        ofType(AuthGuardsActions.authRedirect, AuthGuardsActions.authRequired),
         tap(() => {
           this.router.navigateByUrl('/login');
         }),
@@ -66,7 +66,11 @@ export class AuthEffects {
   loggedInRedirect$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(AuthActions.loggedInRedirect, AuthActions.loginSuccess, AuthActions.registerSuccess),
+        ofType(
+          AuthGuardsActions.loggedInRedirect,
+          AuthApiActions.loginSuccess,
+          AuthApiActions.registerSuccess,
+        ),
         tap(() => {
           this.router.navigateByUrl('/');
         }),

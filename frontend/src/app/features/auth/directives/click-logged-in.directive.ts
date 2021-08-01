@@ -2,8 +2,8 @@ import { Directive, EventEmitter, HostListener, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs/operators';
 
-import * as AuthActions from '../state/auth.actions';
-import * as fromAuth from '../state/auth.selectors';
+import { AuthGuardsActions } from '../actions';
+import * as fromAuth from '../reducers';
 
 @Directive({
   selector: '[appClickLoggedIn]',
@@ -25,7 +25,7 @@ export class ClickLoggedInDirective {
         if (value) {
           this.appClickLoggedIn.emit($event);
         } else {
-          this.store.dispatch(AuthActions.authRequired());
+          this.store.dispatch(AuthGuardsActions.authRequired());
         }
       });
   }

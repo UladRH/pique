@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
-import * as AuthActions from '../state/auth.actions';
-import * as fromAuth from '../state/auth.selectors';
+import { AuthGuardsActions } from '../actions';
+import * as fromAuth from '../reducers';
 
 @Injectable({ providedIn: 'root' })
 export class NoAuthGuard implements CanActivate {
@@ -17,7 +17,7 @@ export class NoAuthGuard implements CanActivate {
       take(1),
       map((loggedIn) => {
         if (loggedIn) {
-          this.store.dispatch(AuthActions.loggedInRedirect());
+          this.store.dispatch(AuthGuardsActions.loggedInRedirect());
           return false;
         } else {
           return true;
