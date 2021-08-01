@@ -2,7 +2,7 @@
   <div class="border-bottom p-3">
     <div class="d-flex">
       <div class="flex-grow-0">
-        <a [routerLink]="['/', '@' + post.profile.screenName]">
+        <a [appLinkToProfile]="post.profile">
           <div
             [style.background-image]="
               post.profile.avatarUri ? 'url(' + post.profile.avatarUri + ')' : null
@@ -14,10 +14,7 @@
       </div>
 
       <div class="flex-grow-1 ms-2">
-        <a
-          [routerLink]="['/', '@' + post.profile.screenName]"
-          class="fs-6 fw-bold text-decoration-none text-body"
-        >
+        <a [appLinkToProfile]="post.profile" class="fs-6 fw-bold text-decoration-none text-body">
           {{ post.profile.displayName }}
           <span class="text-muted fw-normal">@{{ post.profile.screenName }}</span>
         </a>

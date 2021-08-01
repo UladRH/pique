@@ -14,8 +14,15 @@ import {
 import { ProfileEffects } from '@pique/frontend/profiles/effects';
 import * as fromProfile from '@pique/frontend/profiles/reducers';
 
+import { LinkToProfileDirective } from './directives/link-to-profile.directive';
+
 @NgModule({
-  declarations: [ProfileDetailsComponent, ProfileSectionComponent, ProfileFollowButtonComponent],
+  declarations: [
+    ProfileDetailsComponent,
+    ProfileSectionComponent,
+    ProfileFollowButtonComponent,
+    LinkToProfileDirective,
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -24,6 +31,6 @@ import * as fromProfile from '@pique/frontend/profiles/reducers';
     AuthModule,
   ],
   providers: [ProfilesService],
-  exports: [ProfileSectionComponent, ProfileFollowButtonComponent],
+  exports: [ProfileSectionComponent, ProfileFollowButtonComponent, LinkToProfileDirective],
 })
 export class ProfileModule {}
