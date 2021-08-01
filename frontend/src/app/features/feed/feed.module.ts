@@ -4,10 +4,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-import { PostModule } from '../post/post.module';
-import { FeedComponent } from './feed.component';
-import { FeedEffects } from './state/feed.effects';
-import * as fromFeed from './state/feed.reducer';
+import { PostsModule } from '@pique/frontend/posts/posts.module';
+import { FeedComponent } from '@pique/frontend/feed/feed.component';
+import { FeedEffects } from '@pique/frontend/feed/state/feed.effects';
+import * as fromFeed from '@pique/frontend/feed/state/feed.reducer';
 
 @NgModule({
   declarations: [FeedComponent],
@@ -15,7 +15,7 @@ import * as fromFeed from './state/feed.reducer';
     CommonModule,
     StoreModule.forFeature(fromFeed.feedFeatureKey, fromFeed.reducer),
     EffectsModule.forFeature([FeedEffects]),
-    PostModule,
+    PostsModule,
     InfiniteScrollModule,
   ],
   exports: [FeedComponent],

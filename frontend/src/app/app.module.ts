@@ -9,12 +9,12 @@ import { ngrxEntityRelationshipReducer } from 'ngrx-entity-relationship';
 import { SimpleModalModule } from 'ngx-simple-modal';
 import { ToastrModule } from 'ngx-toastr';
 
-import { AppRoutingModule } from './app-routing.module';
-import { CoreModule } from './core/core.module';
-import { AuthModule } from './features/auth/auth.module';
-import { environment } from '../environments/environment';
-import { AppComponent } from './app.component';
-import { AppEffects } from './app.effects';
+import { AppRoutingModule } from '@pique/frontend/app-routing.module';
+import { AppComponent } from '@pique/frontend/app.component';
+import { AppEffects } from '@pique/frontend/app.effects';
+import { AuthModule } from '@pique/frontend/auth';
+import { CoreModule } from '@pique/frontend/core';
+import { environment } from '@pique/frontend/environment';
 
 @NgModule({
   declarations: [AppComponent],

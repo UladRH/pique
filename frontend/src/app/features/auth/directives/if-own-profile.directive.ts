@@ -3,8 +3,8 @@ import { Directive, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@ang
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
-import { Profile } from '../../../core/interfaces';
-import * as fromProfile from '../../profile/state/profile.selectors';
+import { Profile } from '@pique/frontend/core/interfaces';
+import * as fromProfiles from '@pique/frontend/profiles/reducers';
 
 @Directive({
   selector: '[appIfOwnProfile]',
@@ -25,7 +25,7 @@ export class IfOwnProfileDirective<T = unknown> extends NgIf implements OnDestro
     this.subscription.unsubscribe();
 
     this.subscription = this.store
-      .select(fromProfile.selectIsOwnProfile(profile.id))
+      .select(fromProfiles.selectIsOwnProfile(profile.id))
       .subscribe((value) => {
         this.ngIf = value;
       });

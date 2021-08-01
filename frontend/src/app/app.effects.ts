@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects'
 import { asyncScheduler } from 'rxjs';
 import { observeOn, switchMap } from 'rxjs/operators';
 
-import * as AuthActions from './features/auth/state/auth.actions';
+import { AuthActions } from '@pique/frontend/auth/actions';
 
 @Injectable()
 export class AppEffects {

@@ -3,6 +3,15 @@
   "groupRules": [
     [{}],
     [
+      "^@pique(.*)shared(.*)",
+      "^@pique(.*).module",
+      "^@pique(.*).service",
+      "^@pique(.*).controller",
+      "^@pique(.*).entity",
+      "^@pique(.*)dto",
+      "^@pique"
+    ],
+    [
       "^[./](.*)shared(.*)",
       "^[./](.*).module",
       "^[./](.*).service",

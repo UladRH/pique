@@ -5,10 +5,10 @@ import { reduceGraph } from 'ngrx-entity-relationship';
 import { of } from 'rxjs';
 import { catchError, concatMap, filter, map, withLatestFrom } from 'rxjs/operators';
 
-import { FeedService } from '../feed.service';
-import * as fromPost from '../../post/state/post.selectors';
-import * as FeedActions from './feed.actions';
-import * as fromFeed from './feed.selectors';
+import { FeedService } from '@pique/frontend/feed';
+import * as FeedActions from '@pique/frontend/feed/state/feed.actions';
+import * as fromFeed from '@pique/frontend/feed/state/feed.selectors';
+import * as fromPost from '@pique/frontend/posts/reducers';
 
 @Injectable()
 export class FeedEffects {

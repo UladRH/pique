@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
-import { Profile, ProfileEditFormDto } from '../../../core/interfaces';
-import * as ProfileActions from '../../profile/state/profile.actions';
-import * as fromProfile from '../../profile/state/profile.selectors';
+import { Profile, ProfileEditFormDto } from '@pique/frontend/core/interfaces';
+import { ProfileActions, ProfilesApiActions } from '@pique/frontend/profiles/actions';
+import * as fromProfile from '@pique/frontend/profiles/reducers';
 
 @Component({
   selector: 'app-edit-profile-container',
@@ -28,7 +28,11 @@ export class EditProfileContainerComponent {
     this.profile$ = this.store.select(fromProfile.selectLoggedInProfile) as Observable<Profile>;
 
     this.pending$ = this.actions$.pipe(
-      ofType(ProfileActions.update, ProfileActions.updateSuccess, ProfileActions.updateFailure),
+      ofType(
+        ProfileActions.update,
+        ProfilesApiActions.updateSuccess,
+        ProfilesApiActions.updateFailure,
+      ),
       map((action) => {
         return action.type == ProfileActions.update.type;
       }),

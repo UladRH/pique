@@ -4,7 +4,7 @@ import { SimpleModalService } from 'ngx-simple-modal';
 import { EMPTY } from 'rxjs';
 import { exhaustMap, filter, map, take } from 'rxjs/operators';
 
-import { ImageCropModalComponent } from '../image-crop-modal/image-crop-modal.component';
+import { ImageCropModalComponent } from '@pique/frontend/settings/components';
 
 interface ImagePickerState {
   initial: string | null;

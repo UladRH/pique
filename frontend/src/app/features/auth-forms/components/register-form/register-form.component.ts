@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ScreenNameValidators } from '../../../../shared/validators/screen-name.validators';
-import { IError, RegisterUserDto } from '../../../../core/interfaces';
+import { ScreenNameValidators } from '@pique/frontend/shared/validators';
+import { IError, RegisterUserDto } from '@pique/frontend/core/interfaces';
 
 @Component({
   selector: 'app-register-form',

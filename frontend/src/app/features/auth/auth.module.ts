@@ -4,17 +4,16 @@ import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { ClickLoggedInDirective } from './directives/click-logged-in.directive';
-import { IfOwnProfileDirective } from './directives/if-own-profile.directive';
-import { AuthEffects } from './state/auth.effects';
-import * as fromAuth from './state/auth.reducer';
+import { ClickLoggedInDirective, IfOwnProfileDirective } from '@pique/frontend/auth/directives';
+import { AuthEffects } from '@pique/frontend/auth/effects';
+import * as fromAuth from '@pique/frontend/auth/reducers';
 
 @NgModule({
   declarations: [ClickLoggedInDirective, IfOwnProfileDirective],
   imports: [
     CommonModule,
     RouterModule,
-    StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducer),
+    StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducers),
     EffectsModule.forFeature([AuthEffects]),
   ],
   exports: [ClickLoggedInDirective, IfOwnProfileDirective],

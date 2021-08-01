@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, UrlSegment } from '@angular/router';
 
-import { AuthGuard } from './features/auth/guards/auth.guard';
-import { NoAuthGuard } from './features/auth/guards/no-auth.guard';
+import { AuthGuard, NoAuthGuard } from '@pique/frontend/auth/guards';
 
 const routes: Routes = [
   {

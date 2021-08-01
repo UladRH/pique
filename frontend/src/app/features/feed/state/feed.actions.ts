@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { Post } from '../../../core/interfaces';
+import { Post } from '@pique/frontend/core/interfaces';
 
 export const get = createAction('[Feed Page] Get Feed');
 export const getSuccess = createAction('[Feed API] Get Feed Success', props<{ posts: Post[] }>());

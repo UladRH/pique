@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { IError, LoginUserDto } from '../../../core/interfaces';
-import * as AuthActions from '../../auth/state/auth.actions';
-import * as fromAuth from '../../auth/state/auth.selectors';
+import { AuthFormsActions } from '@pique/frontend/auth/actions';
+import * as fromAuth from '@pique/frontend/auth/reducers';
+import { IError, LoginUserDto } from '@pique/frontend/core/interfaces';
 
 @Component({
   selector: 'app-login-section',
@@ -27,10 +27,10 @@ export class LoginSectionComponent implements OnDestroy {
   }
 
   onSubmit(dto: LoginUserDto) {
-    this.store.dispatch(AuthActions.login({ dto }));
+    this.store.dispatch(AuthFormsActions.login({ dto }));
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(AuthActions.loginPageUnload());
+    this.store.dispatch(AuthFormsActions.loginPageUnload());
   }
 }
