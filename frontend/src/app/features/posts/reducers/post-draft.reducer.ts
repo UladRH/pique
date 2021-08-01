@@ -1,10 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { MediaAttachmentDraft } from '../../../core/interfaces';
-import { MediaAttachmentsApiActions, PostApiActions } from '../actions';
+import { MediaAttachmentsApiActions, PostsApiActions } from '../actions';
 import * as PostDraftActions from '../actions/post-draft.actions';
 
-export const draftFeatureKey = 'draft';
+export const postDraftFeatureKey = 'draft';
 
 export interface State {
   mediaAttachments: MediaAttachmentDraft[];
@@ -34,7 +34,7 @@ export const reducer = createReducer(
     content,
   })),
 
-  on(PostDraftActions.clear, PostApiActions.publishSuccess, () => ({
+  on(PostDraftActions.clear, PostsApiActions.publishSuccess, () => ({
     ...initialState,
   })),
 );

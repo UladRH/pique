@@ -5,8 +5,8 @@ import { reduceGraph } from 'ngrx-entity-relationship';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, withLatestFrom } from 'rxjs/operators';
 
-import { MediaAttachmentsService, PostService } from '../services';
-import { MediaAttachmentsApiActions, PostApiActions, PostDraftActions } from '../actions';
+import { MediaAttachmentsService, PostsService } from '../services';
+import { MediaAttachmentsApiActions, PostDraftActions, PostsApiActions } from '../actions';
 import * as fromPost from '../reducers';
 
 @Injectable()
@@ -28,9 +28,9 @@ export class PostDraftEffects {
       ofType(PostDraftActions.publish),
       withLatestFrom(this.store.select(fromPost.selectDraftDto)),
       exhaustMap(([_action, dto]) =>
-        this.postService.create(dto).pipe(
-          map((post) => PostApiActions.publishSuccess({ post })),
-          catchError((error) => of(PostApiActions.publishFailure({ error }))),
+        this.postsService.create(dto).pipe(
+          map((post) => PostsApiActions.publishSuccess({ post })),
+          catchError((error) => of(PostsApiActions.publishFailure({ error }))),
         ),
       ),
     ),
@@ -38,7 +38,7 @@ export class PostDraftEffects {
 
   publishSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PostApiActions.publishSuccess),
+      ofType(PostsApiActions.publishSuccess),
       map(({ post }) => reduceGraph({ data: post, selector: fromPost.selectPost })),
     ),
   );
@@ -46,7 +46,7 @@ export class PostDraftEffects {
   constructor(
     private readonly actions$: Actions,
     private readonly store: Store,
-    private readonly postService: PostService,
+    private readonly postsService: PostsService,
     private readonly mediaAttachmentsService: MediaAttachmentsService,
   ) {}
 }

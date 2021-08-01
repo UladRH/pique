@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { toStaticSelector } from 'ngrx-entity-relationship';
 
-import * as fromPost from '../../post/reducers';
+import * as fromPost from '../../posts/reducers';
 import * as fromFeed from './feed.reducer';
 
 export const selectFeedState = createFeatureSelector<fromFeed.FeedState>(fromFeed.feedFeatureKey);

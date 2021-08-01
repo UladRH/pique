@@ -9,30 +9,30 @@ import {
 import { Post, PostCreateDto, Profile } from '../../../core/interfaces';
 import * as fromProfile from '../../profile/reducers';
 import * as fromPostDraft from './post-draft.reducer';
-import * as fromPost from './post.reducer';
+import * as fromPosts from './posts.reducer';
 import * as fromProfilePosts from './profile-posts.reducer';
 
-export const postFeatureKey = 'posts';
+export const postsFeatureKey = 'posts';
 
-export interface PostState {
-  [fromPost.postFeatureKey]: fromPost.State;
-  [fromPostDraft.draftFeatureKey]: fromPostDraft.State;
+export interface PostsState {
+  [fromPosts.postsFeatureKey]: fromPosts.State;
+  [fromPostDraft.postDraftFeatureKey]: fromPostDraft.State;
   [fromProfilePosts.profilePostsFeatureKey]: fromProfilePosts.State;
 }
 
-export function reducers(state: PostState | undefined, action: Action) {
+export function reducers(state: PostsState | undefined, action: Action) {
   return combineReducers({
-    [fromPost.postFeatureKey]: fromPost.reducer,
-    [fromPostDraft.draftFeatureKey]: fromPostDraft.reducer,
+    [fromPosts.postsFeatureKey]: fromPosts.reducer,
+    [fromPostDraft.postDraftFeatureKey]: fromPostDraft.reducer,
     [fromProfilePosts.profilePostsFeatureKey]: fromProfilePosts.reducer,
   })(state, action);
 }
 
-export const selectPostState = createFeatureSelector<PostState>(postFeatureKey);
+export const selectPostState = createFeatureSelector<PostsState>(postsFeatureKey);
 
 export const selectPostEntitiesState = createSelector(
   selectPostState,
-  (state) => state[fromPost.postFeatureKey],
+  (state) => state[fromPosts.postsFeatureKey],
 );
 
 export const selectPost = rootEntity(
@@ -46,7 +46,7 @@ export const selectPostById = (id: Post['id']) => toStaticSelector(selectPost, i
 
 export const selectDraftState = createSelector(
   selectPostState,
-  (state) => state[fromPostDraft.draftFeatureKey],
+  (state) => state[fromPostDraft.postDraftFeatureKey],
 );
 
 export const selectDraftDto = createSelector(

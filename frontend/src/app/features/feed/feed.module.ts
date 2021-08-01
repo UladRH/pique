@@ -4,7 +4,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-import { PostModule } from '../post/post.module';
+import { PostsModule } from '../posts/posts.module';
 import { FeedComponent } from './feed.component';
 import { FeedEffects } from './state/feed.effects';
 import * as fromFeed from './state/feed.reducer';
@@ -15,7 +15,7 @@ import * as fromFeed from './state/feed.reducer';
     CommonModule,
     StoreModule.forFeature(fromFeed.feedFeatureKey, fromFeed.reducer),
     EffectsModule.forFeature([FeedEffects]),
-    PostModule,
+    PostsModule,
     InfiniteScrollModule,
   ],
   exports: [FeedComponent],

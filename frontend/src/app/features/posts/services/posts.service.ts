@@ -5,7 +5,7 @@ import { ApiService } from '../../../core/services/api.service';
 import { PaginationQueryDto, Post, PostCreateDto, Profile } from '../../../core/interfaces';
 
 @Injectable({ providedIn: 'root' })
-export class PostService {
+export class PostsService {
   constructor(private readonly api: ApiService) {}
 
   create(dto: PostCreateDto): Observable<Post> {

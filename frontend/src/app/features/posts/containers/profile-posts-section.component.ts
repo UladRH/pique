@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Post, Profile } from '../../../core/interfaces';
-import { PostApiActions, ProfilePostsActions } from '../actions';
+import { PostsApiActions, ProfilePostsActions } from '../actions';
 import * as fromPost from '../reducers';
 
 @Component({
@@ -34,7 +34,7 @@ export class ProfilePostsSectionComponent implements OnInit {
 
   constructor(private readonly store: Store, private readonly actions$: Actions) {
     this.pending$ = this.actions$.pipe(
-      ofType(ProfilePostsActions.next, PostApiActions.nextSuccess, PostApiActions.nextFailure),
+      ofType(ProfilePostsActions.next, PostsApiActions.nextSuccess, PostsApiActions.nextFailure),
       map((action) => {
         return action.type == ProfilePostsActions.next.type;
       }),

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { PostService } from './services';
+import { PostsService } from './services';
 import { Post } from '../../core/interfaces';
 import { PostActions } from './actions';
 
@@ -14,7 +14,7 @@ import { PostActions } from './actions';
 export class PostResolver implements Resolve<Post | null> {
   constructor(
     private readonly store: Store,
-    private readonly postService: PostService,
+    private readonly postService: PostsService,
     private readonly router: Router,
   ) {}
 

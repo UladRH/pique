@@ -4,15 +4,15 @@ import { reduceGraph } from 'ngrx-entity-relationship';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map } from 'rxjs/operators';
 
-import { PostService } from '../services';
-import { PostActions, PostApiActions } from '../actions';
+import { PostsService } from '../services';
+import { PostActions, PostsApiActions } from '../actions';
 import * as fromPost from '../reducers';
 
 @Injectable()
 export class PostEffects {
   loaded$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PostActions.loaded, PostApiActions.likeSuccess, PostApiActions.unlikeSuccess),
+      ofType(PostActions.loaded, PostsApiActions.likeSuccess, PostsApiActions.unlikeSuccess),
       map(({ post }) => reduceGraph({ data: post, selector: fromPost.selectPost })),
     ),
   );
@@ -21,9 +21,9 @@ export class PostEffects {
     this.actions$.pipe(
       ofType(PostActions.like),
       exhaustMap(({ post }) =>
-        this.postService.like(post.id).pipe(
-          map((post) => PostApiActions.likeSuccess({ post })),
-          catchError((error) => of(PostApiActions.likeFailure({ post, error }))),
+        this.postsService.like(post.id).pipe(
+          map((post) => PostsApiActions.likeSuccess({ post })),
+          catchError((error) => of(PostsApiActions.likeFailure({ post, error }))),
         ),
       ),
     ),
@@ -33,13 +33,13 @@ export class PostEffects {
     this.actions$.pipe(
       ofType(PostActions.unlike),
       exhaustMap(({ post }) =>
-        this.postService.unlike(post.id).pipe(
-          map((post) => PostApiActions.unlikeSuccess({ post })),
-          catchError((error) => of(PostApiActions.unlikeFailure({ post, error }))),
+        this.postsService.unlike(post.id).pipe(
+          map((post) => PostsApiActions.unlikeSuccess({ post })),
+          catchError((error) => of(PostsApiActions.unlikeFailure({ post, error }))),
         ),
       ),
     ),
   );
 
-  constructor(private readonly actions$: Actions, private readonly postService: PostService) {}
+  constructor(private readonly actions$: Actions, private readonly postsService: PostsService) {}
 }

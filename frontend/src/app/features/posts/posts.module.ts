@@ -36,7 +36,7 @@ import * as fromPost from './reducers';
   imports: [
     CommonModule,
     RouterModule,
-    StoreModule.forFeature(fromPost.postFeatureKey, fromPost.reducers),
+    StoreModule.forFeature(fromPost.postsFeatureKey, fromPost.reducers),
     EffectsModule.forFeature([PostEffects, PostDraftEffects, ProfilePostsEffects]),
     AuthModule,
     ProfileModule,
@@ -51,4 +51,4 @@ import * as fromPost from './reducers';
     ProfilePostsSectionComponent,
   ],
 })
-export class PostModule {}
+export class PostsModule {}
