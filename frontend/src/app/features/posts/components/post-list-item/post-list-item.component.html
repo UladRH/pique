@@ -48,7 +48,7 @@
               <app-post-like-button [post]="post"></app-post-like-button>
             </div>
             <div>
-              <a [routerLink]="['p', post.id]" class="text-muted fs-6">
+              <a [appLinkToPost]="post" class="text-muted fs-6">
                 {{ post.createdAt | date: 'medium' }}
               </a>
             </div>

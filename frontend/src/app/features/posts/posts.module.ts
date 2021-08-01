@@ -22,6 +22,8 @@ import { PostDraftEffects, PostEffects, ProfilePostsEffects } from '@pique/front
 import * as fromPost from '@pique/frontend/posts/reducers';
 import { ProfileModule } from '@pique/frontend/profiles';
 
+import { LinkToPostDirective } from './directives/link-to-post.directive';
+
 @NgModule({
   declarations: [
     PostDetailsComponent,
@@ -32,6 +34,7 @@ import { ProfileModule } from '@pique/frontend/profiles';
     PostLikeButtonComponent,
     PostCreatorSectionComponent,
     ProfilePostsSectionComponent,
+    LinkToPostDirective,
   ],
   imports: [
     CommonModule,
