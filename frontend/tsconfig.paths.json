@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@pique/frontend/*": ["src/app/*", "src/app/features/*"],
+      "@pique/frontend/environment": ["src/environments/environment"]
+    }
+  }
+}
