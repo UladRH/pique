@@ -20,7 +20,7 @@ import {
 } from '@pique/frontend/posts/containers';
 import { PostDraftEffects, PostEffects, ProfilePostsEffects } from '@pique/frontend/posts/effects';
 import * as fromPost from '@pique/frontend/posts/reducers';
-import { ProfileModule } from '@pique/frontend/profiles';
+import { ProfilesModule } from '@pique/frontend/profiles';
 
 import { LinkToPostDirective } from './directives/link-to-post.directive';
 
@@ -42,7 +42,7 @@ import { LinkToPostDirective } from './directives/link-to-post.directive';
     StoreModule.forFeature(fromPost.postsFeatureKey, fromPost.reducers),
     EffectsModule.forFeature([PostEffects, PostDraftEffects, ProfilePostsEffects]),
     AuthModule,
-    ProfileModule,
+    ProfilesModule,
     InfiniteScrollModule,
   ],
   exports: [

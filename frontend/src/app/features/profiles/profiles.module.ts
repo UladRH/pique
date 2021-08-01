@@ -33,4 +33,4 @@ import { LinkToProfileDirective } from './directives/link-to-profile.directive';
   providers: [ProfilesService],
   exports: [ProfileSectionComponent, ProfileFollowButtonComponent, LinkToProfileDirective],
 })
-export class ProfileModule {}
+export class ProfilesModule {}

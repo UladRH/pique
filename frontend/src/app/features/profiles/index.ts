@@ -1,2 +1,2 @@
-export * from './profile.module';
+export * from './profiles.module';
 export * from './profile.resolver';
