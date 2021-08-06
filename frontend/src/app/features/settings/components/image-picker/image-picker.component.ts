@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { ImagePickerStore } from '@pique/frontend/settings/components';
+import { ImagePickerStore } from './image-picker.store';
 
 @Component({
   selector: 'app-image-picker',

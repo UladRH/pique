@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Actions, ofType } from '@ngrx/effects';
+import { Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
+import { selectPending } from '@pique/frontend/shared/utils';
 import { Profile, ProfileEditFormDto } from '@pique/frontend/core/interfaces';
 import { ProfileActions, ProfilesApiActions } from '@pique/frontend/profiles/actions';
 import * as fromProfile from '@pique/frontend/profiles/reducers';
@@ -28,14 +29,10 @@ export class EditProfileContainerComponent {
     this.profile$ = this.store.select(fromProfile.selectLoggedInProfile) as Observable<Profile>;
 
     this.pending$ = this.actions$.pipe(
-      ofType(
-        ProfileActions.update,
-        ProfilesApiActions.updateSuccess,
-        ProfilesApiActions.updateFailure,
+      selectPending(
+        [ProfileActions.update],
+        [ProfilesApiActions.updateSuccess, ProfilesApiActions.updateFailure],
       ),
-      map((action) => {
-        return action.type == ProfileActions.update.type;
-      }),
     );
   }
 

@@ -3,7 +3,7 @@
     <app-post-list [posts]="(posts$ | async) ?? []"></app-post-list>
   </div>
 
-  <div *ngIf="!!(pending$ | async)" class="text-center p-5">
+  <div *ngIf="pending$ | async" class="text-center p-5">
     <div class="spinner-border" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>

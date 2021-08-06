@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Actions, ofType } from '@ngrx/effects';
+import { Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { IInfiniteScrollEvent } from 'ngx-infinite-scroll';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
+import { selectPending } from '@pique/frontend/shared/utils';
 import { Post } from '@pique/frontend/core/interfaces';
 import * as FeedActions from '@pique/frontend/feed/state/feed.actions';
 import * as fromFeed from '@pique/frontend/feed/state/feed.selectors';
@@ -21,10 +21,15 @@ export class FeedComponent implements OnInit {
     this.posts$ = this.store.select(fromFeed.selectFeedPosts);
 
     this.pending$ = this.actions$.pipe(
-      ofType(FeedActions.next, FeedActions.nextSuccess, FeedActions.nextFailure),
-      map((action) => {
-        return action.type == FeedActions.next.type;
-      }),
+      selectPending(
+        [FeedActions.get, FeedActions.next],
+        [
+          FeedActions.getSuccess,
+          FeedActions.getFailure,
+          FeedActions.nextSuccess,
+          FeedActions.nextFailure,
+        ],
+      ),
     );
   }
 
