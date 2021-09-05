@@ -1,10 +1,22 @@
-#!/bin/sh
+#!/usr/bin/env sh
 . "$(dirname "$0")/_/husky.sh"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-[ -s "$HOME/.asdf/asdf.sh" ] && \. $HOME/.asdf/asdf.sh
+export ASDF_DIR="$HOME/.asdf"
+if [ -s "$ASDF_DIR/asdf.sh" ]; then
+  # https://github.com/asdf-vm/asdf/issues/653
+
+  ASDF_BIN="${ASDF_DIR}/bin"
+  ASDF_USER_SHIMS="${ASDF_DATA_DIR:-$HOME/.asdf}/shims"
+
+  PATH=$(echo $PATH | sed "s,$ASDF_BIN:,,")
+  PATH=$(echo $PATH | sed "s,$ASDF_USER_SHIMS:,,")
+
+  PATH="${ASDF_BIN}:$PATH"
+  PATH="${ASDF_USER_SHIMS}:$PATH"
+fi
 
 #############
 
